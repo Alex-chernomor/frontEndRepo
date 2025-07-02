@@ -1,0 +1,64 @@
+.containerLoginForm {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 48px 32px;
+  border-radius: 32px;
+  max-width: 362px;
+  width: 100%;
+  background-color: #faf3e0;
+  box-sizing: border-box;
+  margin: 56px auto 16px auto;
+}
+
+.titleLoginForm {
+  font-weight: 600;
+  font-size: 32px;
+  text-align: center;
+}
+
+.formLoginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 298px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.labelLoginForm {
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: #000000;
+  position: relative;
+}
+
+.fieldLoginForm {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px;
+  font-size: 16px;
+  background-color: #ffffff;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+
+  padding-right: 32px;
+}
+
+.fieldWrapperLoginForm {
+  position: relative;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+}
+
+@media screen and (min-width: 1440px) {
+}

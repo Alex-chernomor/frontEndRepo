@@ -16,10 +16,8 @@
   font-weight: 600;
   font-size: 32px;
   text-align: center;
-  margin: 0;
 }
 .text {
-  font-weight: 400;
   font-size: 16px;
   line-height: 1.55;
   text-align: center;
@@ -64,7 +62,6 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* gap: 4px; відступ між чекбоксом і помилкою */
 }
 .checkLabel {
   display: flex;
@@ -76,7 +73,7 @@
 .checkInput {
   width: 16px;
   height: 16px;
-  margin: 4;
+  margin: 4px;
   border: 1.5px solid #595d62;
   border-radius: 4px;
   accent-color: #9b6c43;
@@ -89,7 +86,7 @@
   margin-top: 4px;
   padding: 8px;
   font-size: 16px;
-  background-color: FFFFFF;
+  background-color: #ffffff;
   transition: border 0.2s ease, box-shadow 0.2s ease;
   box-sizing: border-box;
 
@@ -133,6 +130,12 @@
   background-color: #6d554b;
 }
 
+.loginText {
+  font-size: 16px;
+  line-height: 1.55;
+  text-align: center;
+}
+
 .link {
   text-decoration: underline;
   text-decoration-skip-ink: none;
@@ -145,4 +148,33 @@
 .link:hover {
   /* background-color: rgba(155, 108, 67, 0.19); */
   color: #6d554b;
+}
+
+@media screen and (min-width: 768px) {
+  .registerContainer {
+    max-width: 522px;
+    margin: 132px auto 130px auto;
+  }
+  .form {
+    max-width: 458px;
+  }
+  .eyeBtn {
+    right: 10px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .registerContainer {
+    max-width: 420px;
+    margin: 32px auto 14px auto;
+  }
+  .text {
+    width: 356px;
+    font-size: 12px;
+  }
+  .form {
+    max-width: 356px;
+  }
+  .loginText {
+    font-size: 16px;
+  }
 }

@@ -1,9 +1,9 @@
 // Section header
 // Use LogoComponent, Recipes link, User menu or AuthNav ( {isLoggedIn ? <UserMenu /> : <AuthNav />})
-import Logo from "../../components/Logo/Logo.jsx";
-import { Link, NavLink } from "react-router";
-import clsx from "clsx";
-import css from "./Header.module.css";
+import Logo from '../../components/Logo/Logo.jsx';
+import { Link, NavLink } from 'react-router';
+import clsx from 'clsx';
+import css from './Header.module.css';
 
 const getLinkStyles = ({ isActive }) => {
   return clsx(css.link, isActive && css.active);
@@ -14,9 +14,7 @@ export default function Header() {
     <div>
       <ul>
         <li>
-          <Link to="/">
-            <Logo />
-          </Link>
+          <Logo />
         </li>
         <li>
           <NavLink to="/recipes" className={getLinkStyles}>

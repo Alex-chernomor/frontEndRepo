@@ -1,80 +1,64 @@
-/* Desctope */
-.sectionLoginForm {
+.containerLoginForm {
   display: flex;
-  justify-content: center;
   align-items: center;
-
-  background-color: red;
-  height: 100%;
-}
-
-.container {
-  display: flex;
   justify-content: center;
-  align-items: center;
-
-  width: 420px;
-}
-
-.wrapperLoginForm {
-  background: #faf3e0;
-
-  border-radius: 32px;
+  flex-direction: column;
+  gap: 20px;
   padding: 48px 32px;
-}
-
-.logiForm {
-  width: 356px;
-  margin-left: auto;
-  margin-right: auto;
+  border-radius: 32px;
+  max-width: 362px;
+  width: 100%;
+  background-color: #faf3e0;
+  box-sizing: border-box;
+  margin: 56px auto 16px auto;
 }
 
 .titleLoginForm {
-  text-align: center;
   font-weight: 600;
   font-size: 32px;
-  margin: 0px 0px 20px 0px;
+  text-align: center;
 }
 
-.label {
+.formLoginForm {
   display: flex;
   flex-direction: column;
-
-  font-family: var(--font-family);
-  font-weight: 400;
-  font-size: 12px;
+  gap: 16px;
+  max-width: 298px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.loginFormField {
+.labelLoginForm {
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: #000000;
+  position: relative;
+}
+
+.fieldLoginForm {
   border: 1px solid #d9d9d9;
   border-radius: 8px;
+  width: 100%;
+  margin-top: 4px;
   padding: 8px;
-
-  font-weight: 400;
   font-size: 16px;
-  line-height: 155%;
+  background-color: #ffffff;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+
+  padding-right: 32px;
 }
 
-.button {
-  background: #9b6c43;
-  border-radius: 8px;
-  padding: 8px;
-  width: 356px;
-  margin-top: 27px;
-
-  color: white;
+.fieldWrapperLoginForm {
+  position: relative;
+  width: 100%;
 }
 
-.descriptionRedirect {
-  text-align: center;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 155%;
-  margin: 20px 0px 0px 0px;
+@media screen and (min-width: 768px) {
 }
 
-.linkRedirect {
-  font-weight: 600;
-  text-decoration: underline;
-  text-decoration-skip-ink: none;
+@media screen and (min-width: 1440px) {
 }

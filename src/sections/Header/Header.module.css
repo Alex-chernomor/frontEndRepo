@@ -1,8 +1,39 @@
-.active{
-    color: red;
-    border-bottom: 2px solid red;
+.header {
+  background: #3d2218;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }
 
-/* .link{
-    color:#646cff; ;
-} */
+.sectionHeader {
+  /* background-color: blue; */
+  width: 1440px;
+  display: flex;
+  justify-content: center;
+}
+
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  /* background-color: red; */
+  justify-content: space-between;
+  width: 1230px;
+}
+
+.navigation {
+  display: flex;
+  align-items: center;
+}
+
+.reipeLink {
+  margin-right: 13px;
+  color: white;
+}
+
+.appbar {
+  display: flex;
+  justify-content: center;
+  /* background-color: black; */
+  width: 380px;
+  height: auto;
+}

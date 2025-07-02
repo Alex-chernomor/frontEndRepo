@@ -1,17 +1,26 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
-import HomePage from "./pages/HomePage/HomePage.jsx";
-import LoginPage from "./pages/LoginPage/LoginPage.jsx";
-import RegistrationPage from "./pages/RegistrationPage/RegistrationPage.jsx";
-import AddrecipePage from "./pages/AddRecipePage/AddRecipePage.jsx";
-import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
-import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
-import RecipeViewPage from "./pages/RecipeViewPage/RecipeViewPage.jsx";
+
+const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
+const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage.jsx"));
+const RegistrationPage = lazy(() =>
+  import("./pages/RegistrationPage/RegistrationPage.jsx")
+);
+const AddrecipePage = lazy(() =>
+  import("./pages/AddRecipePage/AddRecipePage.jsx")
+);
+const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage.jsx"));
+const RecipeViewPage = lazy(() =>
+  import("./pages/RecipeViewPage/RecipeViewPage.jsx")
+);
+const NotFoundPage = lazy(() =>
+  import("./pages/NotFoundPage/NotFoundPage.jsx")
+);
 
 export default function App() {
   return (
-    <div>
+    <Suspense fallback={<p>Loading...</p>}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/api/auth/login" element={<LoginPage />} />
@@ -21,6 +30,6 @@ export default function App() {
         <Route path="/api/auth/recipe/:recipeId" element={<RecipeViewPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </div>
+    </Suspense>
   );
 }

@@ -1,0 +1,148 @@
+.registerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+  padding: 48px 32px;
+  border-radius: 32px;
+  max-width: 362px;
+  width: 100%;
+  background-color: #faf3e0;
+  box-sizing: border-box;
+  margin: 56px auto 16px auto;
+}
+.header {
+  font-weight: 600;
+  font-size: 32px;
+  text-align: center;
+  margin: 0;
+}
+.text {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.55;
+  text-align: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 298px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 400;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  color: #000000;
+  position: relative;
+}
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+.eyeBtn {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.checkWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  /* gap: 4px; відступ між чекбоксом і помилкою */
+}
+.checkLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  cursor: pointer;
+}
+.checkInput {
+  width: 16px;
+  height: 16px;
+  margin: 4;
+  border: 1.5px solid #595d62;
+  border-radius: 4px;
+  accent-color: #9b6c43;
+}
+
+.input {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px;
+  font-size: 16px;
+  background-color: FFFFFF;
+  transition: border 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+
+  padding-right: 32px;
+}
+
+.input:focus {
+  border: 1.5px solid #d9d9d9;
+  box-shadow: 0 0 0 4px rgba(78, 70, 180, 0.2);
+  outline: none;
+}
+
+.errorInput {
+  border: 1.5px solid #c80000 !important;
+}
+
+.error {
+  color: #c80000;
+  font-size: 12px;
+  margin: 4px;
+}
+
+.button {
+  margin-top: 7px;
+  padding: 8px;
+  font-weight: 600;
+  font-size: 16px;
+  background-color: #9b6c43;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #6d554b;
+}
+
+.button:active {
+  background-color: #6d554b;
+}
+
+.link {
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000000;
+  transition: all 0.3s ease-in-out;
+}
+
+.link:hover {
+  /* background-color: rgba(155, 108, 67, 0.19); */
+  color: #6d554b;
+}

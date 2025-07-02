@@ -1,3 +1,12 @@
+
+import React from "react";
+import { NavLink } from "react-router-dom";
+import css from "./UserMenu.module.css";
+export default function UserMenu() {
+  return (
+    <div>
+      <NavLink className={css.userMenu}>My Profile</NavLink>
+
 import css from "./UserMenu.module.css";
 // import { selectUser } from "../../redux/auth/selectors";
 // import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +30,7 @@ export default function UserMenu() {
       <div className={css.avatarUserMenu}>{firstLetterName(userName)}</div>
       <p>{userName}</p>
       <button className={css.buttonUserMenu}>Log out</button>
+
     </div>
   );
 }

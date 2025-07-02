@@ -10,8 +10,6 @@ export default function UserMenu() {
     return name.split("")[0];
   };
 
-  // console.log(firstLetterName("Max"));
-
   return (
     <div className={css.wrapper}>
       <NavLink className={css.link} to="/api/users/current">

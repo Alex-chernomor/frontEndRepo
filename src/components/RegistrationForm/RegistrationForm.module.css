@@ -40,6 +40,24 @@
   flex-direction: column;
   text-align: left;
   color: #000000;
+  position: relative;
+}
+.inputWrapper {
+  position: relative;
+  width: 100%;
+}
+.eyeBtn {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .checkWrapper {
@@ -74,6 +92,8 @@
   background-color: FFFFFF;
   transition: border 0.2s ease, box-shadow 0.2s ease;
   box-sizing: border-box;
+
+  padding-right: 32px;
 }
 
 .input:focus {

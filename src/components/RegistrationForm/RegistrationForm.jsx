@@ -6,6 +6,8 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import styles from './RegistrationForm.module.css';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
+import { Eye, EyeCrossed } from './Icons';
+import { useState } from 'react';
 
 const initialValues = {
   name: '',
@@ -34,6 +36,15 @@ const getLinkStyles = ({ isActive }) => {
 };
 
 export default function RegistrationForm() {
+  const [passwordEye, setPasswordEye] = useState(false);
+  const [confirmPassEye, setConfirmPassEye] = useState(false);
+
+  const handlePasswordClick = () => {
+    setPasswordEye(!passwordEye);
+  };
+  const handleConfirmPassClick = () => {
+    setConfirmPassEye(!confirmPassEye);
+  };
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
@@ -97,18 +108,29 @@ export default function RegistrationForm() {
           </label>
           <label className={styles.label}>
             Create a strong password
-            <Field name="password">
-              {({ field, meta }) => (
-                <input
-                  {...field}
-                  type="password"
-                  className={clsx(
-                    styles.input,
-                    meta.touched && meta.error && styles.errorInput
-                  )}
-                ></input>
-              )}
-            </Field>
+            <div className={styles.inputWrapper}>
+              <Field name="password">
+                {({ field, meta }) => (
+                  <input
+                    {...field}
+                    type={passwordEye ? 'text' : 'password'}
+                    placeholder="*********"
+                    className={clsx(
+                      styles.input,
+                      meta.touched && meta.error && styles.errorInput
+                    )}
+                  />
+                )}
+              </Field>
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={handlePasswordClick}
+                aria-label={passwordEye ? 'Hide password' : 'Show password'}
+              >
+                {passwordEye ? <EyeCrossed /> : <Eye />}
+              </button>
+            </div>
             <ErrorMessage
               name="password"
               className={styles.error}
@@ -117,18 +139,29 @@ export default function RegistrationForm() {
           </label>
           <label className={styles.label}>
             Repeat your password
-            <Field name="password">
-              {({ field, meta }) => (
-                <input
-                  {...field}
-                  type="password"
-                  className={clsx(
-                    styles.input,
-                    meta.touched && meta.error && styles.errorInput
-                  )}
-                ></input>
-              )}
-            </Field>
+            <div className={styles.inputWrapper}>
+              <Field name="password">
+                {({ field, meta }) => (
+                  <input
+                    {...field}
+                    type={passwordEye ? 'text' : 'password'}
+                    placeholder="*********"
+                    className={clsx(
+                      styles.input,
+                      meta.touched && meta.error && styles.errorInput
+                    )}
+                  />
+                )}
+              </Field>
+              <button
+                type="button"
+                className={styles.eyeBtn}
+                onClick={handlePasswordClick}
+                aria-label={passwordEye ? 'Hide password' : 'Show password'}
+              >
+                {passwordEye ? <EyeCrossed /> : <Eye />}
+              </button>
+            </div>
             <ErrorMessage
               name="password"
               className={styles.error}

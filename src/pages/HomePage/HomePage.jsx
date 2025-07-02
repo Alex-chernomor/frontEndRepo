@@ -8,9 +8,4 @@ export default function HomePage() {
       <Header />
     </div>
   );
-  return (
-    <div>
-      <UserMenu />
-    </div>
-  );
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
+// import { lazy, Suspense, useEffect } from "react";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import LoginPage from "./pages/LoginPage/LoginPage.jsx";
 import RegistrationPage from "./pages/RegistrationPage/RegistrationPage.jsx";

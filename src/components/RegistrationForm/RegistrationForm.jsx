@@ -52,6 +52,7 @@ export default function RegistrationForm() {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
+    // eslint-disable-next-line no-unused-vars
     const { confirmPassword, toggle, ...dataToSend } = values;
     dispatch(register(dataToSend));
     actions.resetForm();

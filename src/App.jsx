@@ -9,6 +9,10 @@ import NotFoundPage from "./pages/NotFoundPage/NotFoundPage.jsx";
 import ProfilePage from "./pages/ProfilePage/ProfilePage.jsx";
 import RecipeViewPage from "./pages/RecipeViewPage/RecipeViewPage.jsx";
 
+import Header from "./sections/Header/Header";
+// import ModalWindow from "./components/ModalWindow/ModalWindow";
+import SearchBox from "./components/SearchBox/SearchBox.jsx";
+import MainTitle from "./components/MainTitle/MainTitle.jsx";
 export default function App() {
   return (
     <div>
@@ -21,6 +25,10 @@ export default function App() {
         <Route path="/api/auth/recipe/:recipeId" element={<RecipeViewPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <Header />
+      {/* <ModalWindow /> */}
+      {/* <MainTitle />
+      <SearchBox onSearch={handleSearch} /> */}
     </div>
   );
 }

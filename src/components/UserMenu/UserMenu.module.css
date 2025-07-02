@@ -1,0 +1,24 @@
+.wrapper {
+  display: flex;
+  background-color: aqua;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarUserMenu {
+  width: 32px;
+  height: 32px;
+  background-color: blue;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+}
+
+.buttonUserMenu {
+  padding: 0;
+  height: 32px;
+}

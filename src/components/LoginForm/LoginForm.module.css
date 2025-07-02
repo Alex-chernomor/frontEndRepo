@@ -1,0 +1,80 @@
+/* Desctope */
+.sectionLoginForm {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: red;
+  height: 100%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 420px;
+}
+
+.wrapperLoginForm {
+  background: #faf3e0;
+
+  border-radius: 32px;
+  padding: 48px 32px;
+}
+
+.logiForm {
+  width: 356px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.titleLoginForm {
+  text-align: center;
+  font-weight: 600;
+  font-size: 32px;
+  margin: 0px 0px 20px 0px;
+}
+
+.label {
+  display: flex;
+  flex-direction: column;
+
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.loginFormField {
+  border: 1px solid #d9d9d9;
+  border-radius: 8px;
+  padding: 8px;
+
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 155%;
+}
+
+.button {
+  background: #9b6c43;
+  border-radius: 8px;
+  padding: 8px;
+  width: 356px;
+  margin-top: 27px;
+
+  color: white;
+}
+
+.descriptionRedirect {
+  text-align: center;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 155%;
+  margin: 20px 0px 0px 0px;
+}
+
+.linkRedirect {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+}

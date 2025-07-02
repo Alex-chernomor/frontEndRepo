@@ -6,6 +6,7 @@ export default function Logo() {
       <svg className={css.icon} width="165" height="46">
         <use href="/sprite.svg#icon-logo" />
       </svg>
+      LOGO
     </a>
   );
 }

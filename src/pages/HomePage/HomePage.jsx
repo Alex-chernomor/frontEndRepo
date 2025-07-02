@@ -1,5 +1,10 @@
 import React from "react";
+import UserMenu from "../../components/UserMenu/UserMenu";
 
 export default function HomePage() {
-  return <div>HomePage</div>;
+  return (
+    <div>
+      <UserMenu />
+    </div>
+  );
 }

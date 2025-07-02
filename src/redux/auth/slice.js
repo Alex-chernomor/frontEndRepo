@@ -9,6 +9,7 @@ const slice = createSlice({
       email: null,
     },
     token: null,
+    error: null,
     isLoggedIn: false,
     isRefreshing: false,
   },
@@ -18,9 +19,14 @@ const slice = createSlice({
         state.isRefreshing = true;
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = action.payload.data;
+        // state.token = action.payload.token;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(register.rejected, (state, action) => {
+        state.isRefreshing = false;
+        state.error = action.payload || 'Registration failed';
       }),
 });
 

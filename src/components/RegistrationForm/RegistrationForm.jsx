@@ -13,6 +13,7 @@ const initialValues = {
   name: '',
   email: '',
   password: '',
+  confirmPassword: '',
   toggle: false,
 };
 const UserSchema = Yup.object().shape({
@@ -28,6 +29,9 @@ const UserSchema = Yup.object().shape({
     .min(8, 'At least 8 characters')
     .max(128, 'At most 128 characters')
     .required('This field is required'),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Please confirm your password'),
   toggle: Yup.boolean().oneOf([true], 'You must agree to continue'),
 });
 
@@ -48,7 +52,8 @@ export default function RegistrationForm() {
   const dispatch = useDispatch();
 
   const handleSubmit = (values, actions) => {
-    dispatch(register(values));
+    const { confirmPassword, toggle, ...dataToSend } = values;
+    dispatch(register(dataToSend));
     actions.resetForm();
   };
   return (
@@ -126,9 +131,9 @@ export default function RegistrationForm() {
                 type="button"
                 className={styles.eyeBtn}
                 onClick={handlePasswordClick}
-                aria-label={passwordEye ? 'Hide password' : 'Show password'}
+                aria-label={passwordEye ? 'Show password' : 'Hide password'}
               >
-                {passwordEye ? <EyeCrossed /> : <Eye />}
+                {passwordEye ? <Eye /> : <EyeCrossed />}
               </button>
             </div>
             <ErrorMessage
@@ -140,11 +145,11 @@ export default function RegistrationForm() {
           <label className={styles.label}>
             Repeat your password
             <div className={styles.inputWrapper}>
-              <Field name="password">
+              <Field name="confirmPassword">
                 {({ field, meta }) => (
                   <input
                     {...field}
-                    type={passwordEye ? 'text' : 'password'}
+                    type={confirmPassEye ? 'text' : 'password'}
                     placeholder="*********"
                     className={clsx(
                       styles.input,
@@ -156,14 +161,14 @@ export default function RegistrationForm() {
               <button
                 type="button"
                 className={styles.eyeBtn}
-                onClick={handlePasswordClick}
-                aria-label={passwordEye ? 'Hide password' : 'Show password'}
+                onClick={handleConfirmPassClick}
+                aria-label={confirmPassEye ? 'Show password' : 'Hide password'}
               >
-                {passwordEye ? <EyeCrossed /> : <Eye />}
+                {confirmPassEye ? <Eye /> : <EyeCrossed />}
               </button>
             </div>
             <ErrorMessage
-              name="password"
+              name="confirmPassword"
               className={styles.error}
               component="span"
             />

@@ -10,9 +10,18 @@ const slice = createSlice({
     },
     token: null,
     isLoggedIn: false,
-    // isRefreshing: false,
+    isRefreshing: false,
   },
-  //   extraReducers: builder => builder.addCase(register),
+  extraReducers: builder =>
+    builder
+      .addCase(register.pending, state => {
+        state.isRefreshing = true;
+      })
+      .addCase(register.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = action.payload.token;
+        state.isLoggedIn = true;
+      }),
 });
 
 export default slice.reducer;

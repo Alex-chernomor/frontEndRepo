@@ -6,7 +6,7 @@ export default function Logo() {
       <svg height="30" width="32">
         <use className={css.icon} href="/logo.svg" />
       </svg>
-      <p>Tasteorama</p>
+      <p className={css.logoTitle}>Tasteorama</p>
     </div>
   );
 }

@@ -1,13 +1,13 @@
 .link {
   font-weight: 600;
-  font-size: 12px;
+  size: 12px;
   color: white;
   text-wrap: nowrap;
 }
 
 .registerButton {
   font-weight: 600;
-  font-size: 16px;
+  size: 16px;
   padding: 12px 16px;
   background-color: #9b6c43;
 

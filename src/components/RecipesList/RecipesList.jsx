@@ -14,19 +14,14 @@ const RecipesList = () => {
   const dispatch = useDispatch();
   const allRecipes = useSelector(selectAllRecipes);
   const isLoading = useSelector(selectIsLoading);
-
   const [visibleCount, setVisibleCount] = useState(RECIPES_PER_PAGE);
-
   useEffect(() => {
     dispatch(fetchRecipes());
   }, [dispatch]);
-
   const handleLoadMore = () => {
     setVisibleCount(prev => prev + RECIPES_PER_PAGE);
   };
-
   const visibleRecipes = allRecipes.slice(0, visibleCount);
-
   return (
     <>
       <div className={css.recipesWrap}>

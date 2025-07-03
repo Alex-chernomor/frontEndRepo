@@ -11,7 +11,7 @@
   align-items: center;
 }
 
-.button {
+.btn {
   flex-shrink: 0;
   font-size: 12px;
   font-weight: 600;
@@ -26,7 +26,7 @@
   text-decoration: none;
 }
 
-.button:hover {
+.btn:hover {
   background-color: #f0f0f0;
 }
 
@@ -35,6 +35,36 @@
   text-decoration: underline;
 }
 
-.button:hover {
-  background-color: #f0f0f0;
+.mobileFilterBtnWrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobileFilterBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #595d62;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.mobileModal {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }

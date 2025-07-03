@@ -1,6 +1,24 @@
-// import { useState } from 'react';
+// import { useState, useEffect } from 'react';
+
 // import Select from 'react-select';
 // import css from './RecipesFilters.module.css';
+
+// const useIsMobile = (breakpoint = 768) => {
+//   const [isMobile, setIsMobile] = useState(
+//     () => window.innerWidth <= breakpoint
+//   );
+
+//   useEffect(() => {
+//     const handleResize = () => {
+//       setIsMobile(window.innerWidth <= breakpoint);
+//     };
+
+//     window.addEventListener('resize', handleResize);
+//     return () => window.removeEventListener('resize', handleResize);
+//   }, [breakpoint]);
+
+//   return isMobile;
+// };
 
 // const customStyles = {
 //   control: provided => ({
@@ -37,8 +55,12 @@
 //   const categories = ['Lunch', 'Dinner'];
 //   const ingredients = ['Eggs', 'Tomatoes'];
 
+//   const isMobile = useIsMobile();
+
 //   const [selectedCategory, setSelectedCategory] = useState(null);
 //   const [selectedIngredient, setSelectedIngredient] = useState(null);
+
+//   const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
 //   const handleReset = () => {
 //     setSelectedCategory(null);
@@ -48,33 +70,87 @@
 //   const hasSelectedFilters = selectedCategory || selectedIngredient;
 
 //   return (
-//     <div className={css.filtersWrapper}>
-//       <div className={css.filtersBox}>
-//         <button
-//           onClick={handleReset}
-//           className={`${css.button} ${hasSelectedFilters ? css.active : ''}`}
-//         >
-//           Reset filters
-//         </button>
-//         <Select
-//           options={categories.map(cat => ({ label: cat, value: cat }))}
-//           value={selectedCategory}
-//           onChange={setSelectedCategory}
-//           placeholder="Category"
-//           isClearable
-//           className={css.select}
-//           styles={customStyles}
-//         />
-//         <Select
-//           options={ingredients.map(ing => ({ label: ing, value: ing }))}
-//           value={selectedIngredient}
-//           onChange={setSelectedIngredient}
-//           placeholder="Ingredient"
-//           isClearable
-//           className={css.select}
-//           styles={customStyles}
-//         />
-//       </div>
+//     <div>
+//       {isMobile ? (
+//         <>
+//           <div className={css.mobileFilterBtnWrap}>
+//             <button
+//               className={css.mobileFilterBtn}
+//               onClick={() => setIsFiltersOpen(true)}
+//             >
+//               <svg className={css.icon}>
+//                 <use href="/sprite.svg#icon-filter" />
+//               </svg>
+//               Filters
+//             </button>
+//           </div>
+
+//           {isFiltersOpen && (
+//             <div className={css.mobileModal}>
+//               <Select
+//                 options={categories.map(cat => ({ label: cat, value: cat }))}
+//                 value={selectedCategory}
+//                 onChange={setSelectedCategory}
+//                 placeholder="Category"
+//                 isClearable
+//                 styles={customStyles}
+//               />
+//               <Select
+//                 options={ingredients.map(ing => ({ label: ing, value: ing }))}
+//                 value={selectedIngredient}
+//                 onChange={setSelectedIngredient}
+//                 placeholder="Ingredient"
+//                 isClearable
+//                 styles={customStyles}
+//               />
+//               <button
+//                 onClick={() => {
+//                   handleReset();
+//                   setIsFiltersOpen(false);
+//                 }}
+//                 className={`${css.btn} ${hasSelectedFilters ? css.active : ''}`}
+//               >
+//                 Reset filters
+//               </button>
+//             </div>
+//           )}
+//         </>
+//       ) : (
+//         <div className={css.filtersWrapper}>
+//           <div className={css.filtersBox}>
+//             <button
+//               onClick={handleReset}
+//               className={`${css.btn} ${hasSelectedFilters ? css.active : ''}`}
+//             >
+//               Reset filters
+//             </button>
+//             <Select
+//               options={categories.map(cat => ({ label: cat, value: cat }))}
+//               value={selectedCategory}
+//               onChange={setSelectedCategory}
+//               placeholder="Category"
+//               isClearable
+//               styles={customStyles}
+//             />
+//             <Select
+//               options={ingredients.map(ing => ({ label: ing, value: ing }))}
+//               value={selectedIngredient}
+//               onChange={setSelectedIngredient}
+//               placeholder="Ingredient"
+//               isClearable
+//               styles={customStyles}
+//             />
+//           </div>
+//         </div>
+//       )}
+
+//       {/* {isLoading ? (
+//         <p>Loading recipes...</p>
+//       ) : recipes.length === 0 ? (
+//         <p className={css.text}>No recipes match your filters.</p>
+//       ) : (
+//         <p className={css.text}>{recipes.length} recipes found.</p>
+//       )} */}
 //     </div>
 //   );
 // };
@@ -94,7 +170,25 @@ import {
   selectFilterOptions,
   selectIsLoading,
 } from '../redux/recipes/selectors';
+
 import css from './RecipesFilters.module.css';
+
+const useIsMobile = (breakpoint = 768) => {
+  const [isMobile, setIsMobile] = useState(
+    () => window.innerWidth <= breakpoint
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= breakpoint);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [breakpoint]);
+
+  return isMobile;
+};
 
 const customStyles = {
   control: provided => ({
@@ -135,6 +229,7 @@ const customStyles = {
 
 const RecipesFilters = () => {
   const dispatch = useDispatch();
+  const isMobile = useIsMobile();
 
   const { ingredients, categories } = useSelector(selectFilterOptions);
   const recipes = useSelector(selectFilteredRecipes);
@@ -142,6 +237,7 @@ const RecipesFilters = () => {
 
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
 
   const hasSelectedFilters = selectedCategory || selectedIngredient;
 
@@ -167,32 +263,76 @@ const RecipesFilters = () => {
 
   return (
     <div>
-      <div className={css.filtersWrapper}>
-        <div className={css.filtersBox}>
+      {isMobile ? (
+        <>
           <button
-            onClick={handleReset}
-            className={`${css.btn} ${hasSelectedFilters ? css.active : ''}`}
+            className={css.mobileFilterBtn}
+            onClick={() => setIsFiltersOpen(true)}
           >
-            Reset filters
+            <svg className={css.icon}>
+              <use href="/sprite.svg#icon-filter" />
+            </svg>
+            Filters
           </button>
-          <Select
-            options={categories.map(cat => ({ label: cat, value: cat }))}
-            value={selectedCategory}
-            onChange={setSelectedCategory}
-            placeholder="Category"
-            isClearable
-            styles={customStyles}
-          />
-          <Select
-            options={ingredients.map(ing => ({ label: ing, value: ing }))}
-            value={selectedIngredient}
-            onChange={setSelectedIngredient}
-            placeholder="Ingredient"
-            isClearable
-            styles={customStyles}
-          />
+
+          {isFiltersOpen && (
+            <div className={css.mobileModal}>
+              <Select
+                options={categories.map(cat => ({ label: cat, value: cat }))}
+                value={selectedCategory}
+                onChange={setSelectedCategory}
+                placeholder="Category"
+                isClearable
+                styles={customStyles}
+              />
+              <Select
+                options={ingredients.map(ing => ({ label: ing, value: ing }))}
+                value={selectedIngredient}
+                onChange={setSelectedIngredient}
+                placeholder="Ingredient"
+                isClearable
+                styles={customStyles}
+              />
+              <button
+                onClick={() => {
+                  handleReset();
+                  setIsFiltersOpen(false);
+                }}
+                className={`${css.btn} ${hasSelectedFilters ? css.active : ''}`}
+              >
+                Reset filters
+              </button>
+            </div>
+          )}
+        </>
+      ) : (
+        <div className={css.filtersWrapper}>
+          <div className={css.filtersBox}>
+            <button
+              onClick={handleReset}
+              className={`${css.btn} ${hasSelectedFilters ? css.active : ''}`}
+            >
+              Reset filters
+            </button>
+            <Select
+              options={categories.map(cat => ({ label: cat, value: cat }))}
+              value={selectedCategory}
+              onChange={setSelectedCategory}
+              placeholder="Category"
+              isClearable
+              styles={customStyles}
+            />
+            <Select
+              options={ingredients.map(ing => ({ label: ing, value: ing }))}
+              value={selectedIngredient}
+              onChange={setSelectedIngredient}
+              placeholder="Ingredient"
+              isClearable
+              styles={customStyles}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       {isLoading ? (
         <p>Loading recipes...</p>

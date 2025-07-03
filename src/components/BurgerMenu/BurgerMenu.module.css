@@ -1,0 +1,22 @@
+.burgerBtn {
+  font-size: 32px;
+  cursor: pointer;
+  display: block;
+}
+
+@media screen and (min-width: 768px) {
+  .burgerBtn {
+    display: none;
+  }
+}
+
+.menu {
+  display: none;
+  list-style: none;
+  padding: 0;
+  margin: 16px 0;
+}
+
+.menu.open {
+  display: block;
+}

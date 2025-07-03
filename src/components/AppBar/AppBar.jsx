@@ -11,3 +11,20 @@ export default function AppBar({ className }) {
     <div className={className}>{isLoggedIn ? <UserMenu /> : <AuthNav />}</div>
   );
 }
+
+// burder-menu-pages
+
+
+import React from "react";
+import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
+
+export default function AppBar() {
+  return (
+    <header>
+      <BurgerMenu />
+    </header>
+  );
+}
+
+
+// burder-menu-pages

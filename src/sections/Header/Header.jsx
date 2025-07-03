@@ -21,3 +21,54 @@ export default function Header() {
     </header>
   );
 }
+
+// burder-menu-pages
+
+// Section header
+// Use LogoComponent, Recipes link, User menu or AuthNav ( {isLoggedIn ? <UserMenu /> : <AuthNav />})
+import Logo from "../../components/Logo/Logo.jsx";
+import { Link, NavLink } from "react-router";
+import clsx from "clsx";
+import css from "./Header.module.css";
+
+import AppBar from "../../components/AppBar/AppBar.jsx";
+
+const getLinkStyles = ({ isActive }) => {
+  return clsx(css.link, isActive && css.active);
+};
+
+export default function Header() {
+  return (
+    <div>
+      <ul>
+        <li>
+          <Link to="/">
+            <Logo />
+          </Link>
+        </li>
+        <li>
+          <NavLink to="/recipes" className={getLinkStyles}>
+            Recipes
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/user/profile" className={getLinkStyles}>
+            My profile
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/add-recipe" className={getLinkStyles}>
+            Add Recipe
+          </NavLink>
+        </li>
+      </ul>
+      {/* <img src="" alt="" /> */}
+      <p>Name</p>
+      <button>Logout</button>
+      <AppBar />
+    </div>
+  );
+}
+
+
+// burder-menu-pages

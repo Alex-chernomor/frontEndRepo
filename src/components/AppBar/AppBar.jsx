@@ -6,11 +6,9 @@ import UserMenu from '../UserMenu/UserMenu';
 import AuthNav from '../AuthNav/AuthNav';
 
 export default function AppBar({ className }) {
-  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoggedIn = false;
+
   return (
-    <header className={className}>
-      <BurgerMenu />
-      <div>{isLoggedIn ? <UserMenu /> : <AuthNav />}</div>
-    </header>
+    <div className={className}>{isLoggedIn ? <UserMenu /> : <AuthNav />}</div>
   );
 }

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { fetchRecipeDetails } from '../../recipesService';
 import Loader from '../../components/Loader/Loader';
 import { ErrorMessage } from 'formik';
+import Header from '../../sections/Header/Header';
 
 export default function RecipeViewPage() {
   const { recipeId } = useParams;
@@ -31,6 +32,7 @@ export default function RecipeViewPage() {
   }, [recipeId]);
   return (
     <>
+      <Header />
       {isLoading && <Loader />}
       {/* ErrorMessage можна якось замінити чи покращити */}
       {error && <ErrorMessage />}

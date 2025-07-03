@@ -1,0 +1,19 @@
+.recipesWrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  max-width: 361px;
+}
+
+@media only screen and (min-width: 768px) {
+  .recipesWrap {
+    max-width: 704px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .recipesWrap {
+    max-width: 1225px;
+  }
+}

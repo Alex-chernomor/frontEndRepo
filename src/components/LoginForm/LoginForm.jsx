@@ -79,7 +79,7 @@ export default function LoginForm() {
                 type="button"
                 className={css.eyeButton}
                 onClick={handlePasswordClick}
-                aria-lable={passwordEye ? "Show password" : "Hide password"}
+                aria-label={passwordEye ? "Show password" : "Hide password"}
               >
                 {passwordEye ? <Eye /> : <EyeCrossed />}
               </button>

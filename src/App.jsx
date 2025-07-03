@@ -22,7 +22,6 @@ const NotFoundPage = lazy(() =>
 export default function App() {
   return (
     <>
-      <RecipeViewPage />
       <Suspense fallback={<p>Loading...</p>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -30,7 +29,7 @@ export default function App() {
           <Route path="/api/auth/register" element={<RegistrationPage />} />
           <Route path="/api/add-recipe" element={<AddrecipePage />} />
           <Route path="/api/user/current" element={<ProfilePage />} />
-          {/* <Route path="/api/recipe/:recipeId" element={<RecipeViewPage />} /> */}
+          <Route path="/api/recipe/:recipeId" element={<RecipeViewPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

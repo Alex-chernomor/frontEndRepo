@@ -1,7 +1,7 @@
-import React from 'react'
+import css from './SectionTitle.module.css';
 
-export default function SectionTitle() {
-  return (
-    <h2>SectionTitle</h2>
-  )
-}
+const SectionTitle = ({ children }) => {
+  return <h2 className={css.title}>{children}</h2>;
+};
+
+export default SectionTitle;

@@ -1,5 +1,15 @@
-import React from "react";
+import RecipesList from '../../components/RecipesList/RecipesList.jsx';
+import RecipesFilters from '../../components/RecipesFilters/RecipesFilters.jsx';
+import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
 
-export default function Recipes() {
-  return <div>Recipes</div>;
-}
+const Recipes = () => {
+  return (
+    <div>
+      <SectionTitle>Recipes</SectionTitle>
+      <RecipesFilters />
+      <RecipesList />
+    </div>
+  );
+};
+
+export default Recipes;

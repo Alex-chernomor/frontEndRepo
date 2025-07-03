@@ -1,9 +1,6 @@
 import { Formik, Form, Field } from "formik";
 import { NavLink } from "react-router-dom";
 
-// import { useDispatch } from "react-redux";
-// import { login } from "../../redux/auth/operations";
-
 import css from "./LoginForm.module.css";
 
 export default function LoginForm() {

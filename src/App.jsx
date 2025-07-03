@@ -25,9 +25,9 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/api/auth/login" element={<LoginPage />} />
         <Route path="/api/auth/register" element={<RegistrationPage />} />
-        <Route path="/api/auth/add-recipe" element={<AddrecipePage />} />
-        <Route path="/api/auth/user/current" element={<ProfilePage />} />
-        <Route path="/api/auth/recipe/:recipeId" element={<RecipeViewPage />} />
+        <Route path="/api/add-recipe" element={<AddrecipePage />} />
+        <Route path="/api/user/current" element={<ProfilePage />} />
+        <Route path="/api/recipe/:recipeId" element={<RecipeViewPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Suspense>

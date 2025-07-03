@@ -6,7 +6,6 @@
 }
 
 .sectionHeader {
-  /* background-color: blue; */
   width: 1440px;
   display: flex;
   justify-content: center;
@@ -15,7 +14,6 @@
 .headerContainer {
   display: flex;
   justify-content: center;
-  /* background-color: red; */
   justify-content: space-between;
   width: 1230px;
 }
@@ -33,7 +31,5 @@
 .appbar {
   display: flex;
   justify-content: center;
-  /* background-color: black; */
-  width: 380px;
   height: auto;
 }

@@ -1,17 +1,6 @@
-
 import React from "react";
 import { NavLink } from "react-router-dom";
 import css from "./UserMenu.module.css";
-export default function UserMenu() {
-  return (
-    <div>
-      <NavLink className={css.userMenu}>My Profile</NavLink>
-
-import css from "./UserMenu.module.css";
-// import { selectUser } from "../../redux/auth/selectors";
-// import { useDispatch, useSelector } from "react-redux";
-// import { logout } from "../../redux/auth/operations";
-import { NavLink } from "react-router-dom";
 
 export default function UserMenu() {
   let userName = "Max";
@@ -20,17 +9,16 @@ export default function UserMenu() {
   };
 
   return (
-    <div className={css.wrapper}>
-      <NavLink className={css.link} to="/api/users/current">
+    <div className={css.container}>
+      <NavLink className={css.link} to="/api/user/current">
         My Profile
       </NavLink>
-      <NavLink className={css.link} to="/api/auth/add-recipe">
+      <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">
         Add Recipe
       </NavLink>
-      <div className={css.avatarUserMenu}>{firstLetterName(userName)}</div>
-      <p>{userName}</p>
+      <div className={css.firstLetter}>{firstLetterName(userName)}</div>
+      <p className={css.userName}>{userName}</p>
       <button className={css.buttonUserMenu}>Log out</button>
-
     </div>
   );
 }

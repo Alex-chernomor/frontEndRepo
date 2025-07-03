@@ -23,6 +23,7 @@ export default function RecipeViewPage() {
         const data = await fetchRecipeDetails(recipeId);
         setRecipe(data);
       } catch (error) {
+        console.error(error.message);
         setError(true);
       } finally {
         setIsLoading(false);

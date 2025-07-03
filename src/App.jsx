@@ -1,6 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import Loader from './components/Loader/Loader.jsx';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage.jsx'));

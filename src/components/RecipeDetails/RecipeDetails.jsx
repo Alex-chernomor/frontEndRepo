@@ -28,8 +28,8 @@ export default function RecipeDetails({
 }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
-  const { recipeId } = useParams();
-  //А може там і userId const { recipeId , userId} = useParams()
+  const { recipeId, userId } = useParams();
+  //А може там і userId const { recipeId , userId} = useParams().Поки так і напишу
   //!А може userId треба брати зі слайсу auth через селектор. Але тоді цей параметр тре там описати
   // const user = useSelector(selectUser);
   // const userId = user?.id;

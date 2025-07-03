@@ -1,5 +1,5 @@
 import styles from './RecipeDescription.module.css';
-import { useIngredients } from '../../context/ingredientsContext';
+import { useIngredients } from '../../context/useIngredients';
 
 const RecipeDescription = ({ description, instructions, ingredients = [] }) => {
   const allIngredients = useIngredients();

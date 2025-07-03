@@ -1,5 +1,5 @@
 // src/context/IngredientsContext.jsx
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
 //створили контекст
@@ -53,9 +53,4 @@ export const IngredientsProvider = ({ children }) => {
       {children}
     </IngredientsContext.Provider>
   );
-};
-
-// Хук для використання
-export const useIngredients = () => {
-  return useContext(IngredientsContext);
 };

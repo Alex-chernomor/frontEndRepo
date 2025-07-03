@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import clsx from "clsx";
 
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { NavLink } from "react-router-dom";
+import CreateLink from "../CreateLink/CreateLink.jsx";
 import { useState } from "react";
 
 import css from "./LoginForm.module.css";
@@ -33,13 +33,9 @@ export default function LoginForm() {
 
   return (
     <div className={css.containerLoginForm}>
-      <h3 className={css.titleLoginForm}>Login</h3>
+      <h2 className={css.titleLoginForm}>Login</h2>
 
-      <Formik
-        initialValues={initialValues}
-        // onSubmit={handleSubmit}
-        validationSchema={UserSchema}
-      >
+      <Formik initialValues={initialValues} validationSchema={UserSchema}>
         <Form className={css.formLoginForm} autoComplete="off">
           <label className={css.labelLoginForm}>
             Enter your email address
@@ -99,7 +95,11 @@ export default function LoginForm() {
 
       <p className={css.descriptionRedirect}>
         Don't have an account?{" "}
-        <NavLink className={css.linkRedirect}>Register</NavLink>
+        <CreateLink
+          className={css.linkRedirect}
+          text="Register"
+          to="/api/auth/register"
+        />
       </p>
     </div>
   );

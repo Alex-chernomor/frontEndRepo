@@ -1,6 +1,4 @@
 import React from "react";
-// import { selectIsLoggedIn } from '../../redux/auth/selectors';
-// import { useSelector } from 'react-redux';
 import UserMenu from "../UserMenu/UserMenu";
 import AuthNav from "../AuthNav/AuthNav";
 

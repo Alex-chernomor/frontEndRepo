@@ -1,8 +1,6 @@
 .link {
   font-weight: 600;
   font-size: 12px;
-
-  margin-right: 32px;
   color: white;
   text-wrap: nowrap;
 }
@@ -17,4 +15,11 @@
   height: 44;
 
   border-radius: 14px;
+}
+
+.navLinkList {
+  display: flex;
+}
+.navLinkList > *:not(:last-child) {
+  margin-right: 32px;
 }

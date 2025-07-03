@@ -14,7 +14,7 @@ export default function Button({
       className={`${css.button} ${css[variant]} ${
         disabled ? css.disabled : ""
       } ${className}`}
-      type = {type}
+      type={type}
       disabled={disabled}
       onClick={onClick}
       {...props}
@@ -23,19 +23,3 @@ export default function Button({
     </button>
   );
 }
-
-
-// import React from "react";
-// import css from "./Button.module.css";
-
-// export default function Button({ children, nameButton, onClick, ...props }) {
-//   return (
-//     <button
-//       onClick={onClick}
-//       className={`${css.button} ${nameButton}`}
-//       {...props}
-//     >
-//       {children}
-//     </button>
-//   );
-// }

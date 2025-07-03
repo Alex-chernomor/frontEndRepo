@@ -7,15 +7,21 @@ export default function AuthNav() {
   return (
     <div>
       <nav>
-        <NavLink to="/api/auth/login" className={css.link}>
-          Log in
-        </NavLink>
-        <NavLink
-          to="/api/auth/register"
-          className={`${css.link} ${css.registerButton}`}
-        >
-          Register
-        </NavLink>
+        <ul className={css.navLinkList}>
+          <li>
+            <NavLink to="/api/auth/login" className={css.link}>
+              Log in
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/api/auth/register"
+              className={`${css.link} ${css.registerButton}`}
+            >
+              Register
+            </NavLink>
+          </li>
+        </ul>
       </nav>
     </div>
   );

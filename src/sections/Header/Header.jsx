@@ -1,8 +1,8 @@
 import React from 'react';
 import Logo from '../../components/Logo/Logo.jsx';
-import { NavLink } from 'react-router-dom';
 import AppBar from '../../components/AppBar/AppBar.jsx';
 import css from './Header.module.css';
+import CreateLink from '../../components/CreateLink/CreateLink.jsx';
 
 export default function Header() {
   return (
@@ -11,9 +11,7 @@ export default function Header() {
         <div className={css.headerContainer}>
           <Logo />
           <nav className={css.navigation}>
-            <NavLink to="/" className={css.reipeLink}>
-              Recipes
-            </NavLink>
+            <CreateLink className={css.reipeLink} text={'Recipe'} to={'/'} />
             <AppBar className={css.appbar} />
           </nav>
         </div>

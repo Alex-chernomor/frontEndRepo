@@ -1,7 +1,7 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { lazy, Suspense } from 'react';
-// import ModalWindow from "./components/ModalWindow/ModalWindow";
+import { lazy, Suspense, useEffect } from 'react';
+import Loader from './components/Loader/Loader.jsx';
 
 const HomePage = lazy(() => import('./pages/HomePage/HomePage.jsx'));
 const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage.jsx'));
@@ -21,18 +21,16 @@ const NotFoundPage = lazy(() =>
 
 export default function App() {
   return (
-    <>
-      <Suspense fallback={<p>Loading...</p>}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/api/auth/login" element={<LoginPage />} />
-          <Route path="/api/auth/register" element={<RegistrationPage />} />
-          <Route path="/api/add-recipe" element={<AddrecipePage />} />
-          <Route path="/api/user/current" element={<ProfilePage />} />
-          <Route path="/api/recipe/:recipeId" element={<RecipeViewPage />} />
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </Suspense>
-    </>
+    <Suspense fallback={<Loader />}>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/api/auth/login" element={<LoginPage />} />
+        <Route path="/api/auth/register" element={<RegistrationPage />} />
+        <Route path="/api/add-recipe" element={<AddrecipePage />} />
+        <Route path="/api/user/current" element={<ProfilePage />} />
+        <Route path="/api/recipe/:recipeId" element={<RecipeViewPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   );
 }

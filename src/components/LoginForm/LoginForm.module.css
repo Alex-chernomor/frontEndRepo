@@ -7,13 +7,14 @@
   padding: 48px 32px;
   border-radius: 32px;
   max-width: 362px;
-  width: 100%;
+  width: 420px;
   background-color: #faf3e0;
   box-sizing: border-box;
   margin: 56px auto 16px auto;
 }
 
 .titleLoginForm {
+  color: #000000;
   font-weight: 600;
   font-size: 32px;
   text-align: center;
@@ -39,6 +40,7 @@
 }
 
 .fieldLoginForm {
+  color: #000000;
   border: 1px solid #d9d9d9;
   border-radius: 8px;
   width: 100%;
@@ -99,6 +101,7 @@
 }
 
 .descriptionRedirect {
+  color: #000000;
   font-size: 16px;
   line-height: 1.55;
   text-align: center;

@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function SectionTitle() {
+export default function SectionTitle({ children, className = '' }) {
   return (
-    <h2>SectionTitle</h2>
-  )
+    <h2 className={`${styles.title} ${className}`}>
+      {children}
+    </h2>
+  );
 }

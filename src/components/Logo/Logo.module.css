@@ -6,8 +6,19 @@
 }
 
 .icon {
+  margin-top: 8px;
   display: block;
-  width: 165px;
+  width: 32px;
   height: 46px;
   fill: currentColor;
+}
+
+.logo {
+  display: flex;
+  align-content: center;
+}
+
+.container {
+  justify-content: center;
+  align-items: center;
 }

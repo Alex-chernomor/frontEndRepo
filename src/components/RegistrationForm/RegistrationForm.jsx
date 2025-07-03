@@ -6,7 +6,7 @@ import { Field, Form, Formik, ErrorMessage } from 'formik';
 import styles from './RegistrationForm.module.css';
 import { NavLink } from 'react-router-dom';
 import clsx from 'clsx';
-import { Eye, EyeCrossed } from './Icons';
+import { Eye, EyeCrossed } from '../Icons/Icons';
 import { useState } from 'react';
 
 const initialValues = {

@@ -1,30 +1,16 @@
-import React from "react";
-// import { selectIsLoggedIn } from '../../redux/auth/selectors';
-// import { useSelector } from 'react-redux';
-import UserMenu from "../UserMenu/UserMenu";
-import AuthNav from "../AuthNav/AuthNav";
+import React from 'react';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { useSelector } from 'react-redux';
+import BurgerMenu from '../BurgerMenu/BurgerMenu';
+import UserMenu from '../UserMenu/UserMenu';
+import AuthNav from '../AuthNav/AuthNav';
 
 export default function AppBar({ className }) {
-  const isLoggedIn = true;
-
+  const isLoggedIn = useSelector(selectIsLoggedIn);
   return (
-    <div className={className}>{isLoggedIn ? <UserMenu /> : <AuthNav />}</div>
-  );
-}
-
-// burder-menu-pages
-
-
-import React from "react";
-import BurgerMenu from "../BurgerMenu/BurgerMenu.jsx";
-
-export default function AppBar() {
-  return (
-    <header>
+    <header className={className}>
       <BurgerMenu />
+      <div>{isLoggedIn ? <UserMenu /> : <AuthNav />}</div>
     </header>
   );
 }
-
-
-// burder-menu-pages

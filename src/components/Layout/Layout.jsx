@@ -1,5 +1,10 @@
-import React from "react";
+import AppBar from "../AppBar/AppBar";
 
-export default function Layout() {
-  return <div>Layout</div>;
+export default function Layout({ children }) {
+  return (
+    <div>
+      <AppBar />
+      {children}
+    </div>
+  );
 }

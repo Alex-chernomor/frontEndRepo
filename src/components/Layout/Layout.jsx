@@ -4,10 +4,11 @@ import Header from "../../sections/Header/Header.jsx";
 
 export default function Layout({ children }) {
   return (
-    <div>
+    <>
       <Header />
+      {/* <main id="main">{children}</main> */}
       <Outlet children={children} />
       <Footer />
-    </div>
+    </>
   );
 }

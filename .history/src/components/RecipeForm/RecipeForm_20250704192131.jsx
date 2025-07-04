@@ -221,7 +221,6 @@ export default function RecipeForm({ onAdd }) {
                       />
                     </div>
                     <button
-                      className={css.addIngredient}
                       type="button"
                       onClick={() => {
                         if (values.ingredientName && values.ingredientAmount) {

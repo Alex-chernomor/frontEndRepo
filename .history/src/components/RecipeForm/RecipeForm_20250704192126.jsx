@@ -93,7 +93,7 @@ export default function RecipeForm({ onAdd }) {
         <div className={css.formWrapper}>
           <h2 className={css.sectionTitle}>Add Recipe</h2>
           <Form className={css.formRecipe}>
-            <div className="css.order1">
+            <div className="css.order-1">
               <p className={css.uploadPhoto}>Upload Photo</p>
               <div
                 className={css.photoContainer}
@@ -221,7 +221,6 @@ export default function RecipeForm({ onAdd }) {
                       />
                     </div>
                     <button
-                      className={css.addIngredient}
                       type="button"
                       onClick={() => {
                         if (values.ingredientName && values.ingredientAmount) {

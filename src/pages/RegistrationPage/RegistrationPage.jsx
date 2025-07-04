@@ -7,7 +7,7 @@ export default function RegistrationPage() {
   return (
     <>
       {/* <Header /> */}
-      {/* <RegistrathhionForm /> */}
+      <RegistrationForm />
     </>
   );
 }

@@ -1,0 +1,29 @@
+.thumb {
+  border-radius: 8px;
+  max-width: 361px;
+  /* background-size: cover; */
+  background-color: #faf3e0;
+  overflow: hidden;
+  margin: 32px auto;
+}
+.img {
+  display: block;
+  width: 100%;
+  height: 276px;
+  margin: auto auto;
+}
+
+@media screen and (min-width: 768px) {
+  .thumb {
+    max-width: 704px;
+  }
+  .img {
+    height: 624px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .thumb {
+    max-width: 1225px;
+  }
+}

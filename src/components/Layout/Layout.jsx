@@ -8,3 +8,13 @@ export default function Layout({ children }) {
     </div>
   );
 }
+
+// export default function Layout() {
+//   return (
+//     <>
+//       <Header />
+//         <Main />
+//       <Footer />
+//     </>
+//   );
+// }

@@ -1,0 +1,70 @@
+.filtersWrapper {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.filtersBox {
+  width: 480px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 24px;
+  align-items: center;
+}
+
+.btn {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  height: 33px;
+  border-radius: 4px;
+  border: 1px solid #d9d9d9;
+  background-color: white;
+  cursor: pointer;
+  color: #595d62;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background-color: #f0f0f0;
+}
+
+.active {
+  color: #000;
+  text-decoration: underline;
+}
+
+.mobileFilterBtnWrap {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobileFilterBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #595d62;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  fill: currentColor;
+}
+
+.mobileModal {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

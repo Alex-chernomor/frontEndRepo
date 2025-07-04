@@ -1,6 +1,7 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
+import Loader from "./components/Loader/Loader.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage.jsx"));
@@ -20,7 +21,7 @@ const NotFoundPage = lazy(() =>
 
 export default function App() {
   return (
-    <Suspense fallback={<p>Loading...</p>}>
+    <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/api/auth/login" element={<LoginPage />} />
@@ -33,43 +34,3 @@ export default function App() {
     </Suspense>
   );
 }
-
-// burder-menu-pages
-
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Header from "./sections/Header/Header";
-import { Hero } from "./components/Hero/Hero";
-// import ModalWindow from "./components/ModalWindow/ModalWindow";
-
-import HomePage from "./pages/HomePage/HomePage";
-import RecipeViewPage from "./pages/RecipeViewPage/RecipeViewPage";
-import ProfilePage from "./pages/ProfilePage/ProfilePage";
-import RegistrationPage from "./pages/RegistrationPage/RegistrationPage";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
-import AddRecipePage from "./pages/AddRecipePage/AddRecipePage";
-
-export default function App() {
-  return (
-    <div>
-      {/* <Header /> */}
-      <Hero />
-    <>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/recipes/:id" element={<RecipeViewPage />} />
-        <Route path="/profile/:recipeType" element={<ProfilePage />} />
-        <Route path="/auth/register" element={<RegistrationPage />} />
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/add-recipe" element={<AddRecipePage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      {/* <ModalWindow /> */}
-    </>
-  );
-}
-
-
-// burder-menu-pages

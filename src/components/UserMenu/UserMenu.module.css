@@ -5,12 +5,17 @@
   align-items: center;
 }
 .link {
+  font-weight: 600;
+  font-size: 12px;
+
   margin-right: 32px;
   color: white;
   text-wrap: nowrap;
 }
 
 .addButton {
+  font-weight: 600;
+  font-size: 16px;
   padding: 12px 16px;
   background-color: #9b6c43;
 
@@ -28,6 +33,10 @@
   justify-content: center;
   align-items: center;
 
+  font-weight: 600;
+  font-size: 12px;
+  color: #ffffff;
+
   margin-right: 8px;
   width: 32px;
   height: 32px;
@@ -38,11 +47,28 @@
 }
 
 .buttonUserMenu {
-  padding: 0;
-  height: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  background-color: #3a1f18;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease;
+  color: white; /* керує кольором іконки */
+}
+
+.buttonUserMenu:hover {
+  background-color: #5a2e22;
+  color: #ffaa88; /* змінює колір stroke SVG при hover */
 }
 
 .userName {
   /* display: block; */
   margin-right: 15px;
+  font-weight: 600;
+  font-size: 12px;
+  color: #ffffff;
 }

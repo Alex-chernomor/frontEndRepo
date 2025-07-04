@@ -1,5 +1,9 @@
-import React from "react";
+import Header from "../../sections/Header/Header";
 
 export default function RecipeViewPage() {
-  return <div>RecipeViewPage</div>;
+  return (
+    <>
+      <Header />
+    </>
+  );
 }

@@ -1,8 +1,9 @@
 import React from "react";
-import css from "./SearchBox.module.css";
 import { Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 import Button from "../Button/Button";
+import css from "./SearchBox.module.css";
+
 export default function SearchBox({ onSearch }) {
   return (
     <>
@@ -26,7 +27,7 @@ export default function SearchBox({ onSearch }) {
             autoFocus
             placeholder="Search recipes"
           />
-          <Button nameButton={css.button} type="submit">
+          <Button className={css.button} type="submit">
             Search
           </Button>
         </Form>

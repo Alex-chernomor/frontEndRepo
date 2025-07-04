@@ -1,10 +1,12 @@
-import AppBar from "../AppBar/AppBar";
+import Footer from "../../sections/Footer/Footer.jsx";
+import Header from "../../sections/Header/Header.jsx";
 
 export default function Layout({ children }) {
   return (
     <div>
-      <AppBar />
+      <Header />
       {children}
+      <Footer />
     </div>
   );
 }

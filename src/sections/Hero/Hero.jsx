@@ -1,8 +1,16 @@
-import React from 'react'
-// Use mainTitle, searchBox and button
+import MainTitle from "../../components/MainTitle/MainTitle";
+import SearchBox from "../../components/SearchBox/SearchBox";
+import css from "./Hero.module.css";
 
-export default function Hero() {
+const Hero = () => {
   return (
-    <div>Hero</div>
-  )
-}
+    <section className={css.hero}>
+      <div className={css.container}>
+        <MainTitle />
+        <SearchBox />
+      </div>
+    </section>
+  );
+};
+
+export default Hero;

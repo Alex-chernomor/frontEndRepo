@@ -3,10 +3,10 @@ import Header from "../../sections/Header/Header.jsx";
 
 export default function Layout({ children }) {
   return (
-    <div>
+    <>
       <Header />
-      {children}
+      <main id="main">{children}</main>
       <Footer />
-    </div>
+    </>
   );
 }

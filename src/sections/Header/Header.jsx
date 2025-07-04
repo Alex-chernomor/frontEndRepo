@@ -11,7 +11,11 @@ export default function Header() {
         <div className={css.headerContainer}>
           <Logo />
           <nav className={css.navigation}>
-            <CreateLink className={css.reipeLink} text={"Recipe"} to={"/"} />
+            <CreateLink
+              className={css.reipeLink}
+              text={"Recipe"}
+              to={"/add-recipe"}
+            />
             <AppBar className={css.appbar} />
           </nav>
         </div>

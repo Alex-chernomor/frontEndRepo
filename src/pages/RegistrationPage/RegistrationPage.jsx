@@ -6,8 +6,8 @@ import Loader from "../../components/Loader/Loader";
 export default function RegistrationPage() {
   return (
     <>
-      <Header />
-      {/* <RegistrationForm /> */}
+      {/* <Header /> */}
+      {/* <RegistrathhionForm /> */}
     </>
   );
 }

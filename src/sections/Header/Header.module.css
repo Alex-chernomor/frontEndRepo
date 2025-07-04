@@ -1,7 +1,9 @@
 .header {
   background: #3d2218;
   width: 100%;
+  height: 74px;
   display: flex;
+  align-items: center;
   justify-content: center;
 }
 

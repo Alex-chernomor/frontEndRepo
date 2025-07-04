@@ -5,8 +5,8 @@ import Hero from "../../sections/Hero/Hero.jsx";
 export default function HomePage() {
   return (
     <div>
-      <Header />
       <Hero />
       {/* <Recipes /> */}
     </div>
   );
+}

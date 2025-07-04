@@ -1,9 +1,5 @@
 import Header from "../../sections/Header/Header";
 
 export default function RecipeViewPage() {
-  return (
-    <>
-      <Header />
-    </>
-  );
+  return <>Recipe view page</>;
 }

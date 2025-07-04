@@ -6,8 +6,8 @@ const Recipes = () => {
   return (
     <div>
       {/* <SectionTitle>Recipes</SectionTitle> */}
-      {/* <RecipesFilters /> */}
-      <RecipesList />
+      <RecipesFilters />
+      {/* <RecipesList /> */}
     </div>
   );
 };

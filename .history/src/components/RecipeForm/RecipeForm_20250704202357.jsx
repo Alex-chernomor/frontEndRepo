@@ -59,6 +59,7 @@ export default function RecipeForm({ onAdd }) {
       }}
       validationSchema={RecipeSchema}
       onSubmit={(values) => {
+        console.log(values);
         const formData = new FormData();
         formData.append("title", values.title);
         formData.append("description", values.description);

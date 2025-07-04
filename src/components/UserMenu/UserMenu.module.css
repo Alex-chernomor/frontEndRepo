@@ -6,7 +6,7 @@
 }
 .link {
   font-weight: 600;
-  font-size: 12px;
+  size: 12px;
 
   margin-right: 32px;
   color: white;
@@ -15,7 +15,7 @@
 
 .addButton {
   font-weight: 600;
-  font-size: 16px;
+  size: 16px;
   padding: 12px 16px;
   background-color: #9b6c43;
 
@@ -66,9 +66,8 @@
 }
 
 .userName {
-  /* display: block; */
   margin-right: 15px;
   font-weight: 600;
-  font-size: 12px;
+  size: 12px;
   color: #ffffff;
 }

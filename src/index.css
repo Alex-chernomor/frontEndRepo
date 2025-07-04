@@ -4,7 +4,7 @@
   flex-direction: column;
 }
 
-#outlet {
+#main {
   flex-grow: 1;
 }
 

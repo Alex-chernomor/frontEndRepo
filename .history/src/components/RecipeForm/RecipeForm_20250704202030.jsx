@@ -69,6 +69,7 @@ export default function RecipeForm({ onAdd }) {
         formData.append("photo", values.photo);
         formData.append("ingredients", JSON.stringify(values.ingredients));
 
+        console.log(formData);
         onAdd(formData);
       }}
     >

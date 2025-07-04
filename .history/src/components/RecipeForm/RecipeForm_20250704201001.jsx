@@ -9,14 +9,14 @@ const RecipeSchema = Yup.object().shape({
   cookingTime: Yup.number().positive("Must be positive").required("Required"),
   calories: Yup.string().required("Required"),
   category: Yup.string().required("Required"),
-  // ingredients: Yup.array().of(
-  //   Yup.object().shape({
-  //     name: Yup.string().required("Required"),
-  //     amount: Yup.string().required("Required"),
-  //   })
-  // ),
+  ingredients: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string().required("Required"),
+      amount: Yup.string().required("Required"),
+    })
+  ),
   instructions: Yup.string().required("Required"),
-  // photo: Yup.mixed().required("Required"),
+  photo: Yup.mixed().required("Required"),
 });
 
 export default function RecipeForm({ onAdd }) {
@@ -59,17 +59,12 @@ export default function RecipeForm({ onAdd }) {
       }}
       validationSchema={RecipeSchema}
       onSubmit={(values) => {
-        const formData = new FormData();
-        formData.append("title", values.title);
-        formData.append("description", values.description);
-        formData.append("cookingTime", values.cookingTime);
-        formData.append("calories", values.calories);
-        formData.append("category", values.category);
-        formData.append("instructions", values.instructions);
-        formData.append("photo", values.photo);
-        formData.append("ingredients", JSON.stringify(values.ingredients));
-
-        onAdd(formData);
+        const dataToSubmit = {
+          ...values,
+          ingredients: values.ingredients.map((i) => ({ ...i })),
+        };
+        console.log(dataToSubmit);
+        // onAdd(dataToSubmit); // если нужен вызов callback
       }}
     >
       {({ values, setFieldValue }) => (
@@ -81,8 +76,8 @@ export default function RecipeForm({ onAdd }) {
               <div
                 className={css.photoContainer}
                 onClick={handleClick}
-                onDrop={(e) => handleDrop(e, setFieldValue)}
-                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
               >
                 <svg
                   width="82"

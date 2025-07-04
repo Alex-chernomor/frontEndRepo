@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { Field, Form, Formik, ErrorMessage, FieldArray } from "formik";
 import css from "./RecipeForm.module.css";
 import * as Yup from "yup";
@@ -9,40 +9,19 @@ const RecipeSchema = Yup.object().shape({
   cookingTime: Yup.number().positive("Must be positive").required("Required"),
   calories: Yup.string().required("Required"),
   category: Yup.string().required("Required"),
-  // ingredients: Yup.array().of(
-  //   Yup.object().shape({
-  //     name: Yup.string().required("Required"),
-  //     amount: Yup.string().required("Required"),
-  //   })
-  // ),
+  ingredients: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string().required("Required"),
+      amount: Yup.string().required("Required"),
+    })
+  ),
   instructions: Yup.string().required("Required"),
-  // photo: Yup.mixed().required("Required"),
+  photo: Yup.mixed().nullable(),
 });
 
 export default function RecipeForm({ onAdd }) {
   const [preview, setPreview] = useState(null);
-  const fileInputRef = useRef(null);
 
-  const handleDrop = (event, setFieldValue) => {
-    event.preventDefault();
-    const file = event.dataTransfer.files[0];
-    if (file) {
-      setFieldValue("photo", file);
-      setPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleFileChange = (event, setFieldValue) => {
-    const file = event.currentTarget.files[0];
-    if (file) {
-      setFieldValue("photo", file);
-      setPreview(URL.createObjectURL(file));
-    }
-  };
-
-  const handleClick = () => {
-    fileInputRef.current.click();
-  };
   return (
     <Formik
       initialValues={{
@@ -59,57 +38,31 @@ export default function RecipeForm({ onAdd }) {
       }}
       validationSchema={RecipeSchema}
       onSubmit={(values) => {
-        const formData = new FormData();
-        formData.append("title", values.title);
-        formData.append("description", values.description);
-        formData.append("cookingTime", values.cookingTime);
-        formData.append("calories", values.calories);
-        formData.append("category", values.category);
-        formData.append("instructions", values.instructions);
-        formData.append("photo", values.photo);
-        formData.append("ingredients", JSON.stringify(values.ingredients));
-
-        onAdd(formData);
+        const dataToSubmit = {
+          ...values,
+          ingredients: values.ingredients.map((i) => ({ ...i })),
+        };
+        console.log(dataToSubmit);
+        // onAdd(dataToSubmit); // если нужен вызов callback
       }}
     >
       {({ values, setFieldValue }) => (
-        <div className={css.formWrapper}>
+        <div>
           <h2 className={css.sectionTitle}>Add Recipe</h2>
-          <Form className={css.formRecipe}>
-            <div className={css.order1}>
-              <p className={css.uploadPhoto}>Upload Photo</p>
-              <div
-                className={css.photoContainer}
-                onClick={handleClick}
-                onDrop={(e) => handleDrop(e, setFieldValue)}
-                onDragOver={(e) => e.preventDefault()}
-              >
-                <svg
-                  width="82"
-                  height="82"
-                  viewBox="0 0 82 82"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M50.363 44.7452C50.363 49.9162 46.171 54.1082 41 54.1082C35.829 54.1082 31.637 49.9162 31.637 44.7452C31.637 39.5741 35.829 35.3822 41 35.3822C46.171 35.3822 50.363 39.5741 50.363 44.7452Z"
-                    stroke="#070707"
-                    stroke-width="2.5625"
-                  />
-                  <path
-                    d="M16.6563 57.6562L16.6563 34.8358C16.6563 31.0007 19.7652 27.8918 23.6002 27.8918C26.2304 27.8918 28.6348 26.4058 29.8111 24.0533L31.3848 20.9058C32.687 18.3014 35.3489 16.6562 38.2608 16.6563L43.7393 16.6563C46.6511 16.6563 49.313 18.3014 50.6152 20.9058L52.1889 24.0533C53.3652 26.4058 55.7696 27.8919 58.3998 27.8919C62.2348 27.8919 65.3438 31.0008 65.3438 34.8358V57.6562C65.3438 61.9019 61.9019 65.3437 57.6563 65.3437H24.3437C20.0981 65.3437 16.6562 61.9019 16.6563 57.6562Z"
-                    stroke="#070707"
-                    stroke-width="2.5625"
-                  />
-                </svg>
+          <Form className={css.formWrapper}>
+            <div className={css.leftColumn}>
+              <div className={css.rightColumn}>
+                <p className={css.uploadPhoto}>Upload Photo</p>
                 <input
                   name="photo"
                   type="file"
                   accept="image/*"
                   className={css.uploadImage}
-                  ref={fileInputRef}
-                  onChange={handleFileChange}
-                  hidden
+                  onChange={(event) => {
+                    const file = event.currentTarget.files[0];
+                    setFieldValue("photo", file);
+                    setPreview(URL.createObjectURL(file));
+                  }}
                 />
                 {preview && (
                   <img
@@ -119,8 +72,7 @@ export default function RecipeForm({ onAdd }) {
                   />
                 )}
               </div>
-            </div>
-            <div>
+
               <p className={css.generalInfo}>General Information</p>
 
               <div>
@@ -204,7 +156,6 @@ export default function RecipeForm({ onAdd }) {
                       />
                     </div>
                     <button
-                      className={css.addIngredient}
                       type="button"
                       onClick={() => {
                         if (values.ingredientName && values.ingredientAmount) {
@@ -252,11 +203,11 @@ export default function RecipeForm({ onAdd }) {
                   className={css.error}
                 />
               </div>
-
-              <button type="submit" className={css.submitBtn}>
-                Publish Recipe
-              </button>
             </div>
+
+            <button type="submit" className={css.submitBtn}>
+              Publish Recipe
+            </button>
           </Form>
         </div>
       )}

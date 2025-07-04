@@ -59,6 +59,7 @@ export default function RecipeForm({ onAdd }) {
       }}
       validationSchema={RecipeSchema}
       onSubmit={(values) => {
+        console.log(values);
         const formData = new FormData();
         formData.append("title", values.title);
         formData.append("description", values.description);
@@ -69,6 +70,7 @@ export default function RecipeForm({ onAdd }) {
         formData.append("photo", values.photo);
         formData.append("ingredients", JSON.stringify(values.ingredients));
 
+        console.log([...formData.entries()]);
         onAdd(formData);
       }}
     >

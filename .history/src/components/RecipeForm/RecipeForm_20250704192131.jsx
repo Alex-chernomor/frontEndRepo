@@ -1,5 +1,12 @@
 import React, { useState, useRef } from "react";
-import { Field, Form, Formik, ErrorMessage, FieldArray } from "formik";
+import {
+  Field,
+  Form,
+  Formik,
+  ErrorMessage,
+  FieldArray,
+  useFormik,
+} from "formik";
 import css from "./RecipeForm.module.css";
 import * as Yup from "yup";
 
@@ -9,40 +16,55 @@ const RecipeSchema = Yup.object().shape({
   cookingTime: Yup.number().positive("Must be positive").required("Required"),
   calories: Yup.string().required("Required"),
   category: Yup.string().required("Required"),
-  // ingredients: Yup.array().of(
-  //   Yup.object().shape({
-  //     name: Yup.string().required("Required"),
-  //     amount: Yup.string().required("Required"),
-  //   })
-  // ),
+  ingredients: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string().required("Required"),
+      amount: Yup.string().required("Required"),
+    })
+  ),
   instructions: Yup.string().required("Required"),
-  // photo: Yup.mixed().required("Required"),
+  photo: Yup.mixed().nullable(),
 });
 
 export default function RecipeForm({ onAdd }) {
   const [preview, setPreview] = useState(null);
   const fileInputRef = useRef(null);
 
-  const handleDrop = (event, setFieldValue) => {
+  const formik = useFormik({
+    initialValues: {
+      file: null,
+    },
+    onSubmit: (values) => {
+      console.log("Submitted file:", values.file);
+      // Handle file upload here
+    },
+  });
+
+  const handleDrop = (event) => {
     event.preventDefault();
+    event.stopPropagation();
     const file = event.dataTransfer.files[0];
     if (file) {
-      setFieldValue("photo", file);
-      setPreview(URL.createObjectURL(file));
+      formik.setFieldValue("file", file);
     }
   };
 
-  const handleFileChange = (event, setFieldValue) => {
-    const file = event.currentTarget.files[0];
-    if (file) {
-      setFieldValue("photo", file);
-      setPreview(URL.createObjectURL(file));
-    }
+  const handleDragOver = (event) => {
+    event.preventDefault();
+    event.stopPropagation();
   };
 
   const handleClick = () => {
     fileInputRef.current.click();
   };
+
+  const handleFileChange = (event) => {
+    const file = event.currentTarget.files[0];
+    if (file) {
+      formik.setFieldValue("file", file);
+    }
+  };
+
   return (
     <Formik
       initialValues={{
@@ -59,30 +81,25 @@ export default function RecipeForm({ onAdd }) {
       }}
       validationSchema={RecipeSchema}
       onSubmit={(values) => {
-        const formData = new FormData();
-        formData.append("title", values.title);
-        formData.append("description", values.description);
-        formData.append("cookingTime", values.cookingTime);
-        formData.append("calories", values.calories);
-        formData.append("category", values.category);
-        formData.append("instructions", values.instructions);
-        formData.append("photo", values.photo);
-        formData.append("ingredients", JSON.stringify(values.ingredients));
-
-        onAdd(formData);
+        const dataToSubmit = {
+          ...values,
+          ingredients: values.ingredients.map((i) => ({ ...i })),
+        };
+        console.log(dataToSubmit);
+        // onAdd(dataToSubmit); // если нужен вызов callback
       }}
     >
       {({ values, setFieldValue }) => (
         <div className={css.formWrapper}>
           <h2 className={css.sectionTitle}>Add Recipe</h2>
           <Form className={css.formRecipe}>
-            <div className={css.order1}>
+            <div className="css.order1">
               <p className={css.uploadPhoto}>Upload Photo</p>
               <div
                 className={css.photoContainer}
                 onClick={handleClick}
-                onDrop={(e) => handleDrop(e, setFieldValue)}
-                onDragOver={(e) => e.preventDefault()}
+                onDrop={handleDrop}
+                onDragOver={handleDragOver}
               >
                 <svg
                   width="82"
@@ -204,7 +221,6 @@ export default function RecipeForm({ onAdd }) {
                       />
                     </div>
                     <button
-                      className={css.addIngredient}
                       type="button"
                       onClick={() => {
                         if (values.ingredientName && values.ingredientAmount) {

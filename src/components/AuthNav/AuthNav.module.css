@@ -1,0 +1,25 @@
+.link {
+  font-weight: 600;
+  size: 12px;
+  color: white;
+  text-wrap: nowrap;
+}
+
+.registerButton {
+  font-weight: 600;
+  size: 16px;
+  padding: 12px 16px;
+  background-color: #9b6c43;
+
+  width: 132;
+  height: 44;
+
+  border-radius: 14px;
+}
+
+.navLinkList {
+  display: flex;
+}
+.navLinkList > *:not(:last-child) {
+  margin-right: 32px;
+}

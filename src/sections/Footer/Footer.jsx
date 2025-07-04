@@ -1,7 +1,17 @@
-export default function Footer() {
+import Logo from "../../components/Logo/Logo";
+import FooterNav from "../../components/FooterNav/FooterNav";
+import css from "./Footer.module.css";
 
-// use logo component, <p>2025 CookingCompanion. All rights reserved.</p>, recipes link and account link
+export default function Footer() {
   return (
-    <div>Footer</div>
-  )
+    <footer className={css.footer}>
+      <div className={`container ${css.footerContainer}`}>
+        <Logo />
+        <p className={css.footerText}>
+          2025 CookingCompanion. All rights reserved.
+        </p>
+        <FooterNav />
+      </div>
+    </footer>
+  );
 }

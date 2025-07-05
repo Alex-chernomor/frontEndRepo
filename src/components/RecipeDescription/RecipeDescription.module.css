@@ -1,7 +1,9 @@
-sectionContainer {
+.sectionList {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   max-width: 361px;
+  width: 100%;
   gap: 40px;
 }
 .container {
@@ -23,12 +25,12 @@ sectionContainer {
 }
 
 @media screen and (min-width: 768px) {
-  .sectionContainer {
+  .sectionList {
     max-width: 704px;
   }
 }
 @media screen and (min-width: 1440px) {
-  .sectionContainer {
+  .sectionList {
     max-width: 808px;
   }
 }

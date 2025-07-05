@@ -13,8 +13,8 @@ export default function Header() {
           <nav className={css.navigation}>
             <CreateLink
               className={css.reipeLink}
-              text={"Recipe"}
-              to={"/add-recipe"}
+              text={"Recipes"}
+              to={"/"}
             />
             <AppBar className={css.appbar} />
           </nav>

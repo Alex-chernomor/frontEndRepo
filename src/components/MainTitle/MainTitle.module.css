@@ -1,0 +1,14 @@
+.heroTitle {
+  font-weight: 600;
+  font-size: 40px;
+  color: #fff;
+  margin-bottom: 24px;
+}
+
+@media screen and (min-width: 768px) {
+  .heroTitle {
+    max-width: 493px;
+    font-size: 48px;
+    line-height: 1.1;
+  }
+}

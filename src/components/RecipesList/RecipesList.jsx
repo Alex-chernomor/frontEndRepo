@@ -1,3 +1,4 @@
+import Button from '../Button/Button.jsx';
 import css from './RecipesList.module.css';
 
 const RecipesList = () => {
@@ -18,6 +19,9 @@ const RecipesList = () => {
           <li>recipe11</li>
           <li>recipe12</li>
         </ul>
+        <Button className={css.btn} type="button">
+          Load More
+        </Button>
       </div>
     </>
   );

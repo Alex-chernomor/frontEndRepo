@@ -1,5 +1,6 @@
 .footer {
   background-color: #3d2218;
+  padding-inline: 108px;
 }
 
 .footerContainer {
@@ -9,6 +10,9 @@
   align-items: center;
   gap: 32px;
   padding-block: 24px;
+  width: 100%;
+  max-width: 1224px;
+  margin-inline: auto;
 }
 
 .footerText {

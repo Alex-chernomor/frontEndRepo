@@ -1,5 +1,12 @@
-import React from "react";
 
-export default function RecipeInfo() {
-  return <div>RecipeInfo</div>;
-}
+import RecipeDetails from '../../components/RecipeDetails/RecipeDetails';
+
+const RecipeInfo = ({ recipe }) => {
+  return (
+    <div>
+      <RecipeDetails {...recipe} />
+    </div>
+  );
+};
+
+export default RecipeInfo;

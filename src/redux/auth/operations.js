@@ -1,9 +1,17 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-const setAuthHeader = (value) => {
-  axios.defaults.headers.common.Authorization = value;
-};
+
+// const setAuthHeader = (value) => {
+//   axios.defaults.headers.common.Authorization = value;
+// };
+
+// const setAuthHeader = value => {
+//   axios.defaults.headers.common.Authorization = value;
+// };
+
+axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
+
 
 export const register = createAsyncThunk(
   "api/auth/register",

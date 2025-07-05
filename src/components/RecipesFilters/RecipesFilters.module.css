@@ -1,14 +1,23 @@
-.filtersWrapper {
+.filtersWrap {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding: 16px 0;
+}
+
+.countWrap {
+  padding: 0;
+  margin: 0;
 }
 
 .filtersBox {
-  width: 480px;
   display: flex;
-  justify-content: flex-end;
   gap: 24px;
   align-items: center;
+  flex-wrap: wrap;
+  max-width: 100%;
 }
 
 .btn {
@@ -35,36 +44,4 @@
   text-decoration: underline;
 }
 
-.mobileFilterBtnWrap {
-  display: flex;
-  justify-content: flex-end;
-}
 
-.mobileFilterBtn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  color: #595d62;
-}
-
-.icon {
-  width: 24px;
-  height: 24px;
-  fill: currentColor;
-}
-
-.mobileModal {
-  position: fixed;
-  inset: 0;
-  background: white;
-  z-index: 1000;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}

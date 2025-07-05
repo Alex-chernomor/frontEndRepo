@@ -1,14 +1,26 @@
 .heroTitle {
-  font-weight: 600;
+  max-width: 329px;
   font-size: 40px;
+  font-weight: 600;
+  line-height: 1.1;
   color: #fff;
+  margin: 0 auto;
   margin-bottom: 24px;
 }
-
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 1439.8px) {
   .heroTitle {
     max-width: 493px;
     font-size: 48px;
     line-height: 1.1;
+    margin: 0;
+    margin-bottom: 24px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .heroTitle {
+    max-width: 493px;
+    margin: 0;
+    margin-bottom: 24px;
   }
 }

@@ -8,7 +8,7 @@ export default function Footer() {
       <div className={`container ${css.footerContainer}`}>
         <Logo />
         <p className={css.footerText}>
-          2025 CookingCompanion. All rights reserved.
+         © 2025 CookingCompanion. All rights reserved.
         </p>
         <FooterNav />
       </div>

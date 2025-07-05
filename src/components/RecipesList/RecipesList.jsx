@@ -1,43 +1,27 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchRecipes } from "../../redux/recipes/operations.js";
-import {
-  selectAllRecipes,
-  selectIsLoading,
-} from "../../redux/recipes/selectors.js";
-import RecipeCard from "../RecipeCard/RecipeCard.jsx";
-import css from "./RecipesList.module.css";
-
-const RECIPES_PER_PAGE = 12;
+import Button from '../Button/Button.jsx';
+import css from './RecipesList.module.css';
 
 const RecipesList = () => {
-  const dispatch = useDispatch();
-  const allRecipes = useSelector(selectAllRecipes);
-  const isLoading = useSelector(selectIsLoading);
-  const [visibleCount, setVisibleCount] = useState(RECIPES_PER_PAGE);
-  useEffect(() => {
-    dispatch(fetchRecipes());
-  }, [dispatch]);
-  const handleLoadMore = () => {
-    setVisibleCount((prev) => prev + RECIPES_PER_PAGE);
-  };
-  const visibleRecipes = allRecipes.slice(0, visibleCount);
   return (
     <>
       <div className={css.recipesWrap}>
-        {isLoading && <Loader />}
         <ul className={css.list}>
-          {visibleRecipes.map((recipe) => (
-            <li key={recipe._id}>
-              <RecipeCard recipe={recipe} />
-            </li>
-          ))}
+          <li>recipe1</li>
+          <li>recipe2</li>
+          <li>recipe3</li>
+          <li>recipe4</li>
+          <li>recipe5</li>
+          <li>recipe6</li>
+          <li>recipe7</li>
+          <li>recipe8</li>
+          <li>recipe9</li>
+          <li>recipe10</li>
+          <li>recipe11</li>
+          <li>recipe12</li>
         </ul>
-        {visibleCount < allRecipes.lenght && (
-          <div>
-            <LoadMoreBtn onClick={handleLoadMore} />
-          </div>
-        )}
+        <Button className={css.btn} type="button">
+          Load More
+        </Button>
       </div>
     </>
   );

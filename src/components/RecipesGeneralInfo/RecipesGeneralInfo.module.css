@@ -1,10 +1,12 @@
 .card {
   display: flex;
   gap: 15px;
+  box-sizing: border-box;
   flex-direction: column;
   border-radius: 16px;
   padding: 16px;
   max-width: 361px;
+  width: 100%;
   background-color: #faf3e0;
 }
 .header {

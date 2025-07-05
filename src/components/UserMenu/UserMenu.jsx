@@ -1,4 +1,5 @@
 import React from "react";
+import css from "./UserMenu.module.css";
 import { NavLink } from "react-router-dom";
 import css from "./UserMenu.module.css";
 
@@ -17,7 +18,7 @@ export default function UserMenu() {
   let userName = user.name;
 
   const firstLetterName = function (name) {
-    return name.split("")[0];
+    return String(name.split(" ")).split("")[0].split("")[0];
   };
 
   return (

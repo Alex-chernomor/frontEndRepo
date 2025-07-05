@@ -28,6 +28,7 @@ const UserSchema = Yup.object().shape({
 
 export default function LoginForm() {
   const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const [passwordEye, setPasswordEye] = useState(false);
 
@@ -59,6 +60,11 @@ export default function LoginForm() {
     <div className={css.containerLoginForm}>
       <h2 className={css.titleLoginForm}>Login</h2>
 
+      <Formik
+        initialValues={initialValues}
+        validationSchema={UserSchema}
+        onSubmit={handleSubmit}
+      >
       <Formik
         initialValues={initialValues}
         validationSchema={UserSchema}

@@ -1,0 +1,24 @@
+.title {
+  font-weight: 600;
+  font-size: 40px;
+}
+
+/* Variants */
+.recipeTitle {
+  color: #000000;
+}
+
+.hereoTitle {
+  color: #ffffff;
+}
+
+.formsTitle {
+  font-size: 32px;
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 48px;
+    line-height: 1.1;
+  }
+}

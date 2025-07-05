@@ -26,7 +26,7 @@ export default function RecipeCard({
   const favorites = mockFavorites;
 
   const isFavorite = favorites.includes(id);
-  const firstSentence = descr.split(/[.!?]/)[0] + ".";
+  // const firstSentence = descr.split(/[.!?]/)[0] + ".";
 
   const [isUpdating, setIsUpdating] = useState(false);
 
@@ -88,7 +88,7 @@ export default function RecipeCard({
         </div>
       </div>
       <div className={css.descrWrapper}>
-        <p className={css.descrip}>{firstSentence}</p>
+        <p className={css.descrip}>{/* {firstSentence} */}</p>
         <p className={css.descrip}>{calories ? `~${calories} cals` : "—"}</p>
       </div>
       <div className={css.actions}>

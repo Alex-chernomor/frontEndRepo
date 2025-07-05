@@ -2,8 +2,9 @@
 import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-//створили контекст
+//створили контекст і експортували його за замовчуванням
 const IngredientsContext = createContext();
+export default IngredientsContext;
 
 const INGREDIENTS_KEY = 'ingredients_cache';
 const CACHE_TTL = 1000 * 60 * 60 * 24; // cache time to live - 24 години
@@ -49,7 +50,7 @@ export const IngredientsProvider = ({ children }) => {
   }, []);
 
   return (
-    <IngredientsContext.Provider value={ingredients}>
+    <IngredientsContext.Provider value={ingredients.data}>
       {children}
     </IngredientsContext.Provider>
   );

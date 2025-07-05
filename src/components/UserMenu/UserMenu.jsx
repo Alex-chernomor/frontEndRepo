@@ -2,8 +2,20 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import css from "./UserMenu.module.css";
 
+import { selectUser } from "../../redux/auth/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/auth/operations";
+
 export default function UserMenu() {
-  let userName = "Max";
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
+  let userName = user.name;
+
   const firstLetterName = function (name) {
     return name.split("")[0];
   };
@@ -18,7 +30,11 @@ export default function UserMenu() {
       </NavLink>
       <div className={css.firstLetter}>{firstLetterName(userName)}</div>
       <p className={css.userName}>{userName}</p>
-      <button className={css.buttonUserMenu} aria-label="Log out">
+      <button
+        className={css.buttonUserMenu}
+        aria-label="Log out"
+        onClick={handleLogout}
+      >
         <svg
           width="24"
           height="28"

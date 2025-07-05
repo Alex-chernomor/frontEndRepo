@@ -22,7 +22,6 @@ const NotFoundPage = lazy(() =>
 
 export default function App() {
   return (
-
     <Layout>
       <Suspense fallback={<Loader />}>
         <Routes>
@@ -36,6 +35,5 @@ export default function App() {
         </Routes>
       </Suspense>
     </Layout>
-
   );
 }

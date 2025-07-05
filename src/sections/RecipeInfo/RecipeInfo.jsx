@@ -1,9 +1,9 @@
 import RecipeDetails from '../../components/RecipeDetails/RecipeDetails';
 
-const RecipeInfo = () => {
+const RecipeInfo = ({ recipe }) => {
   return (
     <div>
-      <RecipeDetails />
+      <RecipeDetails {...recipe} />
     </div>
   );
 };

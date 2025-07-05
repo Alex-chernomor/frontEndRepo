@@ -1,9 +1,7 @@
-
 import { createSlice } from '@reduxjs/toolkit';
-import { addToFavorite,createResipe, removeFromFavorite, fetchRecipes } from './operations';
+import { addToFavorite, removeFromFavorite, fetchRecipes } from './operations';
 
-
-const handlePending = (state) => {
+const handlePending = state => {
   state.loading = true;
 };
 const handleRejected = (state, { payload }) => {
@@ -12,7 +10,7 @@ const handleRejected = (state, { payload }) => {
 };
 
 const slice = createSlice({
-  name: "recipes",
+  name: 'recipes',
   initialState: {
     recipes: [],
     total: null,
@@ -22,7 +20,7 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
@@ -33,34 +31,24 @@ const slice = createSlice({
         state.perPage = action.payload.perPage;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(fetchRecipes.rejected, handleRejected)
+      .addCase(fetchRecipes.rejected, handleRejected);
 
-      .addCase(addToFavorite.pending, handlePending)
-      .addCase(addToFavorite.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.recipes = [payload, ...state.recipes];
-      })
-      .addCase(addToFavorite.rejected, handleRejected)
-      .addCase(createResipe.pending, handlePending)
-      .addCase(createResipe.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.recipes = payload;
-      })
-      .addCase(createResipe.rejected, handleRejected)
-
-      .addCase(removeFromFavorite.pending, handlePending)
-      .addCase(removeFromFavorite.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.recipes = state.recipes.filter(
-
-          recipe => recipe._id !== payload.id
-
-        );
-      })
-      .addCase(removeFromFavorite.rejected, handleRejected);
+    // .addCase(addToFavorite.pending, handlePending)
+    // .addCase(addToFavorite.fulfilled, (state, { payload }) => {
+    //   state.loading = false;
+    //   state.error = null;
+    //   state.recipes = [payload, ...state.recipes];
+    // })
+    // .addCase(addToFavorite.rejected, handleRejected)
+    // .addCase(removeFromFavorite.pending, handlePending)
+    // .addCase(removeFromFavorite.fulfilled, (state, { payload }) => {
+    //   state.loading = false;
+    //   state.error = null;
+    //   state.recipes = state.recipes.filter(
+    //     recipe => recipe._id !== payload.id
+    //   );
+    // })
+    // .addCase(removeFromFavorite.rejected, handleRejected);
   },
 });
 

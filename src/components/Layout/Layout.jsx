@@ -1,10 +1,15 @@
-import AppBar from "../AppBar/AppBar";
+import Outlet from "../../sections/Outlet/Outlet.jsx";
+import Footer from "../../sections/Footer/Footer.jsx";
+import Header from "../../sections/Header/Header.jsx";
 
 export default function Layout({ children }) {
   return (
-    <div>
-      <AppBar />
-      {children}
-    </div>
+    <>
+      <>
+        <Header />
+        <Outlet children={children} />
+        <Footer />
+      </>
+    </>
   );
 }

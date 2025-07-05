@@ -1,0 +1,40 @@
+.hero {
+  background-image: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0.9) 0%,
+      rgba(0, 0, 0, 0.3) 100%
+    ),
+    url("../../../public/33b500ffd647488ecb502185d49660ee18160826.jpg");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding-block: 128px 98px;
+}
+
+.container {
+  max-width: 393px;
+  padding-inline: 32px;
+  margin-inline: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .hero {
+    background-size: cover;
+    padding-bottom: 128px;
+  }
+  .container {
+    max-width: 768px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .hero {
+    background-position: left top 22%;
+    padding-inline: 108px;
+  }
+
+  .container {
+    max-width: 1224px;
+    margin-inline: auto;
+  }
+}

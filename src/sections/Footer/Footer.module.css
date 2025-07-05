@@ -1,0 +1,28 @@
+.footer {
+  background-color: #3d2218;
+  padding-inline: 108px;
+}
+
+.footerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  padding-block: 24px;
+  width: 100%;
+  max-width: 1224px;
+  margin-inline: auto;
+}
+
+.footerText {
+  color: #fff;
+  font-size: 12px;
+}
+
+@media screen and (min-width: 1440px) {
+  .footerContainer {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

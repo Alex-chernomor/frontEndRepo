@@ -1,11 +1,11 @@
 import * as Yup from "yup";
-import { useDispatch } from "react-redux";
+// import { useDispatch } from 'react-redux';
 import { register } from "../../redux/auth/operations";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import styles from "./RegistrationForm.module.css";
 import { NavLink } from "react-router-dom";
 import clsx from "clsx";
-import { Eye, EyeCrossed } from "./Icons";
+import { Eye, EyeCrossed } from "../Icons/Icons";
 import { useState } from "react";
 
 const initialValues = {
@@ -42,7 +42,7 @@ const getLinkStyles = ({ isActive }) => {
 export default function RegistrationForm() {
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPassEye, setConfirmPassEye] = useState(false);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const handlePasswordClick = () => {
     setPasswordEye((prev) => !prev);
@@ -52,16 +52,16 @@ export default function RegistrationForm() {
     setConfirmPassEye((prev) => !prev);
   };
 
-  const handleSubmit = async (values, actions) => {
-    const { confirmPassword, toggle, ...dataToSend } = values;
-    try {
-      await dispatch(register(dataToSend)).unwrap();
-      actions.resetForm();
-    } catch (error) {
-      // Пример: показать ошибку на email поле
-      actions.setFieldError("email", error.message || "Registration failed");
-    }
-  };
+  // const handleSubmit = async (values, actions) => {
+  //   const { confirmPassword, toggle, ...dataToSend } = values;
+  //   try {
+  //     await dispatch(register(dataToSend)).unwrap();
+  //     actions.resetForm();
+  //   } catch (error) {
+  //     // Пример: показать ошибку на email поле
+  //     actions.setFieldError('email', error.message || 'Registration failed');
+  //   }
+  // };
 
   return (
     <div className={styles.registerContainer}>
@@ -73,7 +73,7 @@ export default function RegistrationForm() {
 
       <Formik
         initialValues={initialValues}
-        onSubmit={handleSubmit}
+        // onSubmit={handleSubmit}
         validationSchema={UserSchema}
       >
         <Form className={styles.form} autoComplete="off">
@@ -211,7 +211,7 @@ export default function RegistrationForm() {
 
       <p className={styles.text}>
         Already have an account?{" "}
-        <NavLink to="/login" className={getLinkStyles}>
+        <NavLink to="/api/auth/login" className={getLinkStyles}>
           Log in
         </NavLink>
       </p>

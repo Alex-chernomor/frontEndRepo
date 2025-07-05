@@ -1,3 +1,11 @@
+
+// import Header from "../../sections/Header/Header";
+// import RecipesGeneralInfo from "../../components/RecipesGeneralInfo/RecipesGeneralInfo.jsx";
+// export default function RecipeViewPage() {
+//   return (
+//     <>
+//       <RecipesGeneralInfo />
+
 import RecipeInfo from '../../sections/RecipeInfo/RecipeInfo';
 // import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';

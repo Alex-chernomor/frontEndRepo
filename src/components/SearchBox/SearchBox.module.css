@@ -44,9 +44,11 @@
 }
 
 .button {
+
   width: 329px;
   padding: 13px 136px;
   max-height: 46px;
+
   color: #ffffff;
   background-color: #9b6c43;
   display: flex;

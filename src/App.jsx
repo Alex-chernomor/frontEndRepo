@@ -30,7 +30,11 @@ export default function App() {
           <Route path="/api/auth/register" element={<RegistrationPage />} />
           <Route path="/api/add-recipe" element={<AddrecipePage />} />
           <Route path="/api/user/current" element={<ProfilePage />} />
+
+          <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
+
           {/* <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} /> */}
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

@@ -1,0 +1,18 @@
+.title {
+  /* padding-left: 16px; */
+  font-size: 32px;
+  font-weight: 600;
+}
+
+@media screen and (min-width: 768px) {
+  .title {
+    /* padding-left: 32px; */
+    font-size: 40px;
+  }
+}
+
+/* @media screen and (min-width: 1440px) {
+  .title {
+    padding-left: 108px;
+  }
+} */

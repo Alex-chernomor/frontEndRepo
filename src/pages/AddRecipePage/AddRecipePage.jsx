@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../../sections/Header/Header";
 import RecipeForm from "../../components/RecipeForm/RecipeForm.jsx";
+
 import { useDispatch } from "react-redux";
 
 import toast, { Toaster } from "react-hot-toast";
@@ -16,4 +17,5 @@ export default function AddRecipePage() {
     toast.success("Added to favorites!");
   };
   return <RecipeForm onAdd={onAdd} />;
-}
+
+

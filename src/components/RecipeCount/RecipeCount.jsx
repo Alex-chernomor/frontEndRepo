@@ -1,5 +1,7 @@
-import css from "./RecipeCount.module.css";
+import css from './RecipeCount.module.css';
 
-export const RecipeCount = (count) => {
+const count = 12;
+
+export const RecipeCount = () => {
   return <p className={css.count}>{count} recipes</p>;
 };

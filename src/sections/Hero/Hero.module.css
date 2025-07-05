@@ -14,6 +14,7 @@
 .container {
   max-width: 393px;
   padding-inline: 32px;
+  margin-inline: auto;
 }
 
 @media screen and (min-width: 768px) {
@@ -33,6 +34,7 @@
   }
 
   .container {
-    max-width: 1440px;
+    max-width: 1224px;
+    margin-inline: auto;
   }
 }

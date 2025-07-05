@@ -4,7 +4,6 @@
 }
 .input {
   width: 459px;
-  height: 46px;
   border-radius: 8px;
   border: 1px solid #9f9f9f;
   padding: 16px 8px;
@@ -16,7 +15,6 @@
 
 .button {
   width: 190px;
-  height: 46px;
   color: #ffffff;
   background-color: #9b6c43;
 }

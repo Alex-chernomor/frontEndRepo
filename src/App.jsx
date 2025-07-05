@@ -1,5 +1,4 @@
 import React from "react";
-
 import { Routes, Route } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
 import Loader from "./components/Loader/Loader.jsx";
@@ -23,6 +22,7 @@ const NotFoundPage = lazy(() =>
 
 export default function App() {
   return (
+
     <Layout>
       <Suspense fallback={<Loader />}>
         <Routes>
@@ -31,10 +31,11 @@ export default function App() {
           <Route path="/api/auth/register" element={<RegistrationPage />} />
           <Route path="/api/add-recipe" element={<AddrecipePage />} />
           <Route path="/api/user/current" element={<ProfilePage />} />
-          <Route path="/api/recipe/:recipeId" element={<RecipeViewPage />} />
+          <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>
     </Layout>
+
   );
 }

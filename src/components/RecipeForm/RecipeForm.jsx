@@ -69,7 +69,7 @@ export default function RecipeForm({ onAdd }) {
         formData.append("photo", values.photo);
         formData.append("ingredients", JSON.stringify(values.ingredients));
 
-        console.log([...formData.entries()]);
+// console.log([...formData.entries()]);
         onAdd(formData);
       }}
     >
@@ -164,8 +164,7 @@ export default function RecipeForm({ onAdd }) {
                   className={css.error}
                 />
               </div>
-
-              <div>
+<div>
                 <label htmlFor="calories">Calories</label>
                 <Field name="calories" className={css.input} />
                 <ErrorMessage

@@ -1,16 +1,37 @@
-.recipesWrap {
+.list {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  max-width: 361px;
+  gap: 50px;
+  padding: 0;
 }
 
+.btn {
+  background-color: #9b6c43;
+  margin-top: 24px;
+
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 289px;
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  font-size: 18px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* 
 @media only screen and (min-width: 768px) {
   .recipesWrap {
     max-width: 704px;
   }
-}
+} */
 
 @media only screen and (min-width: 1440px) {
   .recipesWrap {

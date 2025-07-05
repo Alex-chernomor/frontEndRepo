@@ -1,5 +1,3 @@
-import React from "react";
-import css from "./UserMenu.module.css";
 import { NavLink } from "react-router-dom";
 import css from "./UserMenu.module.css";
 

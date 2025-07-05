@@ -3,8 +3,6 @@ import { login, logout } from "./operations";
 
 const authSlice = createSlice({
   name: "auth",
-const slice = createSlice({
-  name: "auth",
   initialState: {
     user: {
       name: null,

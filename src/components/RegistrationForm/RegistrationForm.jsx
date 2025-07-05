@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../redux/auth/operations';
 import { Field, Form, Formik, ErrorMessage } from 'formik';
 import styles from './RegistrationForm.module.css';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { Eye, EyeCrossed } from '../Icons/Icons';
 import { useState } from 'react';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import toast, { Toaster } from 'react-hot-toast';
 
 const initialValues = {
   name: '',
@@ -43,8 +43,8 @@ const getLinkStyles = ({ isActive }) => {
 export default function RegistrationForm() {
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPassEye, setConfirmPassEye] = useState(false);
-  const isLoggedin = useSelector(selectIsLoggedIn);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handlePasswordClick = () => {
     setPasswordEye(prev => !prev);
@@ -59,14 +59,17 @@ export default function RegistrationForm() {
     try {
       await dispatch(register(dataToSend)).unwrap();
       actions.resetForm();
+      navigate('/');
     } catch (error) {
       // Пример: показать ошибку на email поле
-      actions.setFieldError('email', error.message || 'Registration failed');
+      actions.setFieldError('email', error?.message || 'Registration failed');
+      toast.error(error?.message);
     }
   };
 
   return (
     <div className={styles.registerContainer}>
+      <Toaster position="top-right" reverseOrder={false} />
       <h1 className={styles.header}>Register</h1>
       <p className={styles.text}>
         Join our community of culinary enthusiasts, save your favorite recipes,

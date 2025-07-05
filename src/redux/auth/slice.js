@@ -1,9 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register } from './operations';
 
-const handlePending = state => state.isRefreshing(true);
+const handlePending = state => {
+  state.isRefreshing = true;
+};
 const handleReject = (state, { payload }) => {
-  state.isRefreshing(false);
+  state.isRefreshing = false;
   state.error = payload || 'Registration failed';
 };
 

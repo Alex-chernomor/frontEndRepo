@@ -5,8 +5,7 @@ import axios from 'axios';
 //   axios.defaults.headers.common.Authorization = value;
 // };
 
-// axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
-axios.defaults.baseURL = 'https://contacts-app-swagger-hgem.onrender.com';
+axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
 
 export const register = createAsyncThunk(
   'auth/register',

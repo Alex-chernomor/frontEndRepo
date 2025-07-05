@@ -1,4 +1,5 @@
 import Button from '../Button/Button';
+import PageTitle from '../PageTitle/PageTitle';
 import RecipeDescription from '../RecipeDescription/RecipeDescription';
 import RecipesGeneralInfo from '../RecipesGeneralInfo/RecipesGeneralInfo';
 import RecipesImg from '../RecipesImg/RecipesImg';
@@ -60,25 +61,29 @@ export default function RecipeDetails({
       <Toaster position="top-right" reverseOrder={false} />
       <PageTitle variant="recipeTitle">{title}</PageTitle>
       <RecipesImg thumb={thumb} title={title} />
-      <RecipesGeneralInfo
-        category={category}
-        area={area}
-        time={time}
-        cals={cals}
-      />
-      <RecipeDescription
-        description={description}
-        instructions={instructions}
-        ingredients={ingredients}
-      />
-      {/* Чомусь кнопка зникає???? може просто зробитит її чере <button></button>?*/}
-      {/* <Button className="styles.btn" variant="darkButton">
-        Save <FlagIcon />
-      </Button> */}
-      {/* не забути потім передати onClick={handleClick} */}
-      <button className={styles.btn}>
-        {isFavorite ? 'Remove' : 'Save'} <FlagIcon />
-      </button>
+      <div className={styles.textContainer}>
+        <div className={styles.generalInfoAndBtn}>
+          <RecipesGeneralInfo
+            category={category}
+            area={area}
+            time={time}
+            cals={cals}
+          />
+          {/* Чомусь кнопка зникає???? може просто зробитит її чере <button></button>?*/}
+          {/* <Button className="styles.btn" variant="darkButton">
+            Save <FlagIcon />
+          </Button> */}
+          {/* не забути потім передати onClick={handleClick} */}
+          <button className={styles.btn}>
+            {isFavorite ? 'Remove' : 'Save'} <FlagIcon />
+          </button>
+        </div>
+        <RecipeDescription
+          description={description}
+          instructions={instructions}
+          ingredients={ingredients}
+        />
+      </div>
     </div>
   );
 }

@@ -1,3 +1,23 @@
+.textContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  justify-content: center;
+  max-width: 361px;
+  width: 100%;
+  margin: 0 auto;
+}
+.generalInfoAndBtn {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+  max-width: 361px;
+  width: 100%;
+  margin: 0 auto;
+}
+
 .btn {
   display: flex;
   align-items: center;
@@ -5,10 +25,31 @@
   gap: 16px;
   border-radius: 8px;
   padding: 16px;
-  width: 361px;
+  width: 100%;
   font-weight: 600;
   font-size: 18px;
   background: #9b6c43;
   color: #ffffff;
   border: none;
+}
+
+@media screen and (min-width: 768px) {
+  .generalInfoAndBtn {
+    flex-direction: row;
+    max-width: 704px;
+    align-items: flex-start;
+  }
+  .textContainer {
+    max-width: 704px;
+  }
+}
+@media screen and (min-width: 1440px) {
+  .sectionContainer {
+    max-width: 808px;
+  }
+  .textContainer {
+    max-width: 1225px;
+    flex-direction: row-reverse;
+    align-content: flex-start;
+  }
 }

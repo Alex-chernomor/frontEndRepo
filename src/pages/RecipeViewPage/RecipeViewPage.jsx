@@ -3,6 +3,7 @@ import RecipeInfo from '../../sections/RecipeInfo/RecipeInfo';
 import { useEffect, useState } from 'react';
 // import { fetchRecipeDetails } from '../../recipesService';
 import Loader from '../../components/Loader/Loader';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage';
 
 export default function RecipeViewPage() {
   // const { recipeId } = useParams();

@@ -23,7 +23,6 @@ const NotFoundPage = lazy(() =>
 export default function App() {
   return (
     <Layout>
-      <RecipeViewPage />
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />

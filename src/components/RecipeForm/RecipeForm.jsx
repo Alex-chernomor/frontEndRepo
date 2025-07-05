@@ -9,14 +9,14 @@ const RecipeSchema = Yup.object().shape({
   cookingTime: Yup.number().positive("Must be positive").required("Required"),
   calories: Yup.string().required("Required"),
   category: Yup.string().required("Required"),
-  // ingredients: Yup.array().of(
-  //   Yup.object().shape({
-  //     name: Yup.string().required("Required"),
-  //     amount: Yup.string().required("Required"),
-  //   })
-  // ),
+  ingredients: Yup.array().of(
+    Yup.object().shape({
+      name: Yup.string().required("Required"),
+      amount: Yup.string().required("Required"),
+    })
+  ),
   instructions: Yup.string().required("Required"),
-  // photo: Yup.mixed().required("Required"),
+  photo: Yup.mixed().required("Required"),
 });
 
 export default function RecipeForm({ onAdd }) {
@@ -69,6 +69,7 @@ export default function RecipeForm({ onAdd }) {
         formData.append("photo", values.photo);
         formData.append("ingredients", JSON.stringify(values.ingredients));
 
+        console.log([...formData.entries()]);
         onAdd(formData);
       }}
     >

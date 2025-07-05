@@ -15,14 +15,39 @@
 
 .headerContainer {
   display: flex;
-  justify-content: center;
   justify-content: space-between;
-  width: 1230px;
+  width: 393px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439.8px) {
+  .headerContainer {
+    width: 768px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .headerContainer {
+    width: 1440px;
+    padding: 0 108px;
+  }
 }
 
 .navigation {
-  display: flex;
-  align-items: center;
+  display: none;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1439.8px) {
+  .navigation {
+    display: flex;
+    align-items: center;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .navigation {
+    display: flex;
+    align-items: center;
+  }
 }
 
 .reipeLink {
@@ -34,4 +59,20 @@
   display: flex;
   justify-content: center;
   height: auto;
+}
+.containerIcon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  padding: none;
+  background-color: #3d2218;
+}
+@media screen and (min-width: 768px) {
+  .containerIcon {
+    display: none;
+  }
+}
+.icon {
+  color: #ffffff;
 }

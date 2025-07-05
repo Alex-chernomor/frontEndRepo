@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import styles from "./RegistrationForm.module.css";
@@ -7,13 +7,14 @@ import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import { Eye, EyeCrossed } from "../Icons/Icons";
 import { useState } from "react";
+// import { register } from "../../redux/auth/operations";
 
 const initialValues = {
   name: "",
   email: "",
   password: "",
-  confirmPassword: "",
-  toggle: false,
+  // confirmPassword: "",
+  // toggle: false,
 };
 
 const UserSchema = Yup.object().shape({
@@ -42,7 +43,7 @@ const getLinkStyles = ({ isActive }) => {
 export default function RegistrationForm() {
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPassEye, setConfirmPassEye] = useState(false);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handlePasswordClick = () => {
     setPasswordEye((prev) => !prev);
@@ -62,6 +63,9 @@ export default function RegistrationForm() {
   //     actions.setFieldError('email', error.message || 'Registration failed');
   //   }
   // };
+  const handleSubmit = (values, actions) => {
+    dispatch(register(values));
+  };
 
   return (
     <div className={styles.registerContainer}>
@@ -73,8 +77,8 @@ export default function RegistrationForm() {
 
       <Formik
         initialValues={initialValues}
-        // onSubmit={handleSubmit}
-        validationSchema={UserSchema}
+        onSubmit={handleSubmit}
+        // validationSchema={UserSchema}
       >
         <Form className={styles.form} autoComplete="off">
           <label className={styles.label}>

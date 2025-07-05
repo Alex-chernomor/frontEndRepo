@@ -7,6 +7,8 @@ import { useState } from "react";
 
 import css from "./LoginForm.module.css";
 import { Eye, EyeCrossed } from "./Icons";
+import { useDispatch } from "react-redux";
+import { logIn } from "../../redux/auth/operations.js";
 
 const initialValues = {
   email: "",
@@ -25,17 +27,27 @@ const UserSchema = Yup.object().shape({
 });
 
 export default function LoginForm() {
+  const dispatch = useDispatch();
   const [passwordEye, setPasswordEye] = useState(false);
 
   const handlePasswordClick = () => {
     setPasswordEye((prev) => !prev);
   };
 
+  const handleSubmit = (values, actions) => {
+    dispatch(logIn(values));
+    actions.resetForm();
+  };
+
   return (
     <div className={css.containerLoginForm}>
       <h2 className={css.titleLoginForm}>Login</h2>
 
-      <Formik initialValues={initialValues} validationSchema={UserSchema}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={UserSchema}
+        onSubmit={handleSubmit}
+      >
         <Form className={css.formLoginForm} autoComplete="off">
           <label className={css.labelLoginForm}>
             Enter your email address

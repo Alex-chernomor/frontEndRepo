@@ -1,13 +1,20 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
 import css from "./UserMenu.module.css";
+import { NavLink } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { selectUser } from "../../redux/auth/selectors";
+import { logOut } from "../../redux/auth/operations";
 
 export default function UserMenu() {
-  let userName = "Max";
+  const user = useSelector(selectUser);
   const firstLetterName = function (name) {
-    return name.split("")[0];
+    return String(name.split(" ")).split("")[0].split("")[0];
   };
 
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
   return (
     <div className={css.container}>
       <NavLink className={css.link} to="/api/user/current">
@@ -16,9 +23,13 @@ export default function UserMenu() {
       <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">
         Add Recipe
       </NavLink>
-      <div className={css.firstLetter}>{firstLetterName(userName)}</div>
-      <p className={css.userName}>{userName}</p>
-      <button className={css.buttonUserMenu} aria-label="Log out">
+      {/* <div className={css.firstLetter}>{firstLetterName(user.name)}</div> */}
+      {/* <p className={css.userName}>{user.name}</p> */}
+      <button
+        className={css.buttonUserMenu}
+        aria-label="Log out"
+        onClick={handleLogout}
+      >
         <svg
           width="24"
           height="28"

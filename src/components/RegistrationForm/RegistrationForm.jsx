@@ -1,38 +1,39 @@
-import * as Yup from "yup";
-// import { useDispatch } from 'react-redux';
-import { register } from "../../redux/auth/operations";
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import styles from "./RegistrationForm.module.css";
-import { NavLink } from "react-router-dom";
-import clsx from "clsx";
-import { Eye, EyeCrossed } from "../Icons/Icons";
-import { useState } from "react";
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../redux/auth/operations';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import styles from './RegistrationForm.module.css';
+import { NavLink } from 'react-router-dom';
+import clsx from 'clsx';
+import { Eye, EyeCrossed } from '../Icons/Icons';
+import { useState } from 'react';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
 
 const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  confirmPassword: "",
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
   toggle: false,
 };
 
 const UserSchema = Yup.object().shape({
   name: Yup.string()
-    .min(1, "Too short!")
-    .max(16, "Too long!")
-    .required("This field is required"),
+    .min(1, 'Too short!')
+    .max(16, 'Too long!')
+    .required('This field is required'),
   email: Yup.string()
-    .email("Invalid email")
-    .max(128, "Too long!")
-    .required("This field is required"),
+    .email('Invalid email')
+    .max(128, 'Too long!')
+    .required('This field is required'),
   password: Yup.string()
-    .min(8, "At least 8 characters")
-    .max(128, "At most 128 characters")
-    .required("This field is required"),
+    .min(8, 'At least 8 characters')
+    .max(128, 'At most 128 characters')
+    .required('This field is required'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Please confirm your password"),
-  toggle: Yup.boolean().oneOf([true], "You must agree to continue"),
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Please confirm your password'),
+  toggle: Yup.boolean().oneOf([true], 'You must agree to continue'),
 });
 
 const getLinkStyles = ({ isActive }) => {
@@ -42,26 +43,27 @@ const getLinkStyles = ({ isActive }) => {
 export default function RegistrationForm() {
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPassEye, setConfirmPassEye] = useState(false);
-  // const dispatch = useDispatch();
+  const isLoggedin = useSelector(selectIsLoggedIn);
+  const dispatch = useDispatch();
 
   const handlePasswordClick = () => {
-    setPasswordEye((prev) => !prev);
+    setPasswordEye(prev => !prev);
   };
 
   const handleConfirmPassClick = () => {
-    setConfirmPassEye((prev) => !prev);
+    setConfirmPassEye(prev => !prev);
   };
 
-  // const handleSubmit = async (values, actions) => {
-  //   const { confirmPassword, toggle, ...dataToSend } = values;
-  //   try {
-  //     await dispatch(register(dataToSend)).unwrap();
-  //     actions.resetForm();
-  //   } catch (error) {
-  //     // Пример: показать ошибку на email поле
-  //     actions.setFieldError('email', error.message || 'Registration failed');
-  //   }
-  // };
+  const handleSubmit = async (values, actions) => {
+    const { confirmPassword, toggle, ...dataToSend } = values;
+    try {
+      await dispatch(register(dataToSend)).unwrap();
+      actions.resetForm();
+    } catch (error) {
+      // Пример: показать ошибку на email поле
+      actions.setFieldError('email', error.message || 'Registration failed');
+    }
+  };
 
   return (
     <div className={styles.registerContainer}>
@@ -73,7 +75,7 @@ export default function RegistrationForm() {
 
       <Formik
         initialValues={initialValues}
-        // onSubmit={handleSubmit}
+        onSubmit={handleSubmit}
         validationSchema={UserSchema}
       >
         <Form className={styles.form} autoComplete="off">
@@ -128,7 +130,7 @@ export default function RegistrationForm() {
                 {({ field, meta }) => (
                   <input
                     {...field}
-                    type={passwordEye ? "text" : "password"}
+                    type={passwordEye ? 'text' : 'password'}
                     placeholder="*********"
                     className={clsx(
                       styles.input,
@@ -141,7 +143,7 @@ export default function RegistrationForm() {
                 type="button"
                 className={styles.eyeBtn}
                 onClick={handlePasswordClick}
-                aria-label={passwordEye ? "Hide password" : "Show password"}
+                aria-label={passwordEye ? 'Hide password' : 'Show password'}
                 aria-pressed={passwordEye}
               >
                 {passwordEye ? <Eye /> : <EyeCrossed />}
@@ -161,7 +163,7 @@ export default function RegistrationForm() {
                 {({ field, meta }) => (
                   <input
                     {...field}
-                    type={confirmPassEye ? "text" : "password"}
+                    type={confirmPassEye ? 'text' : 'password'}
                     placeholder="*********"
                     className={clsx(
                       styles.input,
@@ -174,7 +176,7 @@ export default function RegistrationForm() {
                 type="button"
                 className={styles.eyeBtn}
                 onClick={handleConfirmPassClick}
-                aria-label={confirmPassEye ? "Hide password" : "Show password"}
+                aria-label={confirmPassEye ? 'Hide password' : 'Show password'}
                 aria-pressed={confirmPassEye}
               >
                 {confirmPassEye ? <Eye /> : <EyeCrossed />}
@@ -210,7 +212,7 @@ export default function RegistrationForm() {
       </Formik>
 
       <p className={styles.text}>
-        Already have an account?{" "}
+        Already have an account?{' '}
         <NavLink to="/api/auth/login" className={getLinkStyles}>
           Log in
         </NavLink>

@@ -1,6 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { register } from './operations';
 
+const handlePending = state => state.isRefreshing(true);
+const handleReject = (state, { payload }) => {
+  state.isRefreshing(false);
+  state.error = payload || 'Registration failed';
+};
+
 const slice = createSlice({
   name: 'auth',
   initialState: {
@@ -15,19 +21,13 @@ const slice = createSlice({
   },
   extraReducers: builder =>
     builder
-      .addCase(register.pending, state => {
-        state.isRefreshing = true;
-      })
+      .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.data;
-        // state.token = action.payload.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addCase(register.rejected, (state, action) => {
-        state.isRefreshing = false;
-        state.error = action.payload || 'Registration failed';
-      }),
+      .addCase(register.rejected, handleReject),
 });
 
 export default slice.reducer;

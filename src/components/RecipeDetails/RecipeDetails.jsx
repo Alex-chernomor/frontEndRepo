@@ -73,7 +73,7 @@ export default function RecipeDetails({
         instructions={instructions}
         ingredients={ingredients}
       />
-      {/* Чомусь кнопка зникає???? може промто зробитит її чере <button></button>?*/}
+      {/* Чомусь кнопка зникає???? може просто зробитит її чере <button></button>?*/}
       {/* <Button className="styles.btn" variant="darkButton">
         Save <FlagIcon />
       </Button> */}

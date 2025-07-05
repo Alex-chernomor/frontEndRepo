@@ -1,5 +1,9 @@
-import Header from "../../sections/Header/Header";
+import RecipeInfo from '../../sections/RecipeInfo/RecipeInfo';
 
 export default function RecipeViewPage() {
-  return <>Recipe view page</>;
+  return (
+    <>
+      <RecipeInfo />
+    </>
+  );
 }

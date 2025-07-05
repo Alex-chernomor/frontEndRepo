@@ -1,12 +1,12 @@
-import Header from "../../sections/Header/Header.jsx";
-import Hero from "../../sections/Hero/Hero.jsx";
-// import Recipes from "../../sections/Recipes/Recipes.jsx";
+import Header from '../../sections/Header/Header.jsx';
+import Hero from '../../sections/Hero/Hero.jsx';
+import Recipes from '../../sections/Recipes/Recipes.jsx';
 
 export default function HomePage() {
   return (
     <div>
       <Hero />
-      {/* <Recipes /> */}
+      <Recipes />
     </div>
   );
 }

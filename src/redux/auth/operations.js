@@ -6,16 +6,16 @@ const setAuthHeader = (value) => {
   axios.defaults.headers.common.Authorization = value;
 };
 
-// axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com/api";
-axios.defaults.baseURL = "/api";
+axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com/api";
+// axios.defaults.baseURL = "/api";
 
 // REGISTER
 export const register = createAsyncThunk(
   "auth/register",
   async (userCredentials, thunkAPI) => {
     try {
-      const response = await axios.post("/api/auth/register", userCredentials);
-      // const response = await axios.post('/auth/register', userCredentials);
+      // const response = await axios.post("/api/auth/register", userCredentials);
+      const response = await axios.post("/auth/register", userCredentials);
       return response.data;
     } catch (error) {
       console.error(error);

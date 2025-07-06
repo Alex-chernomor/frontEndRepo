@@ -14,7 +14,7 @@ export default function UserMenu() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const userName = user?.name || 'User';
+  const userName = user?.name || 'userName';
 
   const handleLogoutClick = () => {
     setIsModalOpen(true);

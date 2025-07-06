@@ -1,10 +1,6 @@
 import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-// axios.defaults.params = {
-//   perPage: 12,
-// };
-
 export const createResipe = createAsyncThunk(
   'recipes/createResipe',
   async ({ recipe }, thunkAPI) => {
@@ -39,7 +35,6 @@ export const fetchIngredients = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await axios.get('/api/ingredients');
-      // console.log('API Response:', response.data);
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -57,35 +52,32 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
-// export const fetchRecipes = createAsyncThunk(
-//   'recipes/fetchRecipes',
+export const fetchRecipes = createAsyncThunk(
+  'recipes/fetchRecipes',
 
-//   async (
-//     {
-//       page = 1,
-//       perPage = 12,
+  async (
+    {
+      page = 1,
+      perPage = 12,
 
-//       category = '',
-//       ingredientId = '',
-//       query = '',
+      category = '',
+      ingredientId = '',
+      query = '',
 
-//       //       category = "",
-//       //       ingredientId = "",
-//       //       query = "",
-//     } = {},
-//     thunkAPI
-//   ) => {
-//     try {
-//       const response = await axios.get(
-//         `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
-//       );
-//       console.log('API Response:', response.data);
-//       return response.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(error.response?.message);
-//     }
-//   }
-// );
+    } = {},
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.get(
+        `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
+      );
+      console.log('API Response:', response.data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.message);
+    }
+  }
+);
 
 export const fetchFavoriteRecipes = createAsyncThunk(
   'recipes/getFavoritesRecipes',

@@ -1,15 +1,29 @@
-import { createSlice } from "@reduxjs/toolkit";
+=
+// import { createSlice } from "@reduxjs/toolkit";
 
+// import {
+//   addToFavorite,
+//   createRecipe,
+
+import { createSlice } from '@reduxjs/toolkit';
 import {
-  addToFavorite,
-  createRecipe,
+  createResipe,
+
   removeFromFavorite,
+  fetchRecipesByName,
+} from "./operations";
   fetchRecipes,
   fetchFavoriteRecipes,
   fetchOwnRecipes,
+
 } from "./operations";
 
 const handlePending = (state) => {
+
+// } from './operations';
+
+// const handlePending = state => {
+
   state.loading = true;
 };
 const handleRejected = (state, { payload }) => {
@@ -30,6 +44,11 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+
+      .addCase(fetchRecipesByName.pending, handlePending)
+      .addCase(fetchRecipesByName.fulfilled, (state, action) => {
+        console.log("✅ fetchRecipes payload:", action.payload);
+
       .addCase(fetchRecipes.pending, handlePending)
 
       .addCase(fetchRecipes.fulfilled, (state, action) => {
@@ -42,6 +61,7 @@ const slice = createSlice({
         state.totalPages = action.payload.data.totalPages;
       })
 
+      .addCase(fetchRecipesByName.rejected, handleRejected)
       .addCase(fetchRecipes.rejected, handleRejected)
       .addCase(createRecipe.pending, handlePending)
       .addCase(createRecipe.fulfilled, (state, { payload }) => {
@@ -49,6 +69,7 @@ const slice = createSlice({
         state.error = null;
         state.recipes = payload;
       })
+
 
       .addCase(createRecipe.rejected, handleRejected)
 
@@ -61,6 +82,9 @@ const slice = createSlice({
         );
       })
       .addCase(removeFromFavorite.rejected, handleRejected)
+
+//       .addCase(createResipe.rejected, handleRejected)
+
       .addCase(fetchFavoriteRecipes.pending, handlePending)
       .addCase(fetchFavoriteRecipes.fulfilled, (state, { payload }) => {
         state.loading = false;

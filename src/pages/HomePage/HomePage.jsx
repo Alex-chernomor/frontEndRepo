@@ -4,12 +4,16 @@ import Header from '../../sections/Header/Header.jsx';
 import Hero from '../../sections/Hero/Hero.jsx';
 import Recipes from '../../sections/Recipes/Recipes.jsx';
 // import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
+
+import { fetchRecipesByName } from '../../redux/recipes/operations.js';
+
 import {
   fetchRecipes,
   fetchCategories,
   fetchIngredients,
   fetchRecipesByFilters,
 } from '../../redux/recipes/operations.js';
+
 import { useDispatch, useSelector } from 'react-redux';
 // import { resetFilters } from '../../redux/filters/slice.js';
 import {
@@ -34,6 +38,8 @@ export default function HomePage() {
   const [selectedIngredient, setSelectedIngredient] = useState(null);
 
   useEffect(() => {
+    dispatch(fetchRecipesByName());
+  }, [dispatch]);
     dispatch(fetchRecipes({ page, perPage }));
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
@@ -68,7 +74,6 @@ export default function HomePage() {
   //   'error:',
   //   error
   // );
-
   return (
     <div>
       <Hero />

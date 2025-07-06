@@ -1,3 +1,4 @@
+
 import RecipesList from '../../components/RecipesList/RecipesList.jsx';
 import RecipesFilters from '../../components/RecipesFilters/RecipesFilters.jsx';
 import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
@@ -6,6 +7,7 @@ import { selectRecipes } from '../../redux/recipes/selectors.js';
 import { useSelector } from 'react-redux';
 
 import css from './Recipes.module.css';
+
 
 const Recipes = ({ onLoadMore, isLoadMoreVisible, isLoadMoreDisabled }) => {
   const recipes = useSelector(selectRecipes);
@@ -27,6 +29,14 @@ const Recipes = ({ onLoadMore, isLoadMoreVisible, isLoadMoreDisabled }) => {
               Load More
             </Button>
           )}
+
+//     <section>
+//       <div>
+//         <div>
+//           <SectionTitle>Recipes</SectionTitle>
+//           <RecipesFilters />
+//           {recipes.length > 0 && <RecipesList />}
+
         </div>
       </div>
     </section>

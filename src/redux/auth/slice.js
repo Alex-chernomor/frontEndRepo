@@ -1,7 +1,16 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { logIn, register, logOut } from "./operations";
+import { login, register, logOut, refreshUser } from "./operations";
+import axios from "axios";
 
-const authSlice = createSlice({
+const handlePending = (state) => {
+  state.isRefreshing = true;
+};
+const handleReject = (state, { payload }) => {
+  state.isRefreshing = false;
+  state.error = payload || "Registration failed";
+};
+
+const slice = createSlice({
   name: "auth",
   initialState: {
     user: {
@@ -9,26 +18,53 @@ const authSlice = createSlice({
       email: null,
     },
     token: null,
+    error: null,
     isLoggedIn: false,
+    isRefreshing: false,
   },
-  extraReducers: (builder) => {
+  extraReducers: (builder) =>
     builder
+      .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.data;
-        state.token = action.payload.token;
+        state.user.name = action.payload.data.user.name;
+        state.user.email = action.payload.data.user.email;
+        state.token = action.payload.data.token;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
       })
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.user = action.payload.data;
-        state.token = action.payload.token;
+      .addCase(register.rejected, handleReject)
+      .addCase(login.pending, (state) => {
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user.name = action.payload.data.user.name;
+        state.user.email = action.payload.data.user.email;
+        state.token = action.payload.data.token;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.error = action.error.message;
       })
       .addCase(logOut.fulfilled, (state) => {
-        state.user = { name: null, email: null };
+        state.user = { name: null, email: null, error: false };
         state.token = null;
         state.isLoggedIn = false;
-      });
-  },
+
+      })
+      .addCase(refreshUser.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isRefreshing = false;
+        state.isLoggedIn = true;
+        axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
+      })
+      .addCase(refreshUser.rejected, (state) => {
+
+        state.isRefreshing = false;
+      }),
 });
 
-export default authSlice.reducer;
+export default slice.reducer;

@@ -52,12 +52,12 @@ export const FlagIcon = () => {
 };
 
 export const FilterIcon = ({
-  className = '',
+  className = "",
   width = 24,
   height = 24,
-  fill = 'white',
-  stroke = 'black',
-  strokeWidth = '1.5',
+  fill = "white",
+  stroke = "black",
+  strokeWidth = "1.5",
 }) => {
   return (
     <svg
@@ -71,6 +71,44 @@ export const FilterIcon = ({
       viewBox="0 0 31 32"
     >
       <path d="M8.552 7.84h13.616c1.012 0 1.832 0.82 1.832 1.832 0 0.468-0.179 0.918-0.5 1.258l-6.146 6.511v4.507c0 1.469-1.535 2.434-2.859 1.796-0.69-0.332-1.129-1.031-1.129-1.796v-4.507l-6.146-6.511c-0.321-0.34-0.5-0.79-0.5-1.258 0-1.012 0.82-1.832 1.832-1.832z"></path>
+    </svg>
+  );
+};
+
+export const LogOutIcon = () => {
+  return (
+    <svg
+      width="24"
+      height="28"
+      viewBox="0 0 21 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M7.07692 0.5H3.42308C1.80871 0.5 0.5 1.80871 0.5 3.42308V16.5769C0.5 18.1913 1.80871 19.5 3.42308 19.5H7.07692M5.5 10L20.1154 10M20.1154 10L15.7308 14.3846M20.1154 10L15.7308 5.61538"
+        stroke="currentColor"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+};
+
+export const CloseIcon = () => {
+  return (
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.25 0.75L8 7.5M8 7.5L1.25 14.25M8 7.5L14.75 14.25M8 7.5L14.75 0.750001"
+        stroke="black"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 };

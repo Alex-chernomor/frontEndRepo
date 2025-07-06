@@ -1,20 +1,20 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
-import Header from '../../sections/Header/Header.jsx';
-import Hero from '../../sections/Hero/Hero.jsx';
-import Recipes from '../../sections/Recipes/Recipes.jsx';
+import Header from "../../sections/Header/Header.jsx";
+import Hero from "../../sections/Hero/Hero.jsx";
+import Recipes from "../../sections/Recipes/Recipes.jsx";
 // import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
 
-import { fetchRecipesByName } from '../../redux/recipes/operations.js';
+import { fetchRecipesByName } from "../../redux/recipes/operations.js";
 
 import {
   fetchRecipes,
   fetchCategories,
   fetchIngredients,
   fetchRecipesByFilters,
-} from '../../redux/recipes/operations.js';
+} from "../../redux/recipes/operations.js";
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "react-redux";
 // import { resetFilters } from '../../redux/filters/slice.js';
 import {
   selectRecipes,
@@ -23,7 +23,7 @@ import {
   selectTotalPages,
   selectIsLoading,
   selectError,
-} from '../../redux/recipes/selectors.js';
+} from "../../redux/recipes/selectors.js";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -39,14 +39,13 @@ export default function HomePage() {
 
   useEffect(() => {
     dispatch(fetchRecipesByName());
-  }, [dispatch]);
     dispatch(fetchRecipes({ page, perPage }));
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
     dispatch(
       fetchRecipesByFilters({
-        category: selectedCategory?.value || '',
-        ingredient: selectedIngredient?.value || '',
+        category: selectedCategory?.value || "",
+        ingredient: selectedIngredient?.value || "",
       })
     );
   }, [dispatch, page, perPage, selectedCategory, selectedIngredient]);

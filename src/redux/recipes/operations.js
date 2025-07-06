@@ -5,6 +5,19 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 //   perPage: 12,
 // };
 
+export const addToFavorite = createAsyncThunk(
+  "recipes/addToFavorite",
+  async ({ recipeId }, thunkAPI) => {
+    try {
+      const resp = await axios.post(`/api/users/favorites/${recipeId}`);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+
 export const createResipe = createAsyncThunk(
   'recipes/createResipe',
   async ({ recipe }, thunkAPI) => {
@@ -22,11 +35,9 @@ export const createResipe = createAsyncThunk(
 
 export const removeFromFavorite = createAsyncThunk(
   "recipes/removeFromFavorite",
-  async ({ userId, recipeId }, thunkAPI) => {
+  async ({ recipeId }, thunkAPI) => {
     try {
-      const resp = await axios.delete(
-        `/api/users/${userId}/favorites/${recipeId}`
-      );
+      const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.data);

@@ -52,17 +52,6 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
-// export const fetchRecipes = createAsyncThunk(
-//   'recipes/fetchRecipes',
-
-//   async (
-//     {
-//       page = 1,
-//       perPage = 12,
-
-//       category = '',
-//       ingredientId = '',
-//       query = '',
 
 export const fetchRecipesByName = createAsyncThunk(
   "recipes/fetchRecipes",
@@ -80,7 +69,6 @@ export const fetchRecipesByName = createAsyncThunk(
       const response = await axios.get(
         `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
       );
-      console.log("API Response:", response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(

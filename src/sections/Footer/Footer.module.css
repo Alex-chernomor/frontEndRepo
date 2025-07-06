@@ -1,9 +1,10 @@
-px.footer {
+.footer {
   background-color: #3d2218;
 }
 
 .footerContainer {
   display: flex;
+  margin: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -20,7 +21,6 @@ px.footer {
 
 @media screen and (min-width: 1440px) {
   .footerContainer {
-    height:94px;
     flex-direction: row;
     justify-content: space-between;
   }

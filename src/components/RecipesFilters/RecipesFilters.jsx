@@ -59,9 +59,6 @@ const RecipesFilters = ({ setSelectedCategory, setSelectedIngredient }) => {
 
   const hasSelectedFilters = selectedCategory || selectedIngredient;
 
-  console.log('categories', categories);
-  console.log('ingredients', ingredients);
-
   return (
     <div className={css.filtersWrap}>
       <div className={css.countWrap}>

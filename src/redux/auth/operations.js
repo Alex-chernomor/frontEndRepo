@@ -13,6 +13,7 @@ export const register = createAsyncThunk(
   async (userCredentials, thunkAPI) => {
     try {
       const response = await axios.post("/api/auth/register", userCredentials);
+      setAuthHeader(`Bearer ${response.data.token}`);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -27,9 +28,7 @@ export const login = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const response = await axios.post("/api/auth/login", credentials);
-      const token = response.data.data.accessToken;
-      setAuthHeader(`Bearer ${token}`);
-      localStorage.setItem("token", token);
+      setAuthHeader(`Bearer ${response.data.token}`);
       return response.data;
 
       // export const logIn = createAsyncThunk(
@@ -54,8 +53,7 @@ export const login = createAsyncThunk(
 
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await axios.post("/auth/logout");
-    localStorage.removeItem("token"); // якщо токен зберігається там
+    await axios.post("/api/auth/logout");
     setAuthHeader("");
     return;
   } catch (error) {
@@ -64,20 +62,19 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 });
 
 export const refreshUser = createAsyncThunk(
-  "auth/refreshUser",
+  "auth/refresh",
   async (_, thunkAPI) => {
-    const persistedToken = localStorage.getItem("token");
-
-    if (!persistedToken) {
-      return thunkAPI.rejectWithValue("No token found");
-    }
-
     try {
-      setAuthHeader(`Bearer ${persistedToken}`);
+      const reduxState = thunkAPI.getState();
+      setAuthHeader(`Bearer ${reduxState.auth.token}`);
+
       const response = await axios.get("/api/users/current");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
+  },
+  {
+    condition: (_, thunkAPI) => thunkAPI.getState().auth.token !== null,
   }
 );

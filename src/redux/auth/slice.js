@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login, register, logOut, refreshUser } from "./operations";
+import axios from "axios";
 
 const handlePending = (state) => {
   state.isRefreshing = true;
@@ -53,6 +54,7 @@ const slice = createSlice({
         state.user = action.payload;
         state.isRefreshing = false;
         state.isLoggedIn = true;
+        axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
       })
       .addCase(refreshUser.rejected, (state) => {
         state.isRefreshing = false;

@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import filtersReducer from './filters/slice.js';
 import {
   persistStore,
   persistReducer,
@@ -26,6 +27,7 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     recipes: recipesReducer,
+    filters: filtersReducer,
   },
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({

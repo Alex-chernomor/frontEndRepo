@@ -32,6 +32,12 @@
 }
 
 .name {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: calc(29px * 2);
   font-size: 24px;
   font-weight: 700;
   color: #000;

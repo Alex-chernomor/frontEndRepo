@@ -19,12 +19,65 @@ export const createResipe = createAsyncThunk(
   }
 );
 
+export const fetchRecipes = createAsyncThunk(
+  'recipes/fetchRecipes',
+  async ({ page, perPage }, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        `/api/recipes?page=${page}&perPage=${perPage}`
+      );
+
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.message);
+    }
+  }
+);
+
+export const fetchIngredients = createAsyncThunk(
+  'filters/fetchIngredients',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/api/ingredients');
+      // console.log('API Response:', response.data);
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+export const fetchCategories = createAsyncThunk(
+  'filters/fetchCategories',
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get('/api/categories');
+      return response.data.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 // export const fetchRecipes = createAsyncThunk(
 //   'recipes/fetchRecipes',
-//   async ({ page, perPage, category, ingredientId, query }, thunkAPI) => {
+
+//   async (
+//     {
+//       page = 1,
+//       perPage = 12,
+
+//       category = '',
+//       ingredientId = '',
+//       query = '',
+
+//       //       category = "",
+//       //       ingredientId = "",
+//       //       query = "",
+//     } = {},
+//     thunkAPI
+//   ) => {
 //     try {
 //       const response = await axios.get(
-//         '/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}'
+//         `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
 //       );
 //       console.log('API Response:', response.data);
 //       return response.data;
@@ -33,38 +86,6 @@ export const createResipe = createAsyncThunk(
 //     }
 //   }
 // );
-
-export const fetchRecipes = createAsyncThunk(
-  'recipes/fetchRecipes',
-
-  async (
-    {
-      page = 1,
-      perPage = 12,
-
-      category = '',
-      ingredientId = '',
-      query = '',
-
-      //       category = "",
-      //       ingredientId = "",
-      //       query = "",
-    } = {},
-    thunkAPI
-  ) => {
-    try {
-      const response = await axios.get(
-        `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${encodeURIComponent(
-          query
-        )}`
-      );
-      console.log('API Response:', response.data);
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.message);
-    }
-  }
-);
 
 export const fetchFavoriteRecipes = createAsyncThunk(
   'recipes/getFavoritesRecipes',
@@ -82,6 +103,20 @@ export const fetchFavoriteRecipes = createAsyncThunk(
     }
   }
 );
+export const fetchRecipesByFilters = createAsyncThunk(
+  'recipes/fetchByFilters',
+  async ({ category, ingredient }, thunkAPI) => {
+    try {
+      const params = {};
+      if (category) params.category = category;
+      if (ingredient) params.ingredient = ingredient;
+      const response = await axios.get('/api/recipes', { params });
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
 
 export const fetchOwnRecipes = createAsyncThunk(
   'recipes/fetchOwnRecipes',
@@ -92,7 +127,6 @@ export const fetchOwnRecipes = createAsyncThunk(
         perPage,
       });
 
-      console.log(response);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

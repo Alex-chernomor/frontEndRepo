@@ -1,6 +1,10 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+// axios.defaults.params = {
+//   perPage: 12,
+// };
+
 export const addToFavorite = createAsyncThunk(
   "recipes/addToFavorite",
   async ({ userId, recipeId }, thunkAPI) => {
@@ -10,9 +14,7 @@ export const addToFavorite = createAsyncThunk(
       );
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message
-      );
+      return thunkAPI.rejectWithValue(error.response?.data);
     }
   }
 );
@@ -40,9 +42,36 @@ export const removeFromFavorite = createAsyncThunk(
       );
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(
-        error.response?.data?.message || error.message
-      );
+      return thunkAPI.rejectWithValue(error.response?.data);
     }
   }
 );
+
+export const fetchRecipes = createAsyncThunk(
+  "recipes/fetchRecipes",
+  async (_, thunkAPI) => {
+    try {
+      const response = await axios.get(
+        "https://backendrepo-ormv.onrender.com/api/recipes"
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.message);
+    }
+  }
+);
+
+// export const fetchRecipes = createAsyncThunk(
+//   'recipes/fetchRecipes',
+//   async ({ page, perPage, category, ingredientId, query }, thunkAPI) => {
+//     try {
+//       const response = await axios.get(
+//         '/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}'
+//       );
+//       console.log('API Response:', response.data);
+//       return response.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.message);
+//     }
+//   }
+// );

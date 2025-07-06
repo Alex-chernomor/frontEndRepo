@@ -1,7 +1,7 @@
 .header {
   background: #3d2218;
   width: 100%;
-  height: 74px;
+  /* height: 74px; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,6 +17,7 @@
   display: flex;
   justify-content: space-between;
   width: 393px;
+  height: 74px;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1439.8px) {

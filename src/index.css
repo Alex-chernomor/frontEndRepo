@@ -65,11 +65,22 @@ input {
   margin: 0 auto;
 }
 
+.loadMoreBtn {
+  display: block;
+  padding: 16px;
+  width: 100%;
+  margin: 0 auto;
+}
+
 @media screen and (min-width: 768px) {
   .container {
     max-width: 768px;
     padding-right: 32px;
     padding-left: 32px;
+  }
+
+  .loadMoreBtn {
+    width: 340px;
   }
 }
 
@@ -78,5 +89,9 @@ input {
     max-width: 1440px;
     padding-right: 108px;
     padding-left: 108px;
+  }
+
+  .loadMoreBtn {
+    width: 289px;
   }
 }

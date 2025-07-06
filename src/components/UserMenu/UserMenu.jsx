@@ -37,7 +37,7 @@ export default function UserMenu() {
   const firstLetterName = name => name?.trim()?.charAt(0).toUpperCase() || '';
   return (
     <div className={css.container}>
-      <NavLink className={css.link} to="/api/user/current">
+      <NavLink className={css.link} to="/api/users/current">
         My Profile
       </NavLink>
       <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">

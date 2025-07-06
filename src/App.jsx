@@ -1,5 +1,6 @@
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { lazy, Suspense, useEffect } from 'react';
+import { lazy, Suspense } from 'react';
 import Loader from './components/Loader/Loader.jsx';
 import Layout from './components/Layout/Layout.jsx';
 import { useDispatch, useSelector } from 'react-redux';
@@ -68,7 +69,7 @@ export default function App() {
             }
           />
           <Route
-            path="/api/user/current"
+            path="/api/users/current"
             element={
               <PrivateRoute
                 component={<ProfilePage />}

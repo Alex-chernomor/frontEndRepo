@@ -27,11 +27,8 @@ label {
 }
 
 .photoContainer {
-
-
     height: 380px;
     display: flex;
-
     background: #9f9f9f;
     border-radius: 10px;
     text-align: center;

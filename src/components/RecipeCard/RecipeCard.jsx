@@ -31,14 +31,12 @@ export default function RecipeCard({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleLearnMore = () => {
-
-    navigate(`/recipes/${_id}`);
-
+    navigate(`api/recipes/${_id}`);
   };
 
   const handleToggleFavorite = async () => {
     if (!isLoggedIn) {
-      navigate("/auth/login");
+      navigate("api/auth/login");
       return;
     }
 

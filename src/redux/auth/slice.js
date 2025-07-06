@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { login, register, logout } from './operations';
+import { login, register, logOut } from './operations';
 
 const handlePending = state => {
   state.isRefreshing = true;
@@ -41,7 +41,7 @@ const slice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.error = action.error.message;
       })
-      .addCase(logout.fulfilled, state => {
+      .addCase(logOut.fulfilled, state => {
         state.user = { name: null, email: null, error: false };
         state.token = null;
         state.isLoggedIn = false;

@@ -1,12 +1,15 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
-  addToFavorite,
   createResipe,
   removeFromFavorite,
   fetchRecipesByName,
 } from "./operations";
+  fetchRecipes,
+  fetchFavoriteRecipes,
+  fetchOwnRecipes,
+} from './operations';
 
-const handlePending = (state) => {
+const handlePending = state => {
   state.loading = true;
 };
 const handleRejected = (state, { payload }) => {
@@ -15,7 +18,7 @@ const handleRejected = (state, { payload }) => {
 };
 
 const slice = createSlice({
-  name: "recipes",
+  name: 'recipes',
   initialState: {
     recipes: [],
     total: null,
@@ -25,27 +28,27 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
+
       .addCase(fetchRecipesByName.pending, handlePending)
       .addCase(fetchRecipesByName.fulfilled, (state, action) => {
         console.log("✅ fetchRecipes payload:", action.payload);
-        state.loading = false;
-        state.recipes = action.payload.data.data;
-        state.total = action.payload.total;
-        state.page = action.payload.page;
-        state.perPage = action.payload.perPage;
-        state.totalPages = action.payload.totalPages;
-      })
-      .addCase(fetchRecipesByName.rejected, handleRejected)
 
-      .addCase(addToFavorite.pending, handlePending)
-      .addCase(addToFavorite.fulfilled, (state, { payload }) => {
+      .addCase(fetchRecipes.pending, handlePending)
+
+      .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
-        state.error = null;
-        state.recipes = [payload, ...state.recipes];
+
+        state.recipes = action.payload.data.data;
+        state.total = action.payload.data.total;
+        state.page = action.payload.data.page;
+        state.perPage = action.payload.data.perPage;
+        state.totalPages = action.payload.data.totalPages;
       })
-      .addCase(addToFavorite.rejected, handleRejected)
+
+      .addCase(fetchRecipesByName.rejected, handleRejected)
+      .addCase(fetchRecipes.rejected, handleRejected)
       .addCase(createResipe.pending, handlePending)
       .addCase(createResipe.fulfilled, (state, { payload }) => {
         state.loading = false;
@@ -53,16 +56,28 @@ const slice = createSlice({
         state.recipes = payload;
       })
       .addCase(createResipe.rejected, handleRejected)
-
-      .addCase(removeFromFavorite.pending, handlePending)
-      .addCase(removeFromFavorite.fulfilled, (state, { payload }) => {
+      .addCase(fetchFavoriteRecipes.pending, handlePending)
+      .addCase(fetchFavoriteRecipes.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
-        state.recipes = state.recipes.filter(
-          (recipe) => recipe._id !== payload.id
-        );
+        state.recipes = payload.data.data;
+        state.total = payload.data.total;
+        state.page = payload.data.page;
+        state.perPage = payload.data.perPage;
+        state.totalPages = payload.data.totalPages;
       })
-      .addCase(removeFromFavorite.rejected, handleRejected);
+      .addCase(fetchFavoriteRecipes.rejected, handleRejected)
+      .addCase(fetchOwnRecipes.pending, handlePending)
+      .addCase(fetchOwnRecipes.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.recipes = payload.data.data;
+        state.total = payload.data.total;
+        state.page = payload.data.page;
+        state.perPage = payload.data.perPage;
+        state.totalPages = payload.data.totalPages;
+      })
+      .addCase(fetchOwnRecipes.rejected, handleRejected);
   },
 });
 

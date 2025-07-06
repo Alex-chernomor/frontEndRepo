@@ -53,7 +53,6 @@ export default function SearchBox() {
             type="text"
             autoComplete="off"
             name="search"
-            autoFocus
             placeholder="Search recipes"
           />
           <Button className={css.button} type="submit">

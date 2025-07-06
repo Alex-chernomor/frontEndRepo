@@ -1,4 +1,5 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore } from '@reduxjs/toolkit';
+import filtersReducer from './filters/slice.js';
 import {
   persistStore,
   persistReducer,
@@ -8,18 +9,16 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from "redux-persist";
-
-import storage from "redux-persist/lib/storage";
-
-import authReducer from "./auth/slice.js";
-import recipesReducer from "./recipes/slice.js";
+} from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import authReducer from './auth/slice.js';
+import recipesReducer from './recipes/slice.js';
 
 const persistedAuthReducer = persistReducer(
   {
-    key: "user-token",
+    key: 'user-token',
     storage,
-    whitelist: ["token"],
+    whitelist: ['token'],
   },
   authReducer
 );
@@ -28,8 +27,9 @@ export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
     recipes: recipesReducer,
+    filters: filtersReducer,
   },
-  middleware: (getDefaultMiddleware) =>
+  middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],

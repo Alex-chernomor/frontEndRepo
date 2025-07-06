@@ -30,9 +30,9 @@ const UserSchema = Yup.object().shape({
     .min(8, "At least 8 characters")
     .max(128, "At most 128 characters")
     .required("This field is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Please confirm your password"),
+  // confirmPassword: Yup.string()
+  // .oneOf([Yup.ref("password"), null], "Passwords must match")
+  // .required("Please confirm your password"),
   toggle: Yup.boolean().oneOf([true], "You must agree to continue"),
 });
 
@@ -60,7 +60,7 @@ export default function RegistrationForm() {
   //     actions.resetForm();
   //   } catch (error) {
   //     // Пример: показать ошибку на email поле
-  //     actions.setFieldError('email', error.message || 'Registration failed');
+  //     actions.setFieldError("email", error.message || "Registration failed");
   //   }
   // };
   const handleSubmit = (values, actions) => {
@@ -102,7 +102,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-
           <label className={styles.label}>
             Enter your email address
             <Field name="email">
@@ -124,7 +123,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-
           <label className={styles.label}>
             Create a strong password
             <div className={styles.inputWrapper}>
@@ -157,7 +155,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-
           <label className={styles.label}>
             Repeat your password
             <div className={styles.inputWrapper}>
@@ -189,8 +186,7 @@ export default function RegistrationForm() {
               component="span"
               className={styles.error}
             />
-          </label>
-
+          </label>{" "}
           <div className={styles.checkWrapper}>
             <label className={styles.checkLabel}>
               <Field
@@ -206,7 +202,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </div>
-
           <button type="submit" className={styles.button}>
             Create account
           </button>

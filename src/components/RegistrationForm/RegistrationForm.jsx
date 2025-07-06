@@ -1,3 +1,4 @@
+
 import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations";
@@ -7,14 +8,14 @@ import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import { Eye, EyeCrossed } from "../Icons/Icons";
 import { useState } from "react";
-// import { register } from "../../redux/auth/operations";
+import { register } from "../../redux/auth/operations";
 
 const initialValues = {
   name: "",
   email: "",
   password: "",
-  // confirmPassword: "",
-  // toggle: false,
+  confirmPassword: "",
+  toggle: false,
 };
 
 const UserSchema = Yup.object().shape({
@@ -30,9 +31,9 @@ const UserSchema = Yup.object().shape({
     .min(8, "At least 8 characters")
     .max(128, "At most 128 characters")
     .required("This field is required"),
-  // confirmPassword: Yup.string()
-  // .oneOf([Yup.ref("password"), null], "Passwords must match")
-  // .required("Please confirm your password"),
+  confirmPassword: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Passwords must match")
+    .required("Please confirm your password"),
   toggle: Yup.boolean().oneOf([true], "You must agree to continue"),
 });
 
@@ -53,18 +54,19 @@ export default function RegistrationForm() {
     setConfirmPassEye((prev) => !prev);
   };
 
-  // const handleSubmit = async (values, actions) => {
-  //   const { confirmPassword, toggle, ...dataToSend } = values;
-  //   try {
-  //     await dispatch(register(dataToSend)).unwrap();
-  //     actions.resetForm();
-  //   } catch (error) {
-  //     // Пример: показать ошибку на email поле
-  //     actions.setFieldError("email", error.message || "Registration failed");
-  //   }
-  // };
-  const handleSubmit = (values, actions) => {
-    dispatch(register(values));
+const handleSubmit = async (values, actions) => {
+    const { confirmPassword, toggle, ...dataToSend } = values;
+    try {
+      await dispatch(register(dataToSend)).unwrap();
+
+      actions.resetForm();
+      toast.success(Welcome, ${loginResult.user.name}!);
+      navigate('/');
+    } catch (error) {
+      actions.setFieldError('email', error?.message || 'Registration failed');
+      toast.error(error?.message);
+      console.error(error?.message);
+    }
   };
 
   return (
@@ -78,7 +80,7 @@ export default function RegistrationForm() {
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
-        // validationSchema={UserSchema}
+        validationSchema={UserSchema}
       >
         <Form className={styles.form} autoComplete="off">
           <label className={styles.label}>
@@ -102,6 +104,7 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
+
           <label className={styles.label}>
             Enter your email address
             <Field name="email">
@@ -123,7 +126,8 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-          <label className={styles.label}>
+
+<label className={styles.label}>
             Create a strong password
             <div className={styles.inputWrapper}>
               <Field name="password">
@@ -155,6 +159,7 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
+
           <label className={styles.label}>
             Repeat your password
             <div className={styles.inputWrapper}>
@@ -186,7 +191,8 @@ export default function RegistrationForm() {
               component="span"
               className={styles.error}
             />
-          </label>{" "}
+          </label>
+
           <div className={styles.checkWrapper}>
             <label className={styles.checkLabel}>
               <Field
@@ -202,6 +208,7 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </div>
+
           <button type="submit" className={styles.button}>
             Create account
           </button>

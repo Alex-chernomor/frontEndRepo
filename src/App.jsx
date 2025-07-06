@@ -5,6 +5,9 @@ import { Toaster } from "react-hot-toast";
 
 import Loader from "./components/Loader/Loader.jsx";
 import Layout from "./components/Layout/Layout.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { refreshUser } from "./redux/auth/operations.js";
+import { selectIsRefreshing } from "./redux/auth/selectors.js";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage.jsx"));
@@ -23,8 +26,16 @@ const NotFoundPage = lazy(() =>
 );
 
 export default function App() {
-  return (
+  const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
 
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  return isRefreshing ? (
+    <strong>Getting user data please wait...</strong>
+  ) : (
     <Layout>
       <Suspense fallback={<Loader />}>
         <Routes>
@@ -39,23 +50,22 @@ export default function App() {
       </Suspense>
     </Layout>
 
-//     <>
-//       <Layout>
-//         <Suspense fallback={<Loader />}>
-//           <Routes>
-//             <Route path="/" element={<HomePage />} />
-//             <Route path="/api/auth/login" element={<LoginPage />} />
-//             <Route path="/api/auth/register" element={<RegistrationPage />} />
-//             <Route path="/api/add-recipe" element={<AddrecipePage />} />
-//             <Route path="/api/user/current" element={<ProfilePage />} />
-//             <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
-//             <Route path="*" element={<NotFoundPage />} />
-//           </Routes>
-//         </Suspense>
-//       </Layout>
+    //     <>
+    //       <Layout>
+    //         <Suspense fallback={<Loader />}>
+    //           <Routes>
+    //             <Route path="/" element={<HomePage />} />
+    //             <Route path="/api/auth/login" element={<LoginPage />} />
+    //             <Route path="/api/auth/register" element={<RegistrationPage />} />
+    //             <Route path="/api/add-recipe" element={<AddrecipePage />} />
+    //             <Route path="/api/user/current" element={<ProfilePage />} />
+    //             <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
+    //             <Route path="*" element={<NotFoundPage />} />
+    //           </Routes>
+    //         </Suspense>
+    //       </Layout>
 
-//       <Toaster position="top-center" reverseOrder={false} />
-//     </>
-
+    //       <Toaster position="top-center" reverseOrder={false} />
+    //     </>
   );
 }

@@ -1,18 +1,18 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
-import toast from 'react-hot-toast';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
+import toast from "react-hot-toast";
 
-const setAuthHeader = value => {
+const setAuthHeader = (value) => {
   axios.defaults.headers.common.Authorization = value;
 };
 
-axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
+axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com";
 
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (userCredentials, thunkAPI) => {
     try {
-      const response = await axios.post('/api/auth/register', userCredentials);
+      const response = await axios.post("/api/auth/register", userCredentials);
       return response.data;
     } catch (error) {
       console.error(error);
@@ -23,11 +23,13 @@ export const register = createAsyncThunk(
 
 // LOGIN
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('/api/auth/login', credentials);
-      setAuthHeader(`Bearer ${response.data.data.accessToken}`);
+      const response = await axios.post("/api/auth/login", credentials);
+      const token = response.data.data.accessToken;
+      setAuthHeader(`Bearer ${token}`);
+      localStorage.setItem("token", token);
       return response.data;
 
       // export const logIn = createAsyncThunk(
@@ -50,13 +52,32 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await axios.post('/auth/logout');
-    localStorage.removeItem('token'); // якщо токен зберігається там
-    setAuthHeader('');
+    await axios.post("/auth/logout");
+    localStorage.removeItem("token"); // якщо токен зберігається там
+    setAuthHeader("");
     return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
 });
+
+export const refreshUser = createAsyncThunk(
+  "auth/refreshUser",
+  async (_, thunkAPI) => {
+    const persistedToken = localStorage.getItem("token");
+
+    if (!persistedToken) {
+      return thunkAPI.rejectWithValue("No token found");
+    }
+
+    try {
+      setAuthHeader(`Bearer ${persistedToken}`);
+      const response = await axios.get("/api/users/current");
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);

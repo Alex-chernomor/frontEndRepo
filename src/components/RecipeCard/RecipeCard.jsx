@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import css from "./RecipeCard.module.css";
 import Button from "../Button/Button";
 import {
@@ -20,6 +20,7 @@ export default function RecipeCard({
 }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const user = useSelector(selectUser);
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -31,14 +32,16 @@ export default function RecipeCard({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleLearnMore = () => {
-
-    navigate(`/recipes/${_id}`);
-
+    navigate(`api/recipes/${_id}`);
   };
 
   const handleToggleFavorite = async () => {
     if (!isLoggedIn) {
-      navigate("/auth/login");
+      navigate("api/auth/login", { state: { from: location } });
+      return;
+    }
+    if (!user?._id) {
+      console.warn("User ID is undefined. Cannot toggle favorite.");
       return;
     }
 

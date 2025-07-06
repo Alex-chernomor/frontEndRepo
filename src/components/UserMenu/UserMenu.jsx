@@ -12,10 +12,9 @@ export default function UserMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
+
   const userName = user?.name || 'User';
-  // const handleLogoutClick = () => {
-  //   setIsLogoutModalOpen(true);
-  // };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -24,9 +23,6 @@ export default function UserMenu() {
     setIsModalOpen(true);
     dispatch(logOut());
   };
-  // const handleLogout = () => {
-  //   dispatch(logout());
-  // };
 
   //! charAt(0) повертає першу літеру рядка
   const firstLetterName = name => name?.trim()?.charAt(0).toUpperCase() || '';

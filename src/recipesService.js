@@ -11,3 +11,13 @@ export const getRecipeById = async recipeId => {
   const resp = await axios.get(`${backEndUrl}/${recipeId}`);
   return resp.data.data;
 };
+
+export const addToFavorite = async recipeId => {
+  const resp = await axios.post(`/api/users/favorites/${recipeId}`);
+  return resp.data;
+};
+
+export const removeFromFavorite = async recipeId => {
+  const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
+  return resp.data;
+};

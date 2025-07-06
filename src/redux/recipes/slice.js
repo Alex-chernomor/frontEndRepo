@@ -1,12 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
-import {
-  addToFavorite,
-  createResipe,
-  removeFromFavorite,
-  fetchRecipes,
-} from "./operations";
+import { createSlice } from '@reduxjs/toolkit';
+import { createResipe, fetchRecipes } from './operations';
 
-const handlePending = (state) => {
+const handlePending = state => {
   state.loading = true;
 };
 const handleRejected = (state, { payload }) => {
@@ -15,7 +10,7 @@ const handleRejected = (state, { payload }) => {
 };
 
 const slice = createSlice({
-  name: "recipes",
+  name: 'recipes',
   initialState: {
     recipes: [],
     total: null,
@@ -25,11 +20,10 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
-        console.log("✅ fetchRecipes payload:", action.payload);
         state.loading = false;
         state.recipes = action.payload.data.data;
         state.total = action.payload.total;
@@ -38,31 +32,13 @@ const slice = createSlice({
         state.totalPages = action.payload.totalPages;
       })
       .addCase(fetchRecipes.rejected, handleRejected)
-
-      .addCase(addToFavorite.pending, handlePending)
-      .addCase(addToFavorite.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.recipes = [payload, ...state.recipes];
-      })
-      .addCase(addToFavorite.rejected, handleRejected)
       .addCase(createResipe.pending, handlePending)
       .addCase(createResipe.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.error = null;
         state.recipes = payload;
       })
-      .addCase(createResipe.rejected, handleRejected)
-
-      .addCase(removeFromFavorite.pending, handlePending)
-      .addCase(removeFromFavorite.fulfilled, (state, { payload }) => {
-        state.loading = false;
-        state.error = null;
-        state.recipes = state.recipes.filter(
-          (recipe) => recipe._id !== payload.id
-        );
-      })
-      .addCase(removeFromFavorite.rejected, handleRejected);
+      .addCase(createResipe.rejected, handleRejected);
   },
 });
 

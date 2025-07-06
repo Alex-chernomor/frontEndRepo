@@ -1,40 +1,40 @@
-
-import * as Yup from "yup";
-import { useDispatch } from "react-redux";
-import { register } from "../../redux/auth/operations";
-import { Field, Form, Formik, ErrorMessage } from "formik";
-import styles from "./RegistrationForm.module.css";
-import { NavLink } from "react-router-dom";
-import clsx from "clsx";
-import { Eye, EyeCrossed } from "../Icons/Icons";
-import { useState } from "react";
-import { register } from "../../redux/auth/operations";
+Ситий Тато, [06/07/2025 13:31]
+import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { register } from '../../redux/auth/operations';
+import { Field, Form, Formik, ErrorMessage } from 'formik';
+import styles from './RegistrationForm.module.css';
+import { NavLink, useNavigate } from 'react-router-dom';
+import clsx from 'clsx';
+import { Eye, EyeCrossed } from '../Icons/Icons';
+import { useState } from 'react';
+import toast, { Toaster } from 'react-hot-toast';
 
 const initialValues = {
-  name: "",
-  email: "",
-  password: "",
-  // confirmPassword: "",
-  // toggle: false,
+  name: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+  toggle: false,
 };
 
 const UserSchema = Yup.object().shape({
   name: Yup.string()
-    .min(1, "Too short!")
-    .max(16, "Too long!")
-    .required("This field is required"),
+    .min(1, 'Too short!')
+    .max(16, 'Too long!')
+    .required('This field is required'),
   email: Yup.string()
-    .email("Invalid email")
-    .max(128, "Too long!")
-    .required("This field is required"),
+    .email('Invalid email')
+    .max(128, 'Too long!')
+    .required('This field is required'),
   password: Yup.string()
-    .min(8, "At least 8 characters")
-    .max(128, "At most 128 characters")
-    .required("This field is required"),
+    .min(8, 'At least 8 characters')
+    .max(128, 'At most 128 characters')
+    .required('This field is required'),
   confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password"), null], "Passwords must match")
-    .required("Please confirm your password"),
-  toggle: Yup.boolean().oneOf([true], "You must agree to continue"),
+    .oneOf([Yup.ref('password'), null], 'Passwords must match')
+    .required('Please confirm your password'),
+  toggle: Yup.boolean().oneOf([true], 'You must agree to continue'),
 });
 
 const getLinkStyles = ({ isActive }) => {
@@ -45,32 +45,32 @@ export default function RegistrationForm() {
   const [passwordEye, setPasswordEye] = useState(false);
   const [confirmPassEye, setConfirmPassEye] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handlePasswordClick = () => {
-    setPasswordEye((prev) => !prev);
+    setPasswordEye(prev => !prev);
   };
 
   const handleConfirmPassClick = () => {
-    setConfirmPassEye((prev) => !prev);
+    setConfirmPassEye(prev => !prev);
   };
 
-const handleSubmit = async (values, actions) => {
+  const handleSubmit = async (values, actions) => {
     const { confirmPassword, toggle, ...dataToSend } = values;
     try {
       await dispatch(register(dataToSend)).unwrap();
-
       actions.resetForm();
-      toast.success(Welcome, ${loginResult.user.name}!);
       navigate('/');
     } catch (error) {
+      // Пример: показать ошибку на email поле
       actions.setFieldError('email', error?.message || 'Registration failed');
       toast.error(error?.message);
-      console.error(error?.message);
     }
   };
 
   return (
     <div className={styles.registerContainer}>
+      <Toaster position="top-right" reverseOrder={false} />
       <h1 className={styles.header}>Register</h1>
       <p className={styles.text}>
         Join our community of culinary enthusiasts, save your favorite recipes,
@@ -127,6 +127,7 @@ const handleSubmit = async (values, actions) => {
             />
           </label>
 
+Ситий Тато, [06/07/2025 13:31]
 <label className={styles.label}>
             Create a strong password
             <div className={styles.inputWrapper}>
@@ -134,7 +135,7 @@ const handleSubmit = async (values, actions) => {
                 {({ field, meta }) => (
                   <input
                     {...field}
-                    type={passwordEye ? "text" : "password"}
+                    type={passwordEye ? 'text' : 'password'}
                     placeholder="*********"
                     className={clsx(
                       styles.input,
@@ -147,7 +148,7 @@ const handleSubmit = async (values, actions) => {
                 type="button"
                 className={styles.eyeBtn}
                 onClick={handlePasswordClick}
-                aria-label={passwordEye ? "Hide password" : "Show password"}
+                aria-label={passwordEye ? 'Hide password' : 'Show password'}
                 aria-pressed={passwordEye}
               >
                 {passwordEye ? <Eye /> : <EyeCrossed />}
@@ -167,7 +168,7 @@ const handleSubmit = async (values, actions) => {
                 {({ field, meta }) => (
                   <input
                     {...field}
-                    type={confirmPassEye ? "text" : "password"}
+                    type={confirmPassEye ? 'text' : 'password'}
                     placeholder="*********"
                     className={clsx(
                       styles.input,
@@ -180,7 +181,7 @@ const handleSubmit = async (values, actions) => {
                 type="button"
                 className={styles.eyeBtn}
                 onClick={handleConfirmPassClick}
-                aria-label={confirmPassEye ? "Hide password" : "Show password"}
+                aria-label={confirmPassEye ? 'Hide password' : 'Show password'}
                 aria-pressed={confirmPassEye}
               >
                 {confirmPassEye ? <Eye /> : <EyeCrossed />}
@@ -216,7 +217,7 @@ const handleSubmit = async (values, actions) => {
       </Formik>
 
       <p className={styles.text}>
-        Already have an account?{" "}
+        Already have an account?{' '}
         <NavLink to="/api/auth/login" className={getLinkStyles}>
           Log in
         </NavLink>

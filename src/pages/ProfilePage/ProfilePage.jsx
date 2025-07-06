@@ -1,6 +1,18 @@
-import React from "react";
-import Header from "../../sections/Header/Header";
+import { Suspense } from "react";
+import { Outlet } from "react-router-dom";
+import SectionTitle from "../../components/SectionTitle/SectionTitle";
+import ProfileNavigation from "../../components/ProfileNavigation/ProfileNavigation";
+import Loader from "../../components/Loader/Loader";
+import css from "./ProfilePage.module.css";
 
 export default function ProfilePage() {
-  return <div>profile page</div>;
+  return (
+    <section className={`container ${css.profileSection}`}>
+      <SectionTitle>My profile</SectionTitle>
+      <ProfileNavigation />
+      <Suspense fallback={<Loader />}>
+        <Outlet />
+      </Suspense>
+    </section>
+  );
 }

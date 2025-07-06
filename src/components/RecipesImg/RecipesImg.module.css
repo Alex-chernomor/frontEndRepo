@@ -3,29 +3,34 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  width: 361px;
+  /* width: 361px; */
+  width: 100%;
+  max-width: 361px;
   height: 276px;
   background-size: cover;
-  background-color: #faf3e0;
+  background-color: #36363a;
   overflow: hidden;
   margin: 32px auto;
 }
 .img {
-  object-fit: cover;
-  width: auto;
-  height: 100%;
+  object-fit: contain;
+  /* width: auto;
+  height: 100%;  */
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 8px;
 }
 
 @media screen and (min-width: 768px) {
   .thumb {
-    width: 704px;
+    max-width: 704px;
     height: 624px;
   }
 }
 
 @media screen and (min-width: 1440px) {
   .thumb {
-    width: 1225px;
+    max-width: 1225px;
     height: 624px;
   }
 }

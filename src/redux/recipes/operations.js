@@ -52,28 +52,25 @@ export const fetchCategories = createAsyncThunk(
     }
   }
 );
-export const fetchRecipes = createAsyncThunk(
-  'recipes/fetchRecipes',
+// export const fetchRecipes = createAsyncThunk(
+//   'recipes/fetchRecipes',
 
-  async (
-    {
-      page = 1,
-      perPage = 12,
+//   async (
+//     {
+//       page = 1,
+//       perPage = 12,
 
-      category = '',
-      ingredientId = '',
-      query = '',
+//       category = '',
+//       ingredientId = '',
+//       query = '',
 
 
 export const fetchRecipesByName = createAsyncThunk(
-  'recipes/fetchRecipes',
+  'recipes/fetchRecipesByName',
   async ({ page = 1, perPage = 12, category = '', ingredientId = '', query = '' } = {}, thunkAPI) => {
-    } = {},
-    thunkAPI
-  ) => {
     try {
       const response = await axios.get(
-        `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
+        `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${encodeURIComponent(query)}`
       );
       console.log('API Response:', response.data);
       return response.data;
@@ -82,6 +79,7 @@ export const fetchRecipesByName = createAsyncThunk(
     }
   }
 );
+
 
 export const fetchFavoriteRecipes = createAsyncThunk(
   'recipes/getFavoritesRecipes',

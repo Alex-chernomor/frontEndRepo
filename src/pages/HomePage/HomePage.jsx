@@ -39,7 +39,6 @@ export default function HomePage() {
 
   useEffect(() => {
     dispatch(fetchRecipesByName());
-  }, [dispatch]);
     dispatch(fetchRecipes({ page, perPage }));
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
@@ -62,18 +61,6 @@ export default function HomePage() {
   const isVisible =
     page < totalPages && !isLoading && !error && recipes.length > 0;
 
-  // console.log(
-  //   'page:',
-  //   page,
-  //   'totalPages:',
-  //   totalPages,
-  //   'recipes.length:',
-  //   recipes.length,
-  //   'isLoading:',
-  //   isLoading,
-  //   'error:',
-  //   error
-  // );
   return (
     <div>
       <Hero />

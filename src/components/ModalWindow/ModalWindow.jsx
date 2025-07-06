@@ -2,17 +2,20 @@ import React, { useEffect } from "react";
 // import { createPortal } from "react-dom";
 import css from "./ModalWindow.module.css";
 import Button from "../Button/Button";
+import { CloseIcon } from "../Icons/Icons.jsx";
 
 // const modalRoot = document.querySelector("#modal-root") ?? document.body;
 
 const MODAL_CONFIG = {
   unauthorised: {
     title: "Error while saving",
-    message: "To save this recipe, you need to authorize first",
+    message: "To save this recipe, you need to\nauthorize first!",
     confirmLabel: "Log in",
     cancelLabel: "Register",
     confirmVariant: "secondary",
     cancelVariant: "primary",
+    confirmClass: "unauthConfirmBtn",
+    cancelClass: "unauthCancelBtn",
   },
   logout: {
     title: "Are you sure?",
@@ -21,6 +24,8 @@ const MODAL_CONFIG = {
     cancelLabel: "Cancel",
     confirmVariant: "danger",
     cancelVariant: "secondary",
+    confirmClass: "logoutBtn",
+    cancelClass: "cancelBtn",
   },
   success: {
     title: "Done! Recipe saved",
@@ -28,6 +33,7 @@ const MODAL_CONFIG = {
     confirmLabel: "Go to My Profile",
     cancelLabel: null,
     confirmVariant: "primary",
+    confirmClass: "successBtn",
   },
 };
 
@@ -57,22 +63,12 @@ export default function ModalWindow({ type, onConfirm, onCancel, onClose }) {
 
   return (
     <div className={css.backdrop} onClick={onClose}>
-      <div className={css.modal} onClick={(e) => e.stopPropagation()}>
+      <div
+        className={`${css.modal} ${css[type]}`}
+        onClick={(e) => e.stopPropagation()}
+      >
         <button className={css.closeBtn} onClick={onClose} aria-label="Close">
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.25 0.75L8 7.5M8 7.5L1.25 14.25M8 7.5L14.75 14.25M8 7.5L14.75 0.750001"
-              stroke="black"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <CloseIcon />
         </button>
         <h2 className={css.title}>{config.title}</h2>
         <p className={css.message}>{config.message}</p>
@@ -80,7 +76,7 @@ export default function ModalWindow({ type, onConfirm, onCancel, onClose }) {
           <Button
             onClick={onConfirm}
             variant={config.confirmVariant}
-            className={css.button}
+            className={css[config.confirmClass] ?? ""}
           >
             {config.confirmLabel}
           </Button>
@@ -88,6 +84,7 @@ export default function ModalWindow({ type, onConfirm, onCancel, onClose }) {
             <Button
               onClick={onCancel ?? onClose}
               variant={config.cancelVariant}
+              className={css[config.cancelClass] ?? ""}
             >
               {config.cancelLabel}
             </Button>

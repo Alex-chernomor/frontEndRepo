@@ -76,3 +76,8 @@
 .icon {
   color: #ffffff;
 }
+
+.divNavAndBurger {
+  display: flex;
+  justify-content: center;
+}

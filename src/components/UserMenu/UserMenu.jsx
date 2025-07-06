@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import css from './UserMenu.module.css';
-import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/selectors';
-import { logOut } from '../../redux/auth/operations';
-import { LogOutIcon } from '../Icons/Icons';
+import { useState } from "react";
+import css from "./UserMenu.module.css";
+import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/auth/selectors";
+import { logOut } from "../../redux/auth/operations";
+import { LogOutIcon } from "../Icons/Icons";
 
-import ModalWindow from '../ModalWindow/ModalWindow.jsx';
+import ModalWindow from "../ModalWindow/ModalWindow.jsx";
 
 export default function UserMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
-  const userName = user?.name || 'User';
+  const userName = user?.name || "User";
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -25,11 +25,11 @@ export default function UserMenu() {
   };
 
   //! charAt(0) повертає першу літеру рядка
-  const firstLetterName = name => name?.trim()?.charAt(0).toUpperCase() || '';
+  const firstLetterName = (name) => name?.trim()?.charAt(0).toUpperCase() || "";
 
   return (
     <div className={css.container}>
-      <NavLink className={css.link} to="/api/user/current">
+      <NavLink className={css.link} to="/api/users/current">
         My Profile
       </NavLink>
       <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">

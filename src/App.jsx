@@ -69,7 +69,7 @@ export default function App() {
             }
           />
           <Route
-            path="/api/user/current"
+            path="/api/users/current"
             element={
               <PrivateRoute
                 component={<ProfilePage />}

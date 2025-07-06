@@ -31,9 +31,7 @@ export default function RecipeCard({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleLearnMore = () => {
-
     navigate(`/recipes/${_id}`);
-
   };
 
   const handleToggleFavorite = async () => {
@@ -45,9 +43,9 @@ export default function RecipeCard({
     setIsUpdating(true);
     try {
       if (isFavorite) {
-        await dispatch(removeFromFavorite({ userId: user._id, recipeId: _id }));
+        await dispatch(removeFromFavorite({ recipeId: _id }));
       } else {
-        await dispatch(addToFavorite({ userId: user._id, recipeId: _id }));
+        await dispatch(addToFavorite({ recipeId: _id }));
       }
     } catch (error) {
       console.error("Favorite toggle error:", error);

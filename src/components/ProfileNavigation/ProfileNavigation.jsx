@@ -6,9 +6,9 @@ function addClasses({ isActive }) {
   return clsx(css.itemLink, isActive && css.activeLink);
 }
 
-export const ProfileNavigation = () => {
+const ProfileNavigation = () => {
   return (
-    <ul>
+    <ul className={css.navList}>
       <li>
         <NavLink to="own" className={addClasses}>
           My Recipes
@@ -22,3 +22,5 @@ export const ProfileNavigation = () => {
     </ul>
   );
 };
+
+export default ProfileNavigation;

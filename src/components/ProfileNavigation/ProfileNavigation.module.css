@@ -1,3 +1,9 @@
+.navList {
+  display: flex;
+  gap: 38px;
+  margin-bottom: 16px;
+}
+
 .itemLink {
   font-weight: 600;
   font-size: 12px;
@@ -14,6 +20,10 @@
 }
 
 @media screen and (min-width: 768px) {
+  .navList {
+    gap: 48px;
+  }
+
   .itemLink:not(:last-child) {
     margin-right: 48px;
   }

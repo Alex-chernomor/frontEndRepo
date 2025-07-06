@@ -4,7 +4,7 @@ import toast, { Toaster } from "react-hot-toast";
 import Button from "../Button/Button";
 import css from "./SearchBox.module.css";
 import { useDispatch } from "react-redux";
-import { fetchRecipes } from "../../redux/recipes/operations";
+import { fetchRecipesByName } from "../../redux/recipes/operations";
 
 export default function SearchBox() {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function SearchBox() {
   }
 
   try {
-    const result = await dispatch(fetchRecipes({ query: trimmedValue }));
+    const result = await dispatch(fetchRecipesByName({ query: trimmedValue }));
 
     if (result.type.endsWith("rejected")) {
       toast.error("Recipe not found!");

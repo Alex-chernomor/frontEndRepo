@@ -90,7 +90,7 @@ export const removeFromFavorite = createAsyncThunk(
 //   }
 // );
 
-export const fetchRecipes = createAsyncThunk(
+export const fetchRecipesByName = createAsyncThunk(
   'recipes/fetchRecipes',
   async ({ page = 1, perPage = 12, category = '', ingredientId = '', query = '' } = {}, thunkAPI) => {
     try {

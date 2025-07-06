@@ -3,7 +3,7 @@ import {
   addToFavorite,
   createResipe,
   removeFromFavorite,
-  fetchRecipes,
+  fetchRecipesByName,
 } from "./operations";
 
 const handlePending = (state) => {
@@ -27,8 +27,8 @@ const slice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchRecipes.pending, handlePending)
-      .addCase(fetchRecipes.fulfilled, (state, action) => {
+      .addCase(fetchRecipesByName.pending, handlePending)
+      .addCase(fetchRecipesByName.fulfilled, (state, action) => {
         console.log("✅ fetchRecipes payload:", action.payload);
         state.loading = false;
         state.recipes = action.payload.data.data;
@@ -37,7 +37,7 @@ const slice = createSlice({
         state.perPage = action.payload.perPage;
         state.totalPages = action.payload.totalPages;
       })
-      .addCase(fetchRecipes.rejected, handleRejected)
+      .addCase(fetchRecipesByName.rejected, handleRejected)
 
       .addCase(addToFavorite.pending, handlePending)
       .addCase(addToFavorite.fulfilled, (state, { payload }) => {

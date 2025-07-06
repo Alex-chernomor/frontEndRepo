@@ -1,9 +1,16 @@
-import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import Button from '../Button/Button.jsx';
 import Select from 'react-select';
 
 import css from './RecipesFilters.module.css';
 import { RecipeCount } from '../RecipeCount/RecipeCount.jsx';
+import {
+  selectTotalCount,
+  selectFilterCategories,
+  selectFilterIngredients,
+  selectSelectedCategory,
+  selectSelectedIngredient,
+} from '../../redux/filters/selectors.js';
 
 const customStyles = {
   control: provided => ({
@@ -13,6 +20,7 @@ const customStyles = {
     minWidth: '179px',
     border: '1px solid #d9d9d9',
     borderRadius: '4px',
+    backgroundColor: 'inherit',
   }),
   valueContainer: provided => ({
     ...provided,
@@ -36,12 +44,13 @@ const customStyles = {
   }),
 };
 
-const RecipesFilters = () => {
-  const categories = ['Lunch', 'Dinner'];
-  const ingredients = ['Eggs', 'Tomatoes'];
+const RecipesFilters = ({ setSelectedCategory, setSelectedIngredient }) => {
+  const total = useSelector(selectTotalCount);
+  const categories = useSelector(selectFilterCategories);
+  const ingredients = useSelector(selectFilterIngredients);
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
+  const selectedCategory = useSelector(selectSelectedCategory);
+  const selectedIngredient = useSelector(selectSelectedIngredient);
 
   const handleReset = () => {
     setSelectedCategory(null);
@@ -50,10 +59,13 @@ const RecipesFilters = () => {
 
   const hasSelectedFilters = selectedCategory || selectedIngredient;
 
+  console.log('categories', categories);
+  console.log('ingredients', ingredients);
+
   return (
     <div className={css.filtersWrap}>
       <div className={css.countWrap}>
-        <RecipeCount className={css.count} />
+        <RecipeCount count={total} />
       </div>
       <div className={css.filtersBox}>
         <Button
@@ -63,8 +75,9 @@ const RecipesFilters = () => {
         >
           Reset filters
         </Button>
+
         <Select
-          options={categories.map(cat => ({ label: cat, value: cat }))}
+          options={categories.map(cat => ({ label: cat.name, value: cat._id }))}
           value={selectedCategory}
           onChange={setSelectedCategory}
           placeholder="Category"
@@ -72,7 +85,10 @@ const RecipesFilters = () => {
           styles={customStyles}
         />
         <Select
-          options={ingredients.map(ing => ({ label: ing, value: ing }))}
+          options={ingredients.map(ing => ({
+            label: ing.name,
+            value: ing._id,
+          }))}
           value={selectedIngredient}
           onChange={setSelectedIngredient}
           placeholder="Ingredient"

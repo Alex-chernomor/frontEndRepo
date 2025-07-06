@@ -1,4 +1,3 @@
-Ситий Тато, [06/07/2025 13:31]
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from '../../redux/auth/operations';
@@ -104,7 +103,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-
           <label className={styles.label}>
             Enter your email address
             <Field name="email">
@@ -126,9 +124,7 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-
-Ситий Тато, [06/07/2025 13:31]
-<label className={styles.label}>
+          <label className={styles.label}>
             Create a strong password
             <div className={styles.inputWrapper}>
               <Field name="password">
@@ -160,7 +156,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-
           <label className={styles.label}>
             Repeat your password
             <div className={styles.inputWrapper}>
@@ -193,7 +188,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </label>
-
           <div className={styles.checkWrapper}>
             <label className={styles.checkLabel}>
               <Field
@@ -209,7 +203,6 @@ export default function RegistrationForm() {
               className={styles.error}
             />
           </div>
-
           <button type="submit" className={styles.button}>
             Create account
           </button>

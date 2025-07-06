@@ -1,16 +1,18 @@
+import { useState } from 'react';
+import css from './UserMenu.module.css';
+import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../redux/auth/selectors';
+import { logOut } from '../../redux/auth/operations';
+import { LogOutIcon } from '../Icons/Icons';
 
-import React, { useState } from "react";
-import css from "./UserMenu.module.css";
-import { NavLink } from "react-router-dom";
-import { useDispatch } from "react-redux";
-// import { selectUser } from "../../redux/auth/selectors";
-import { logOut } from "../../redux/auth/operations";
-import { LogOutIcon } from "../Icons/Icons";
-
-import ModalWindow from "../ModalWindow/ModalWindow.jsx";
+import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 
 export default function UserMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const userName = user?.name || 'User';
   // const handleLogoutClick = () => {
   //   setIsLogoutModalOpen(true);
   // };
@@ -18,38 +20,16 @@ export default function UserMenu() {
     setIsModalOpen(false);
   };
 
-  // const user = useSelector(selectUser);
-  // const firstLetterName = function (name) {
-  //   return String(name.split(" ")).split("")[0].split("")[0];
-  // };
-
-  const dispatch = useDispatch();
   const handleLogout = () => {
     setIsModalOpen(true);
     dispatch(logOut());
   };
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  // };
 
-// import { NavLink } from "react-router-dom";
-// import css from "./UserMenu.module.css";
-
-// import { selectUser } from "../../redux/auth/selectors";
-// import { useDispatch, useSelector } from "react-redux";
-// import { logout } from "../../redux/auth/operations";
-
-// export default function UserMenu() {
-//   const dispatch = useDispatch();
-//   const user = useSelector(selectUser);
-
-
-//   const handleLogout = () => {
-//     dispatch(logout());
-//   };
-
-//   let userName = user.name;
-
-//   const firstLetterName = function (name) {
-//     return String(name.split(" ")).split("")[0].split("")[0];
-//   };
+  //! charAt(0) повертає першу літеру рядка
+  const firstLetterName = name => name?.trim()?.charAt(0).toUpperCase() || '';
 
   return (
     <div className={css.container}>

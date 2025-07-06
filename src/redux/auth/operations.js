@@ -1,32 +1,13 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-import toast from "react-hot-toast";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
-const setAuthHeader = (value) => {
+const setAuthHeader = value => {
   axios.defaults.headers.common.Authorization = value;
 };
 
+axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
 
-axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com/api";
-// axios.defaults.baseURL = "/api";
-
-// const setAuthHeader = (value) => {
-//   axios.defaults.headers.common.Authorization = value;
-// };
-
-
-// const setAuthHeader = value => {
-//   axios.defaults.headers.common.Authorization = value;
-// };
-
-
-axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com";
-
-
-// axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
-
-
-// REGISTER
 export const register = createAsyncThunk(
   'auth/register',
   async (userCredentials, thunkAPI) => {
@@ -42,30 +23,26 @@ export const register = createAsyncThunk(
 
 // LOGIN
 export const login = createAsyncThunk(
-  "auth/login",
+  'auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post("/auth/login", credentials);
-
+      const response = await axios.post('/api/auth/login', credentials);
       setAuthHeader(`Bearer ${response.data.data.accessToken}`);
-      toast.success("Logged in successfully!");
-      console.log(response.data);
       return response.data;
 
-// export const logIn = createAsyncThunk(
-//   "api/auth/login",
-//   async (credentials, thunkAPI) => {
-//     try {
-//       const response = await axios.post(
-//         "https://backendrepo-ormv.onrender.com/api/auth/login",
-//         credentials
-//       );
-//       const { accessToken, name } = response.data.data;
-//       return {
-//         user: { name },
-//         token: accessToken,
-//       };
-
+      // export const logIn = createAsyncThunk(
+      //   "api/auth/login",
+      //   async (credentials, thunkAPI) => {
+      //     try {
+      //       const response = await axios.post(
+      //         "https://backendrepo-ormv.onrender.com/api/auth/login",
+      //         credentials
+      //       );
+      //       const { accessToken, name } = response.data.data;
+      //       return {
+      //         user: { name },
+      //         token: accessToken,
+      //       };
     } catch (error) {
       toast.error(error.response.data.message);
       return thunkAPI.rejectWithValue(error.message);
@@ -73,22 +50,13 @@ export const login = createAsyncThunk(
   }
 );
 
-// export const logOut = createAsyncThunk("api/auth/logout", async () => {
-//   await axios.post("https://backendrepo-ormv.onrender.com/api/auth/logout");
-// });
-
-export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
-    await axios.post("https://backendrepo-ormv.onrender.com/api/auth/logout");
-    localStorage.removeItem("token"); // якщо токен зберігається там
+    await axios.post('/auth/logout');
+    localStorage.removeItem('token'); // якщо токен зберігається там
+    setAuthHeader('');
     return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
   }
-
-// LOGOUT
-// export const logout = createAsyncThunk("auth/logout", async () => {
-//   await axios.post("/auth/logout");
-//   setAuthHeader("");
-
 });

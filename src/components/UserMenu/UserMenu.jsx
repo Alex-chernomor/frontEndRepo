@@ -7,6 +7,7 @@ import { logOut } from "../../redux/auth/operations";
 
 export default function UserMenu() {
   const user = useSelector(selectUser);
+
   const firstLetterName = function (name) {
     return String(name.split(" ")).split("")[0].split("")[0];
   };
@@ -23,8 +24,9 @@ export default function UserMenu() {
       <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">
         Add Recipe
       </NavLink>
-      {/* <div className={css.firstLetter}>{firstLetterName(user.name)}</div> */}
-      {/* <p className={css.userName}>{user.name}</p> */}
+      {console.log(user)}
+      <div className={css.firstLetter}>{firstLetterName(user.name)}</div>
+      <p className={css.userName}>{user.name}</p>
       <button
         className={css.buttonUserMenu}
         aria-label="Log out"

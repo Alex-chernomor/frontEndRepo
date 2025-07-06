@@ -7,7 +7,7 @@ import css from './RecipesList.module.css';
 const RecipesList = () => {
   const recipes = useSelector(selectRecipes);
 
-  console.log('recipes:', recipes);
+  // console.log('recipes:', recipes);
 
   return (
     <div className={css.recipesWrap}>

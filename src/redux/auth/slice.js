@@ -1,5 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { register } from './operations';
+import { login, register, logOut } from './operations';
+
+const handlePending = state => {
+  state.isRefreshing = true;
+};
+const handleReject = (state, { payload }) => {
+  state.isRefreshing = false;
+  state.error = payload || 'Registration failed';
+};
 
 const slice = createSlice({
   name: 'auth',
@@ -15,18 +23,28 @@ const slice = createSlice({
   },
   extraReducers: builder =>
     builder
-      .addCase(register.pending, state => {
-        state.isRefreshing = true;
-      })
+      .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
         state.user = action.payload.data;
-        // state.token = action.payload.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addCase(register.rejected, (state, action) => {
-        state.isRefreshing = false;
-        state.error = action.payload || 'Registration failed';
+      .addCase(register.rejected, handleReject)
+      .addCase(login.pending, state => {
+        state.error = null;
+      })
+      .addCase(login.fulfilled, (state, action) => {
+        state.user = { name: action.payload.data.name };
+        state.token = action.payload.data.token;
+        state.isLoggedIn = true;
+      })
+      .addCase(login.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      .addCase(logOut.fulfilled, state => {
+        state.user = { name: null, email: null, error: false };
+        state.token = null;
+        state.isLoggedIn = false;
       }),
 });
 

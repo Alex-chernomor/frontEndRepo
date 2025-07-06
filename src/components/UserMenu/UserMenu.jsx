@@ -1,12 +1,35 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import css from "./UserMenu.module.css";
+import { useState } from 'react';
+import css from './UserMenu.module.css';
+import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectUser } from '../../redux/auth/selectors';
+import { logOut } from '../../redux/auth/operations';
+import { LogOutIcon } from '../Icons/Icons';
+
+import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 
 export default function UserMenu() {
-  let userName = "Max";
-  const firstLetterName = function (name) {
-    return name.split("")[0];
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const userName = user?.name || 'User';
+  // const handleLogoutClick = () => {
+  //   setIsLogoutModalOpen(true);
+  // };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
   };
+
+  const handleLogout = () => {
+    setIsModalOpen(true);
+    dispatch(logOut());
+  };
+  // const handleLogout = () => {
+  //   dispatch(logout());
+  // };
+
+  //! charAt(0) повертає першу літеру рядка
+  const firstLetterName = name => name?.trim()?.charAt(0).toUpperCase() || '';
 
   return (
     <div className={css.container}>
@@ -16,24 +39,27 @@ export default function UserMenu() {
       <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">
         Add Recipe
       </NavLink>
+
       <div className={css.firstLetter}>{firstLetterName(userName)}</div>
       <p className={css.userName}>{userName}</p>
-      <button className={css.buttonUserMenu} aria-label="Log out">
-        <svg
-          width="24"
-          height="28"
-          viewBox="0 0 21 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M7.07692 0.5H3.42308C1.80871 0.5 0.5 1.80871 0.5 3.42308V16.5769C0.5 18.1913 1.80871 19.5 3.42308 19.5H7.07692M5.5 10L20.1154 10M20.1154 10L15.7308 14.3846M20.1154 10L15.7308 5.61538"
-            stroke="currentColor"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+
+      <button
+        className={css.buttonUserMenu}
+        aria-label="Log out"
+        onClick={handleLogout}
+      >
+        <LogOutIcon />
       </button>
+      {isModalOpen && (
+        <ModalWindow
+          type="logout"
+          // type="unauthorised"
+          // type="success"
+          onClose={handleCloseModal}
+          onConfirm={handleLogout}
+          onCancel={handleCloseModal}
+        />
+      )}
     </div>
   );
 }

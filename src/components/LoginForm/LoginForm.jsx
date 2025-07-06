@@ -4,6 +4,8 @@ import clsx from "clsx";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import CreateLink from "../CreateLink/CreateLink.jsx";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/auth/operations.js";
 
 import css from "./LoginForm.module.css";
 import { Eye, EyeCrossed } from "./Icons";
@@ -25,17 +27,42 @@ const UserSchema = Yup.object().shape({
 });
 
 export default function LoginForm() {
+  const dispatch = useDispatch();
   const [passwordEye, setPasswordEye] = useState(false);
 
   const handlePasswordClick = () => {
     setPasswordEye((prev) => !prev);
   };
 
+  const handleSubmit = async (values, actions) => {
+    try {
+      await dispatch(login(values)).unwrap();
+      actions.resetForm();
+    } catch (error) {
+      console.error(error);
+      // Показуємо повідомлення під полем
+      actions.setFieldError(
+        "email",
+        error?.response?.data?.message || error.message || "Login failed"
+      );
+      actions.setFieldError(
+        "password",
+        error?.response?.data?.message || error.message || "Login failed"
+      );
+
+      // Робимо поле "touched", щоб рамка стала червоною
+      actions.setTouched({ email: true, password: true }, false);
+    }
+  };
   return (
     <div className={css.containerLoginForm}>
       <h2 className={css.titleLoginForm}>Login</h2>
 
-      <Formik initialValues={initialValues} validationSchema={UserSchema}>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={UserSchema}
+        onSubmit={handleSubmit}
+      >
         <Form className={css.formLoginForm} autoComplete="off">
           <label className={css.labelLoginForm}>
             Enter your email address
@@ -75,7 +102,7 @@ export default function LoginForm() {
                 type="button"
                 className={css.eyeButton}
                 onClick={handlePasswordClick}
-                aria-label={passwordEye ? "Show password" : "Hide password"}
+                aria-label={passwordEye ? "Hide password" : "Show password"}
               >
                 {passwordEye ? <Eye /> : <EyeCrossed />}
               </button>

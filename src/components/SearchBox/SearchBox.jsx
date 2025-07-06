@@ -3,8 +3,12 @@ import { Field, Form, Formik } from "formik";
 import toast from "react-hot-toast";
 import Button from "../Button/Button";
 import css from "./SearchBox.module.css";
+import { useDispatch } from "react-redux";
+import { fetchRecipes } from "../../redux/recipes/operations";
 
-export default function SearchBox({ onSearch }) {
+export default function SearchBox() {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Formik
@@ -12,10 +16,11 @@ export default function SearchBox({ onSearch }) {
         onSubmit={(values, actions) => {
           if (!values.search.trim()) {
             toast.error("Please enter something in the search field!");
-          } else {
-            onSearch(values.search);
-            actions.resetForm();
+            return;
           }
+          // Виклик thunk з параметром query
+          dispatch(fetchRecipes({ query: values.search }));
+          actions.resetForm();
         }}
       >
         <Form className={css.form}>

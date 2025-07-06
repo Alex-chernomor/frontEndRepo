@@ -19,13 +19,21 @@
 .homeLink {
   font-size: 16px;
   color: #fff;
-  background-color: #8baa36;
+  background: #9b6c43;
   padding: 10px 20px;
   border-radius: 8px;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .homeLink:hover {
-  background-color: #799a2d;
+  background: #6d554b;
+}
+
+.homeLink:focus {
+  box-shadow: 0 0 0 6px rgba(78, 70, 180, 0.12), 0 0 0 2px #fff;
+  background: #d9d9d9;
+  outline: none;
+  border-color: transparent;
 }

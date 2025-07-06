@@ -9,6 +9,7 @@ export default function UserMenu() {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
 
+
   const handleLogout = () => {
     dispatch(logout());
   };
@@ -27,8 +28,10 @@ export default function UserMenu() {
       <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">
         Add Recipe
       </NavLink>
+
       <div className={css.firstLetter}>{firstLetterName(userName)}</div>
       <p className={css.userName}>{userName}</p>
+
       <button
         className={css.buttonUserMenu}
         aria-label="Log out"

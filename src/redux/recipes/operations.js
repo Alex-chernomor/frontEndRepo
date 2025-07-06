@@ -48,10 +48,12 @@ export const removeFromFavorite = createAsyncThunk(
 );
 
 export const fetchRecipes = createAsyncThunk(
-  'recipes/fetchRecipes',
+  "recipes/fetchRecipes",
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get('/api/recipes');
+      const response = await axios.get(
+        "https://backendrepo-ormv.onrender.com/api/recipes"
+      );
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.message);

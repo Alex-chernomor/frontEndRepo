@@ -1,7 +1,10 @@
-
-import { createSlice } from '@reduxjs/toolkit';
-import { addToFavorite,createResipe, removeFromFavorite, fetchRecipes } from './operations';
-
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  addToFavorite,
+  createResipe,
+  removeFromFavorite,
+  fetchRecipes,
+} from "./operations";
 
 const handlePending = (state) => {
   state.loading = true;
@@ -26,6 +29,7 @@ const slice = createSlice({
     builder
       .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
+        console.log("✅ fetchRecipes payload:", action.payload);
         state.loading = false;
         state.recipes = action.payload.data.data;
         state.total = action.payload.total;
@@ -55,9 +59,7 @@ const slice = createSlice({
         state.loading = false;
         state.error = null;
         state.recipes = state.recipes.filter(
-
-          recipe => recipe._id !== payload.id
-
+          (recipe) => recipe._id !== payload.id
         );
       })
       .addCase(removeFromFavorite.rejected, handleRejected);

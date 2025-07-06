@@ -31,7 +31,7 @@ export default function RecipeCard({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleLearnMore = () => {
-    navigate(/recipes/${_id});
+    navigate(`/recipes/${_id}`);
   };
 
   const handleToggleFavorite = async () => {

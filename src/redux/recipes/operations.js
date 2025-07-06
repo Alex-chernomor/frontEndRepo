@@ -64,6 +64,10 @@ export const fetchRecipes = createAsyncThunk(
       ingredientId = '',
       query = '',
 
+
+export const fetchRecipesByName = createAsyncThunk(
+  'recipes/fetchRecipes',
+  async ({ page = 1, perPage = 12, category = '', ingredientId = '', query = '' } = {}, thunkAPI) => {
     } = {},
     thunkAPI
   ) => {

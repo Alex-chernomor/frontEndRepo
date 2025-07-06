@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import css from "./UserMenu.module.css";
 import { NavLink } from "react-router-dom";
@@ -27,6 +28,29 @@ export default function UserMenu() {
     setIsModalOpen(true);
     dispatch(logOut());
   };
+
+// import { NavLink } from "react-router-dom";
+// import css from "./UserMenu.module.css";
+
+// import { selectUser } from "../../redux/auth/selectors";
+// import { useDispatch, useSelector } from "react-redux";
+// import { logout } from "../../redux/auth/operations";
+
+// export default function UserMenu() {
+//   const dispatch = useDispatch();
+//   const user = useSelector(selectUser);
+
+
+//   const handleLogout = () => {
+//     dispatch(logout());
+//   };
+
+//   let userName = user.name;
+
+//   const firstLetterName = function (name) {
+//     return String(name.split(" ")).split("")[0].split("")[0];
+//   };
+
   return (
     <div className={css.container}>
       <NavLink className={css.link} to="/api/user/current">
@@ -35,8 +59,10 @@ export default function UserMenu() {
       <NavLink className={`${css.link} ${css.addButton}`} to="/api/add-recipe">
         Add Recipe
       </NavLink>
-      {/* <div className={css.firstLetter}>{firstLetterName(user.name)}</div> */}
-      {/* <p className={css.userName}>{user.name}</p> */}
+
+      <div className={css.firstLetter}>{firstLetterName(userName)}</div>
+      <p className={css.userName}>{userName}</p>
+
       <button
         className={css.buttonUserMenu}
         aria-label="Log out"

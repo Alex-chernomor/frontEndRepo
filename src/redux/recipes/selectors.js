@@ -1,7 +1,13 @@
-export const selectRecipes = (state) => state.recipes.recipes;
 
-export const selectTotalPages = (state) => state.recipes.totalPages;
+export const selectRecipes = state => state.recipes.recipes;
+export const selectIsLoading = state => state.recipes.loading;
+export const selectError = state => state.recipes.error;
 
-export const selectIsLoading = (state) => state.recipes.loading;
+// export const selectRecipes = (state) => state.recipes.recipes;
 
-export const selectError = (state) => state.recipes.error;
+// export const selectTotalPages = (state) => state.recipes.totalPages;
+
+// export const selectIsLoading = (state) => state.recipes.loading;
+
+// export const selectError = (state) => state.recipes.error;
+

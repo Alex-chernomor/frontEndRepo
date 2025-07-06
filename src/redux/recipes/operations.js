@@ -1,26 +1,12 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // axios.defaults.params = {
 //   perPage: 12,
 // };
 
-export const addToFavorite = createAsyncThunk(
-  "recipes/addToFavorite",
-  async ({ userId, recipeId }, thunkAPI) => {
-    try {
-      const resp = await axios.post(
-        `/api/users/${userId}/favorites/${recipeId}`
-      );
-      return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data);
-    }
-  }
-);
-
 export const createResipe = createAsyncThunk(
-  "recipes/createResipe",
+  'recipes/createResipe',
   async ({ recipe }, thunkAPI) => {
     try {
       const resp = await axios.post(`/api/users/recipes`, recipe);
@@ -32,6 +18,7 @@ export const createResipe = createAsyncThunk(
     }
   }
 );
+
 
 export const removeFromFavorite = createAsyncThunk(
   "recipes/removeFromFavorite",
@@ -89,14 +76,22 @@ export const removeFromFavorite = createAsyncThunk(
 // );
 
 export const fetchRecipes = createAsyncThunk(
+
   "recipes/fetchRecipes",
+
   async (
     {
       page = 1,
       perPage = 12,
-      category = "",
-      ingredientId = "",
-      query = "",
+
+      category = '',
+      ingredientId = '',
+      query = '',
+
+//       category = "",
+//       ingredientId = "",
+//       query = "",
+
     } = {},
     thunkAPI
   ) => {
@@ -113,6 +108,7 @@ export const fetchRecipes = createAsyncThunk(
     }
   }
 );
+
 
 export const fetchFavoriteRecipes = createAsyncThunk(
   "recipes/getFavoritesRecipes",
@@ -147,3 +143,4 @@ export const fetchOwnRecipes = createAsyncThunk(
     }
   }
 );
+

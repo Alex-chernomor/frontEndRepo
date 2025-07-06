@@ -1,4 +1,4 @@
-.footer {
+px.footer {
   background-color: #3d2218;
 }
 
@@ -20,6 +20,7 @@
 
 @media screen and (min-width: 1440px) {
   .footerContainer {
+    height:94px;
     flex-direction: row;
     justify-content: space-between;
   }

@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
 import css from "./RecipeCard.module.css";
 import Button from "../Button/Button";
-// import { addFavorite, deleteFavorite } from "../../redux/favoritesSlice"; // приклад
-// import { selectIsLoggedIn, selectFavorites } from "../../redux/selectors";
-const mockFavorites = ["1", "2"]; // Масив ID улюблених рецептів
-const mockIsLoggedIn = true; // Або false, щоб перевірити редирект
+import {
+  addToFavorite,
+  removeFromFavorite,
+} from "../../redux/recipes/operations.js";
+import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors.js";
+
 export default function RecipeCard({
   _id,
   title,
@@ -16,14 +18,12 @@ export default function RecipeCard({
   cals,
   isOwnRecipe = false,
 }) {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // const isLoggedIn = useSelector(selectIsLoggedIn);
-  // const favorites = useSelector(selectFavorites);
-  // Моки замість Redux
-  const isLoggedIn = mockIsLoggedIn;
-  const favorites = mockFavorites;
+  const user = useSelector(selectUser);
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const favorites = user?.favorites || [];
 
   const isFavorite = favorites.includes(_id);
   const firstSentence = description.split(/[.!?]/)[0] + ".";
@@ -31,7 +31,7 @@ export default function RecipeCard({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleLearnMore = () => {
-    navigate(`/recipes/${_id}`);
+    navigate(/recipes/${_id});
   };
 
   const handleToggleFavorite = async () => {
@@ -39,33 +39,24 @@ export default function RecipeCard({
       navigate("/auth/login");
       return;
     }
-    setIsUpdating(true);
-    setTimeout(() => {
-      console.log(
-        isFavorite ? "Removing from favorites" : "Adding to favorites"
-      );
-      setIsUpdating(false);
-    }, 500);
-  };
 
-  //   try {
-  //     setIsUpdating(true);
-  //     if (isFavorite) {
-  //       await dispatch(deleteFavorite(id));
-  //     } else {
-  //       await dispatch(addFavorite(id));
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating favorites:", error);
-  //   } finally {
-  //     setIsUpdating(false);
-  //   }
-  // };
+    setIsUpdating(true);
+    try {
+      if (isFavorite) {
+        await dispatch(removeFromFavorite({ userId: user._id, recipeId: _id }));
+      } else {
+        await dispatch(addToFavorite({ userId: user._id, recipeId: _id }));
+      }
+    } catch (error) {
+      console.error("Favorite toggle error:", error);
+    } finally {
+      setIsUpdating(false);
+    }
+  };
 
   return (
     <div className={css.card}>
       <img src={thumb} alt={title} className={css.image} />
-
       <div className={css.titleRow}>
         <h3 className={css.name}>{title}</h3>
         <div className={css.time}>
@@ -89,15 +80,17 @@ export default function RecipeCard({
       </div>
       <div className={css.descrWrapper}>
         <p className={css.descrip}>{firstSentence}</p>
-        <p className={css.descrip}>{cals ? `~${cals} cals` : "—"}</p>
+        <p className={css.descrip}>{cals ? ~${cals} cals : "— cals"}</p>
       </div>
       <div className={css.actions}>
-        <Button variant="Learn more" onClick={handleLearnMore} />
+        <Button className={css.LearnMoreBtn} onClick={handleLearnMore}>
+          Learn more
+        </Button>
 
-        {!isOwnRecipe && (
+{!isOwnRecipe && (
           <button
             type="button"
-            className={`${css.favoriteBtn} ${isFavorite ? css.active : ""}`}
+            className={${css.favoriteBtn} ${isFavorite ? css.active : ""}}
             onClick={handleToggleFavorite}
             disabled={isUpdating}
             aria-label={

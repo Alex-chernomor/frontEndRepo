@@ -14,8 +14,8 @@ const initialValues = {
   name: "",
   email: "",
   password: "",
-  confirmPassword: "",
-  toggle: false,
+  // confirmPassword: "",
+  // toggle: false,
 };
 
 const UserSchema = Yup.object().shape({

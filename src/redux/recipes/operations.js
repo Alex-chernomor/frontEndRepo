@@ -19,6 +19,47 @@ export const createResipe = createAsyncThunk(
   }
 );
 
+
+export const removeFromFavorite = createAsyncThunk(
+  "recipes/removeFromFavorite",
+  async ({ userId, recipeId }, thunkAPI) => {
+    try {
+      const resp = await axios.delete(
+        `/api/users/${userId}/favorites/${recipeId}`
+      );
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data);
+    }
+  }
+);
+
+// export const fetchRecipes = createAsyncThunk(
+//   'recipes/fetchRecipes',
+//   async (_, thunkAPI) => {
+//     try {
+//       const response = await axios.get('/api/recipes');
+//       return response.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.message);
+//     }
+//   }
+// );
+
+// export const fetchRecipes = createAsyncThunk(
+//   "recipes/fetchRecipes",
+//   async (_, thunkAPI) => {
+//     try {
+//       const response = await axios.get(
+//         "https://backendrepo-ormv.onrender.com/api/recipes"
+//       );
+//       return response.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.message);
+//     }
+//   }
+// );
+
 // export const fetchRecipes = createAsyncThunk(
 //   'recipes/fetchRecipes',
 //   async ({ page, perPage, category, ingredientId, query }, thunkAPI) => {
@@ -35,14 +76,22 @@ export const createResipe = createAsyncThunk(
 // );
 
 export const fetchRecipes = createAsyncThunk(
-  'recipes/fetchRecipes',
+
+  "recipes/fetchRecipes",
+
   async (
     {
       page = 1,
       perPage = 12,
+
       category = '',
       ingredientId = '',
       query = '',
+
+//       category = "",
+//       ingredientId = "",
+//       query = "",
+
     } = {},
     thunkAPI
   ) => {
@@ -52,10 +101,46 @@ export const fetchRecipes = createAsyncThunk(
           query
         )}`
       );
-      console.log('API Response:', response.data);
+      console.log("API Response:", response.data);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.message);
     }
   }
 );
+
+
+export const fetchFavoriteRecipes = createAsyncThunk(
+  "recipes/getFavoritesRecipes",
+  async ({ page = 1, perPage = 12 }, thunkAPI) => {
+    try {
+      const response = await axios.get("/api/users/favorites", {
+        page,
+        perPage,
+      });
+
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchOwnRecipes = createAsyncThunk(
+  "recipes/fetchOwnRecipes",
+  async ({ page = 1, perPage = 12 }, thunkAPI) => {
+    try {
+      const response = await axios.get("/api/users/own", {
+        page,
+        perPage,
+      });
+
+      console.log(response);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+

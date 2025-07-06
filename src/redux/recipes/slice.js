@@ -1,5 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { createResipe, fetchRecipes } from './operations';
+=
+// import { createSlice } from '@reduxjs/toolkit';
+// import { createResipe, fetchRecipes } from './operations';
+=
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  addToFavorite,
+  createResipe,
+  removeFromFavorite,
+  fetchRecipes,
+  fetchFavoriteRecipes,
+  fetchOwnRecipes,
+} from "./operations";
 
 const handlePending = state => {
   state.loading = true;
@@ -38,7 +49,41 @@ const slice = createSlice({
         state.error = null;
         state.recipes = payload;
       })
-      .addCase(createResipe.rejected, handleRejected);
+
+      .addCase(createResipe.rejected, handleRejected)
+
+      .addCase(removeFromFavorite.pending, handlePending)
+      .addCase(removeFromFavorite.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.recipes = state.recipes.filter(
+          (recipe) => recipe._id !== payload.id
+        );
+      })
+      .addCase(removeFromFavorite.rejected, handleRejected)
+      .addCase(fetchFavoriteRecipes.pending, handlePending)
+      .addCase(fetchFavoriteRecipes.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.recipes = payload.data.data;
+        state.total = payload.data.total;
+        state.page = payload.data.page;
+        state.perPage = payload.data.perPage;
+        state.totalPages = payload.data.totalPages;
+      })
+      .addCase(fetchFavoriteRecipes.rejected, handleRejected)
+      .addCase(fetchOwnRecipes.pending, handlePending)
+      .addCase(fetchOwnRecipes.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.recipes = payload.data.data;
+        state.total = payload.data.total;
+        state.page = payload.data.page;
+        state.perPage = payload.data.perPage;
+        state.totalPages = payload.data.totalPages;
+      })
+      .addCase(fetchOwnRecipes.rejected, handleRejected);
+
   },
 });
 

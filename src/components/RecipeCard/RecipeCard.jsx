@@ -31,7 +31,9 @@ export default function RecipeCard({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleLearnMore = () => {
-    navigate(/recipes/${_id});
+
+    navigate(`/recipes/${_id}`);
+
   };
 
   const handleToggleFavorite = async () => {
@@ -80,17 +82,17 @@ export default function RecipeCard({
       </div>
       <div className={css.descrWrapper}>
         <p className={css.descrip}>{firstSentence}</p>
-        <p className={css.descrip}>{cals ? ~${cals} cals : "— cals"}</p>
+        <p className={css.descrip}>{cals ? `~${cals} cals` : "— cals"}</p>
       </div>
       <div className={css.actions}>
         <Button className={css.LearnMoreBtn} onClick={handleLearnMore}>
           Learn more
         </Button>
 
-{!isOwnRecipe && (
+        {!isOwnRecipe && (
           <button
             type="button"
-            className={${css.favoriteBtn} ${isFavorite ? css.active : ""}}
+            className={`${css.favoriteBtn} ${isFavorite ? css.active : ""}`}
             onClick={handleToggleFavorite}
             disabled={isUpdating}
             aria-label={

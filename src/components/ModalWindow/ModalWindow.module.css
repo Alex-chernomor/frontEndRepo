@@ -12,46 +12,132 @@
 }
 
 .modal {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 24px 32px;
+  background-color: #faf3e0;
+  border-radius: 32px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-  width: 90%;
-  max-width: 400px;
+  width: 420px;
+  /* height: 236px; */
   text-align: center;
   position: relative;
 }
 
+.unauthorised {
+  height: 277px;
+}
+
+.logout,
+.success {
+  height: 236px;
+}
+
+.logout {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.closeSvg {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}
+
 .closeBtn {
   position: absolute;
-  top: 8px;
+  top: 16px;
   right: 12px;
   font-size: 24px;
   background: none;
   border: none;
   cursor: pointer;
-  color: #6b7280;
+  color: #000;
+  display: flex;
+  justify-content: center;
 }
 
 .title {
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 600;
-  margin-bottom: 12px;
-  color: #111827;
+  margin-bottom: 8px;
+  color: #000;
+  margin-top: 56px;
+  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
 }
 
 .message {
   font-size: 16px;
-  color: #4b5563;
-  margin-bottom: 24px;
+  color: #000;
+  margin-bottom: 20px;
+  white-space: pre-line;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 12px;
+  gap: 27px;
 }
 
-.button {
-  min-width: 100px;
+button.cancelBtn,
+button.unauthConfirmBtn {
+  border: 1px solid #000;
+  background-color: transparent;
+  transition: all 0.25s ease;
+}
+
+.logoutBtn,
+.cancelBtn {
+  font-size: 16px;
+  width: 165px;
+  height: 44px;
+}
+
+.logoutBtn {
+  /* border: none; */
+  color: #fff;
+  background-color: #c80000;
+}
+
+.logoutBtn:hover,
+.logoutBtn:active {
+  background: #6d554b;
+  color: #fff;
+}
+
+.unauthConfirmBtn:hover,
+.unauthConfirmBtn:focus,
+.unauthConfirmBtn:active,
+.cancelBtn:hover,
+.cancelBtn:focus,
+.cancelBtn:active {
+  background-color: #d9d9d9;
+  border: solid 2px #fff;
+  color: #fff;
+}
+
+.unauthConfirmBtn,
+.unauthCancelBtn {
+  width: 165px;
+  height: 36px;
+}
+
+.successBtn,
+.unauthCancelBtn {
+  background-color: #9b6c43;
+  color: #fff;
+}
+
+.successBtn:hover,
+.successBtn:active,
+.unauthCancelBtn:hover,
+.unauthCancelBtn:active {
+  background-color: #6d554b;
+}
+
+.successBtn:focus,
+.logoutBtn:focus,
+.unauthCancelBtn:focus {
+  border: 2px solid #fff;
+}
+
+.successBtn {
+  width: 356px;
+  height: 44px;
 }

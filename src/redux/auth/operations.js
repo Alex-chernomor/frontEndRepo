@@ -6,6 +6,7 @@ const setAuthHeader = (value) => {
   axios.defaults.headers.common.Authorization = value;
 };
 
+
 axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com/api";
 // axios.defaults.baseURL = "/api";
 
@@ -13,13 +14,16 @@ axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com/api";
 //   axios.defaults.headers.common.Authorization = value;
 // };
 
+
 // const setAuthHeader = value => {
 //   axios.defaults.headers.common.Authorization = value;
 // };
 
 
-axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
+axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com";
 
+
+// axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
 
 
 // REGISTER
@@ -69,8 +73,22 @@ export const login = createAsyncThunk(
   }
 );
 
+// export const logOut = createAsyncThunk("api/auth/logout", async () => {
+//   await axios.post("https://backendrepo-ormv.onrender.com/api/auth/logout");
+// });
+
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  try {
+    await axios.post("https://backendrepo-ormv.onrender.com/api/auth/logout");
+    localStorage.removeItem("token"); // якщо токен зберігається там
+    return;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+
 // LOGOUT
-export const logout = createAsyncThunk("auth/logout", async () => {
-  await axios.post("/auth/logout");
-  setAuthHeader("");
+// export const logout = createAsyncThunk("auth/logout", async () => {
+//   await axios.post("/auth/logout");
+//   setAuthHeader("");
+
 });

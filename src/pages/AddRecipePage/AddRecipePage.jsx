@@ -1,19 +1,20 @@
-import React from "react";
-import Header from "../../sections/Header/Header";
-import RecipeForm from "../../components/RecipeForm/RecipeForm.jsx";
-import { useDispatch } from "react-redux";
+import React from 'react';
+import Header from '../../sections/Header/Header';
+import RecipeForm from '../../components/RecipeForm/RecipeForm.jsx';
 
-import toast, { Toaster } from "react-hot-toast";
+import { useDispatch } from 'react-redux';
 
-import { createResipe } from "../../redux/recipes/operations";
+import toast, { Toaster } from 'react-hot-toast';
+
+import { createResipe } from '../../redux/recipes/operations';
 
 export default function AddRecipePage() {
   const dispatch = useDispatch();
 
-  const onAdd = async (recipe) => {
+  const onAdd = async recipe => {
     await dispatch(createResipe({ recipe })).unwrap();
 
-    toast.success("Added to favorites!");
+    toast.success('Added to favorites!');
   };
   return <RecipeForm onAdd={onAdd} />;
 }

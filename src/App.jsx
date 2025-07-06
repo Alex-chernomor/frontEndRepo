@@ -1,24 +1,23 @@
-import React from "react";
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { lazy, Suspense, useEffect } from 'react';
+import Loader from './components/Loader/Loader.jsx';
+import Layout from './components/Layout/Layout.jsx';
 
-import { Routes, Route } from "react-router-dom";
-import { lazy, Suspense, useEffect } from "react";
-import Loader from "./components/Loader/Loader.jsx";
-import Layout from "./components/Layout/Layout.jsx";
-
-const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
-const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage.jsx"));
+const HomePage = lazy(() => import('./pages/HomePage/HomePage.jsx'));
+const LoginPage = lazy(() => import('./pages/LoginPage/LoginPage.jsx'));
 const RegistrationPage = lazy(() =>
-  import("./pages/RegistrationPage/RegistrationPage.jsx")
+  import('./pages/RegistrationPage/RegistrationPage.jsx')
 );
 const AddrecipePage = lazy(() =>
-  import("./pages/AddRecipePage/AddRecipePage.jsx")
+  import('./pages/AddRecipePage/AddRecipePage.jsx')
 );
-const ProfilePage = lazy(() => import("./pages/ProfilePage/ProfilePage.jsx"));
+const ProfilePage = lazy(() => import('./pages/ProfilePage/ProfilePage.jsx'));
 const RecipeViewPage = lazy(() =>
-  import("./pages/RecipeViewPage/RecipeViewPage.jsx")
+  import('./pages/RecipeViewPage/RecipeViewPage.jsx')
 );
 const NotFoundPage = lazy(() =>
-  import("./pages/NotFoundPage/NotFoundPage.jsx")
+  import('./pages/NotFoundPage/NotFoundPage.jsx')
 );
 
 export default function App() {
@@ -31,7 +30,11 @@ export default function App() {
           <Route path="/api/auth/register" element={<RegistrationPage />} />
           <Route path="/api/add-recipe" element={<AddrecipePage />} />
           <Route path="/api/user/current" element={<ProfilePage />} />
-          <Route path="/api/recipe/:recipeId" element={<RecipeViewPage />} />
+
+          <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
+
+          {/* <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} /> */}
+
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

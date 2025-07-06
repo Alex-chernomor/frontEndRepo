@@ -5,11 +5,9 @@ import Header from "../../sections/Header/Header.jsx";
 export default function Layout({ children }) {
   return (
     <>
-      <>
-        <Header />
-        <Outlet children={children} />
-        <Footer />
-      </>
+      <Header />
+      <Outlet children={children} />
+      <Footer />
     </>
   );
 }

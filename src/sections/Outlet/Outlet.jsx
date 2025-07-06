@@ -1,3 +1,3 @@
 export default function Outlet({ children }) {
-  return <main>{children}</main>;
+  return <main id="main">{children}</main>;
 }

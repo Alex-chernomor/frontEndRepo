@@ -26,7 +26,9 @@ const slice = createSlice({
     builder
       .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
-        state.user = action.payload.data;
+        state.user.name = action.payload.data.user.name;
+        state.user.email = action.payload.data.user.email;
+        state.token = action.payload.data.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
@@ -35,9 +37,11 @@ const slice = createSlice({
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.user = { name: action.payload.data.name };
+        state.user.name = action.payload.data.user.name;
+        state.user.email = action.payload.data.user.email;
         state.token = action.payload.data.token;
         state.isLoggedIn = true;
+        state.isRefreshing = false;
       })
       .addCase(login.rejected, (state, action) => {
         state.error = action.error.message;
@@ -46,6 +50,7 @@ const slice = createSlice({
         state.user = { name: null, email: null, error: false };
         state.token = null;
         state.isLoggedIn = false;
+
       })
       .addCase(refreshUser.pending, (state) => {
         state.isRefreshing = true;
@@ -57,6 +62,7 @@ const slice = createSlice({
         axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
       })
       .addCase(refreshUser.rejected, (state) => {
+
         state.isRefreshing = false;
       }),
 });

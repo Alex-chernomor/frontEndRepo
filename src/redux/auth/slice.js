@@ -1,16 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { login, register, logOut } from './operations';
+import { createSlice } from "@reduxjs/toolkit";
+import { login, register, logOut, refreshUser } from "./operations";
+import axios from "axios";
 
-const handlePending = state => {
+const handlePending = (state) => {
   state.isRefreshing = true;
 };
 const handleReject = (state, { payload }) => {
   state.isRefreshing = false;
-  state.error = payload || 'Registration failed';
+  state.error = payload || "Registration failed";
 };
 
 const slice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
     user: {
       name: null,
@@ -21,7 +22,7 @@ const slice = createSlice({
     isLoggedIn: false,
     isRefreshing: false,
   },
-  extraReducers: builder =>
+  extraReducers: (builder) =>
     builder
       .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
@@ -32,7 +33,7 @@ const slice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(register.rejected, handleReject)
-      .addCase(login.pending, state => {
+      .addCase(login.pending, (state) => {
         state.error = null;
       })
       .addCase(login.fulfilled, (state, action) => {
@@ -45,10 +46,23 @@ const slice = createSlice({
       .addCase(login.rejected, (state, action) => {
         state.error = action.error.message;
       })
-      .addCase(logOut.fulfilled, state => {
+      .addCase(logOut.fulfilled, (state) => {
         state.user = { name: null, email: null, error: false };
         state.token = null;
         state.isLoggedIn = false;
+
+      })
+      .addCase(refreshUser.pending, (state) => {
+        state.isRefreshing = true;
+      })
+      .addCase(refreshUser.fulfilled, (state, action) => {
+        state.user = action.payload;
+        state.isRefreshing = false;
+        state.isLoggedIn = true;
+        axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
+      })
+      .addCase(refreshUser.rejected, (state) => {
+
         state.isRefreshing = false;
       }),
 });

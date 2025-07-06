@@ -3,6 +3,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Loader from "./components/Loader/Loader.jsx";
 import Layout from "./components/Layout/Layout.jsx";
+import { useDispatch, useSelector } from "react-redux";
+import { refreshUser } from "./redux/auth/operations.js";
+import { selectIsRefreshing } from "./redux/auth/selectors.js";
+import RestrictedRoute from "./RestrictedRoute.jsx";
+import PrivateRoute from "./PrivateRoute.jsx";
 
 const HomePage = lazy(() => import("./pages/HomePage/HomePage.jsx"));
 const LoginPage = lazy(() => import("./pages/LoginPage/LoginPage.jsx"));
@@ -25,20 +30,54 @@ const NotFoundPage = lazy(() =>
 );
 
 export default function App() {
-  return (
+  const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
+
+  useEffect(() => {
+    dispatch(refreshUser());
+  }, [dispatch]);
+
+  return isRefreshing ? (
+    <strong>Getting user data please wait...</strong>
+  ) : (
     <Layout>
       <Suspense fallback={<Loader />}>
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/api/auth/login" element={<LoginPage />} />
-          <Route path="/api/auth/register" element={<RegistrationPage />} />
-          <Route path="/api/add-recipe" element={<AddrecipePage />} />
-          <Route path="/api/user/current" element={<ProfilePage />}>
-            <Route index element={<Navigate to="own" replace />} />
-            <Route path="own" element={<OwnRecipes />} />
-            <Route path="favorites" element={<SavedRecipes />} />
-          </Route>
-          {/* <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} /> */}
+          <Route
+            path="/api/auth/login"
+            element={
+              <RestrictedRoute component={<LoginPage />} redirectTo="/" />
+            }
+          />
+          <Route
+            path="/api/auth/register"
+            element={
+              <RestrictedRoute
+                component={<RegistrationPage />}
+                redirectTo="/"
+              />
+            }
+          />
+          <Route
+            path="/api/add-recipe"
+            element={
+              <PrivateRoute
+                component={<AddrecipePage />}
+                redirectTo="/api/auth/login"
+              />
+            }
+          />
+          <Route
+            path="/api/user/current"
+            element={
+              <PrivateRoute
+                component={<ProfilePage />}
+                redirectTo="/api/auth/login"
+              />
+            }
+          />
+          <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Suspense>

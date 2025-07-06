@@ -6,7 +6,7 @@ import css from "./FooterNav.module.css";
 export default function FooterNav() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
 
-  const accountRoute = isLoggedIn ? "/users/current" : "/auth/login";
+  const accountRoute = isLoggedIn ? "/api/users/current" : "/api/auth/login";
 
   return (
     <nav className={css.footerNav}>

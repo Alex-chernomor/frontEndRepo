@@ -55,7 +55,7 @@ const slice = createSlice({
         state.isLoggedIn = true;
         axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
       })
-      .addCase(refreshUser.rejected, handlePending),
+      .addCase(refreshUser.rejected, handleReject),
 });
 
 export default slice.reducer;

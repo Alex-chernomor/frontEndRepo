@@ -1,16 +1,14 @@
 import { useSelector } from 'react-redux';
 import Button from '../Button/Button.jsx';
 import Select from 'react-select';
-
 import css from './RecipesFilters.module.css';
 import { RecipeCount } from '../RecipeCount/RecipeCount.jsx';
 import {
   selectTotalCount,
   selectFilterCategories,
-  selectFilterIngredients,
-  selectSelectedCategory,
-  selectSelectedIngredient,
+  // selectSelectedCategory,
 } from '../../redux/filters/selectors.js';
+import { useIngredients } from '../../context/useIngredients.js';
 
 const customStyles = {
   control: provided => ({
@@ -44,18 +42,31 @@ const customStyles = {
   }),
 };
 
-const RecipesFilters = ({ setSelectedCategory, setSelectedIngredient }) => {
+const RecipesFilters = ({
+  categoryParam,
+  ingredientIdParam,
+  onChangeSearchParams,
+  onResetFilters,
+}) => {
   const total = useSelector(selectTotalCount);
   const categories = useSelector(selectFilterCategories);
-  const ingredients = useSelector(selectFilterIngredients);
+  const allIngredients = useIngredients();
 
-  const selectedCategory = useSelector(selectSelectedCategory);
-  const selectedIngredient = useSelector(selectSelectedIngredient);
+  const selectedCategory = categories.find(
+    category => category._id === categoryParam
+  );
+  const selectedIngredient = allIngredients.find(
+    ingredient => ingredient._id === ingredientIdParam
+  );
 
-  const handleReset = () => {
-    setSelectedCategory(null);
-    setSelectedIngredient(null);
-  };
+  const ingredientOptions = allIngredients.map(ing => ({
+    label: ing.name,
+    value: ing._id,
+  }));
+  const categoryOptions = categories.map(cat => ({
+    label: cat.name,
+    value: cat._id,
+  }));
 
   const hasSelectedFilters = selectedCategory || selectedIngredient;
 
@@ -67,7 +78,7 @@ const RecipesFilters = ({ setSelectedCategory, setSelectedIngredient }) => {
       <div className={css.filtersBox}>
         <Button
           type="button"
-          onClick={handleReset}
+          onClick={onResetFilters}
           className={`${css.btn} ${hasSelectedFilters ? css.active : ''}`}
         >
           Reset filters
@@ -75,20 +86,41 @@ const RecipesFilters = ({ setSelectedCategory, setSelectedIngredient }) => {
 
         <Select
           options={categories.map(cat => ({ label: cat.name, value: cat._id }))}
-          value={selectedCategory}
-          onChange={setSelectedCategory}
+          value={
+            categoryOptions.find(
+              category => category.label === categoryParam
+            ) || null
+          }
+          onChange={option => {
+            onChangeSearchParams('category', option?.label || '');
+          }}
           placeholder="Category"
           isClearable
           styles={customStyles}
         />
         <Select
-          options={ingredients.map(ing => ({
+          options={allIngredients.map(ing => ({
             label: ing.name,
             value: ing._id,
           }))}
-          value={selectedIngredient}
-          onChange={setSelectedIngredient}
-          placeholder="Ingredient"
+          value={
+            ingredientOptions.find(ing => ing.value === ingredientIdParam) ||
+            null
+          }
+          // value={
+          //   selectedIngredient
+          //     ? {
+          //         label: selectedIngredient.name,
+          //         value: selectedIngredient._id,
+          //       }
+          //     : null
+          // }
+          onChange={option =>
+            onChangeSearchParams('ingredientId', option?.value || null)
+          }
+          placeholder={
+            selectedIngredient ? selectedIngredient.name : 'Ingredient'
+          }
           isClearable
           styles={customStyles}
         />

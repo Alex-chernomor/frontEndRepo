@@ -1,17 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchCategories, fetchIngredients } from '../recipes/operations.js';
+// import { fetchCategories, fetchIngredients } from '../recipes/operations.js';
+import { fetchCategories } from '../recipes/operations.js';
 
 const filtersSlice = createSlice({
   name: 'filters',
   initialState: {
     categories: [],
-    ingredients: [],
+    // ingredients: [],
     selectedCategory: null,
     selectedIngredient: null,
     searchTerm: "",     
     isLoading: false,
     error: null,
   },
+  
   reducers: {
     setSearchTerm(state, action) {
       state.searchTerm = action.payload;
@@ -22,6 +24,7 @@ const filtersSlice = createSlice({
     //   state.searchTerm = "";
     // },
   },
+
   extraReducers: builder => {
     builder
       .addCase(fetchCategories.pending, state => {
@@ -35,19 +38,19 @@ const filtersSlice = createSlice({
       .addCase(fetchCategories.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
-      })
-      .addCase(fetchIngredients.pending, state => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchIngredients.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.ingredients = action.payload;
-      })
-      .addCase(fetchIngredients.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
       });
+    // .addCase(fetchIngredients.pending, state => {
+    //   state.isLoading = true;
+    //   state.error = null;
+    // })
+    // .addCase(fetchIngredients.fulfilled, (state, action) => {
+    //   state.isLoading = false;
+    //   state.ingredients = action.payload;
+    // })
+    // .addCase(fetchIngredients.rejected, (state, action) => {
+    //   state.isLoading = false;
+    //   state.error = action.payload;
+    // });
   },
 });
 

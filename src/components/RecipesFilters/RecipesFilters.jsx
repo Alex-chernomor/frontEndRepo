@@ -102,21 +102,21 @@
 import { useSelector, useDispatch } from 'react-redux';
 import Button from '../Button/Button.jsx';
 import Select from 'react-select';
-
 import css from './RecipesFilters.module.css';
 import { RecipeCount } from '../RecipeCount/RecipeCount.jsx';
 import {
   selectTotalCount,
   selectFilterCategories,
-  selectFilterIngredients,
-  selectSelectedCategory,
-  selectSelectedIngredient,
+  // selectSelectedCategory,
 } from '../../redux/filters/selectors.js';
+
 import {
   setSelectedCategory,
   setSelectedIngredient,
   resetFilters,
 } from '../../redux/filters/slice.js';
+
+import { useIngredients } from '../../context/useIngredients.js';
 
 const customStyles = {
   control: provided => ({
@@ -178,6 +178,34 @@ const RecipesFilters = () => {
   const handleReset = () => {
     dispatch(resetFilters());
   };
+
+// const RecipesFilters = ({
+//   categoryParam,
+//   ingredientIdParam,
+//   onChangeSearchParams,
+//   onResetFilters,
+// }) => {
+//   const total = useSelector(selectTotalCount);
+//   const categories = useSelector(selectFilterCategories);
+//   const allIngredients = useIngredients();
+
+//   const selectedCategory = categories.find(
+//     category => category._id === categoryParam
+//   );
+//   const selectedIngredient = allIngredients.find(
+//     ingredient => ingredient._id === ingredientIdParam
+//   );
+
+//   const ingredientOptions = allIngredients.map(ing => ({
+//     label: ing.name,
+//     value: ing._id,
+//   }));
+//   const categoryOptions = categories.map(cat => ({
+//     label: cat.name,
+//     value: cat._id,
+//   }));
+
+
   const hasSelectedFilters = selectedCategory || selectedIngredient;
 
   return (
@@ -188,7 +216,7 @@ const RecipesFilters = () => {
       <div className={css.filtersBox}>
         <Button
           type="button"
-          onClick={handleReset}
+          onClick={onResetFilters}
           className={`${css.btn} ${hasSelectedFilters ? css.active : ''}`}
         >
           Reset filters
@@ -200,17 +228,53 @@ const RecipesFilters = () => {
           onChange={option =>
             dispatch(setSelectedCategory(option?.value ?? null))
           }
+
+//           options={categories.map(cat => ({ label: cat.name, value: cat._id }))}
+//           value={
+//             categoryOptions.find(
+//               category => category.label === categoryParam
+//             ) || null
+//           }
+//           onChange={option => {
+//             onChangeSearchParams('category', option?.label || '');
+//           }}
+
           placeholder="Category"
           isClearable
           styles={customStyles}
         />
         <Select
+
           options={ingredientOptions}
           value={currentIngredientOption}
           onChange={option =>
             dispatch(setSelectedIngredient(option?.value ?? null))
           }
           placeholder="Ingredient"
+
+//           options={allIngredients.map(ing => ({
+//             label: ing.name,
+//             value: ing._id,
+//           }))}
+//           value={
+//             ingredientOptions.find(ing => ing.value === ingredientIdParam) ||
+//             null
+//           }
+//           // value={
+//           //   selectedIngredient
+//           //     ? {
+//           //         label: selectedIngredient.name,
+//           //         value: selectedIngredient._id,
+//           //       }
+//           //     : null
+//           // }
+//           onChange={option =>
+//             onChangeSearchParams('ingredientId', option?.value || null)
+//           }
+//           placeholder={
+//             selectedIngredient ? selectedIngredient.name : 'Ingredient'
+//           }
+
           isClearable
           styles={customStyles}
         />

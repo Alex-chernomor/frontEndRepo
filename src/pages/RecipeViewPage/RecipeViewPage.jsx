@@ -32,11 +32,11 @@ export default function RecipeViewPage() {
   }, [recipeId]);
 
   return (
-    <>
+    <div className="container">
       {isLoading && <Loader />}
       {/* ErrorMessage можна якось замінити чи покращити */}
       {error && <ErrorMessage />}
       {!isLoading && !error && recipe && <RecipeInfo recipe={recipe} />}
-    </>
+    </div>
   );
 }

@@ -49,12 +49,13 @@ const slice = createSlice({
       })
       .addCase(refreshUser.pending, handlePending)
       .addCase(refreshUser.fulfilled, (state, action) => {
-        state.user = action.payload;
+        state.user.name = action.payload.data.user.name;
+        state.user.email = action.payload.data.user.email;
         state.isRefreshing = false;
         state.isLoggedIn = true;
         axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
       })
-      .addCase(refreshUser.rejected, handlePending),
+      .addCase(refreshUser.rejected, handleReject),
 });
 
 export default slice.reducer;

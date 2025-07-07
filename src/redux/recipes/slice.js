@@ -1,8 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {
   createResipe,
-  // removeFromFavorite,
-  fetchRecipesByName,
+  // fetchRecipesByName,
   fetchRecipes,
   fetchFavoriteRecipes,
   fetchOwnRecipes,
@@ -29,7 +28,6 @@ const slice = createSlice({
   },
   extraReducers: builder => {
     builder
-
       .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
@@ -47,10 +45,14 @@ const slice = createSlice({
         state.perPage = perPage;
         state.totalPages = totalPages;
       })
+// <<<<<<< Larysa0707
       // .addCase(fetchRecipes.rejected, handleRejected)
       .addCase(fetchRecipesByName.pending, handlePending)
       .addCase(fetchRecipesByName.rejected, handleRejected)
 
+// =======
+//       .addCase(fetchRecipes.rejected, handleRejected)
+// >>>>>>> main
       .addCase(createResipe.pending, handlePending)
       .addCase(createResipe.fulfilled, (state, { payload }) => {
         state.loading = false;

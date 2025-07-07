@@ -330,20 +330,6 @@ export default function RecipeForm({ onAdd }) {
                       </tbody>
                     </table>
 
-//                     <div className={css.ingredientList}>
-//                       {values.ingredients.map((ing, index) => (
-//                         <div key={index} className={css.ingredientItem}>
-//                           {ing.name} — {ing.amount}
-//                           <button
-//                             type="button"
-//                             className={css.deleteBtn}
-//                             onClick={() => remove(index)}
-//                           >
-//                             🗑
-//                           </button>
-//                         </div>
-//                       ))}
-//                     </div>
 
                   </div>
                 )}

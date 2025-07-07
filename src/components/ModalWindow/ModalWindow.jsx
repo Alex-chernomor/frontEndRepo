@@ -68,7 +68,7 @@ export default function ModalWindow({ type, onConfirm, onCancel, onClose }) {
         onClick={(e) => e.stopPropagation()}
       >
         <button className={css.closeBtn} onClick={onClose} aria-label="Close">
-          <CloseIcon />
+          <CloseIcon className={css.closeIcon} />
         </button>
         <h2 className={css.title}>{config.title}</h2>
         <p className={css.message}>{config.message}</p>

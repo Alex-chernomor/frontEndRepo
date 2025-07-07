@@ -32,7 +32,7 @@ export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",
   async ({ recipe }, thunkAPI) => {
     try {
-      const resp = await axios.post(`/api/users/recipes`, recipe);
+      const resp = await axios.post(`/api/recipes`, recipe);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -57,7 +57,7 @@ export const fetchRecipes = createAsyncThunk(
   ) => {
     try {
       const response = await axios.get(
-        `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
+        `https://backendrepo-ormv.onrender.com/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
       );
       return response.data;
     } catch (error) {

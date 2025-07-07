@@ -1,19 +1,19 @@
-import { useState } from 'react';
-import css from './UserMenu.module.css';
-import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/selectors';
-import { logOut } from '../../redux/auth/operations';
-import { LogOutIcon } from '../Icons/Icons';
+import { useState } from "react";
+import css from "./UserMenu.module.css";
+import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUserName } from "../../redux/auth/selectors";
+import { logOut } from "../../redux/auth/operations";
+import { LogOutIcon } from "../Icons/Icons";
 
-import ModalWindow from '../ModalWindow/ModalWindow.jsx';
+import ModalWindow from "../ModalWindow/ModalWindow.jsx";
 
 export default function UserMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const name = useSelector(selectUserName);
 
-  const userName = user?.name || 'User';
+  const userName = name || "User";
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
@@ -25,7 +25,7 @@ export default function UserMenu() {
   };
 
   //! charAt(0) повертає першу літеру рядка
-  const firstLetterName = name => name?.trim()?.charAt(0).toUpperCase() || '';
+  const firstLetterName = (name) => name?.trim()?.charAt(0).toUpperCase() || "";
 
   return (
     <div className={css.container}>

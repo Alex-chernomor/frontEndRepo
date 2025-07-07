@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import Loader from "./components/Loader/Loader.jsx";
@@ -76,7 +76,11 @@ export default function App() {
                 redirectTo="/api/auth/login"
               />
             }
-          />
+          >
+            <Route index element={<Navigate to="own" replace />} />
+            <Route path="own" element={<OwnRecipes />} />
+            <Route path="favorites" element={<SavedRecipes />} />
+          </Route>
           <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

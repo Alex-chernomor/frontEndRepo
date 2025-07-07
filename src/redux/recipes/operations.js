@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { createAsyncThunk } from '@reduxjs/toolkit';
+import axios from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 // axios.defaults.params = {
 //   perPage: 12,
@@ -7,7 +7,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const addToFavorite = createAsyncThunk(
   "recipes/addToFavorite",
-  async ({ recipeId }, thunkAPI) => {
+  async (recipeId, thunkAPI) => {
     try {
       const resp = await axios.post(`/api/users/favorites/${recipeId}`);
       return resp.data;
@@ -17,9 +17,8 @@ export const addToFavorite = createAsyncThunk(
   }
 );
 
-
 export const createResipe = createAsyncThunk(
-  'recipes/createResipe',
+  "recipes/createResipe",
   async ({ recipe }, thunkAPI) => {
     try {
       const resp = await axios.post(`/api/users/recipes`, recipe);
@@ -32,10 +31,9 @@ export const createResipe = createAsyncThunk(
   }
 );
 
-
 export const removeFromFavorite = createAsyncThunk(
   "recipes/removeFromFavorite",
-  async ({ recipeId }, thunkAPI) => {
+  async (recipeId, thunkAPI) => {
     try {
       const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
       return resp.data;
@@ -87,7 +85,6 @@ export const removeFromFavorite = createAsyncThunk(
 // );
 
 export const fetchRecipes = createAsyncThunk(
-
   "recipes/fetchRecipes",
 
   async (
@@ -95,14 +92,13 @@ export const fetchRecipes = createAsyncThunk(
       page = 1,
       perPage = 12,
 
-      category = '',
-      ingredientId = '',
-      query = '',
+      category = "",
+      ingredientId = "",
+      query = "",
 
-//       category = "",
-//       ingredientId = "",
-//       query = "",
-
+      //       category = "",
+      //       ingredientId = "",
+      //       query = "",
     } = {},
     thunkAPI
   ) => {
@@ -112,14 +108,13 @@ export const fetchRecipes = createAsyncThunk(
           query
         )}`
       );
-      console.log("API Response:", response.data);
-      return response.data;
+      const favorites = thunkAPI.getState().auth.user?.favorites || [];
+      return { ...response.data, favorites };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response?.message);
     }
   }
 );
-
 
 export const fetchFavoriteRecipes = createAsyncThunk(
   "recipes/getFavoritesRecipes",
@@ -154,4 +149,3 @@ export const fetchOwnRecipes = createAsyncThunk(
     }
   }
 );
-

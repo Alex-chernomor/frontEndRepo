@@ -77,9 +77,9 @@ export default function App() {
               />
             }
           >
-            <Route index element={<Navigate to="own" replace />} />
+            {/* <Route index element={<Navigate to="own" replace />} />
             <Route path="own" element={<OwnRecipes />} />
-            <Route path="favorites" element={<SavedRecipes />} />
+            <Route path="favorites" element={<SavedRecipes />} /> */}
           </Route>
           <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
           <Route path="*" element={<NotFoundPage />} />

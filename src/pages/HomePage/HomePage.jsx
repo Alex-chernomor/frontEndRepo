@@ -1,30 +1,18 @@
-import { useEffect } from 'react';
-import Header from '../../sections/Header/Header.jsx';
-import Hero from '../../sections/Hero/Hero.jsx';
-import Recipes from '../../sections/Recipes/Recipes.jsx';
-import Loader from '../../components/Loader/Loader.jsx';
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+
+import Header from "../../sections/Header/Header.jsx";
+import Hero from "../../sections/Hero/Hero.jsx";
+import Recipes from "../../sections/Recipes/Recipes.jsx";
+import Loader from "../../components/Loader/Loader.jsx";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage.jsx";
 
 import {
   fetchRecipes,
   fetchCategories,
   fetchIngredients,
-  fetchRecipesByName,
-} from '../../redux/recipes/operations.js';
-
-import { useDispatch, useSelector } from 'react-redux';
-
-
-// import Hero from '../../sections/Hero/Hero.jsx';
-// import Recipes from '../../sections/Recipes/Recipes.jsx';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
-// import {
-//   fetchRecipes,
-//   fetchCategories,
-  // fetchIngredients,
-// } from '../../redux/recipes/operations.js';
-
-// import { useDispatch, useSelector } from 'react-redux';
-// import { resetFilters } from '../../redux/filters/slice.js';
+} from "../../redux/recipes/operations.js";
 
 import {
   selectRecipes,
@@ -33,12 +21,9 @@ import {
   selectTotalPages,
   selectIsLoading,
   selectError,
-} from '../../redux/recipes/selectors.js';
-// <<<<<<< Larysa0707
-import css from './HomePage.module.css';
-// =======
-import { useSearchParams } from 'react-router-dom';
-// >>>>>>> main
+} from "../../redux/recipes/selectors.js";
+
+import css from "./HomePage.module.css";
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -51,110 +36,75 @@ export default function HomePage() {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
-// <<<<<<< Larysa0707
+  const categoryParam = searchParams.get("category") || "";
+  const ingredientIdParam = searchParams.get("ingredientId") || "";
+  const pageParam = parseInt(searchParams.get("page") || 1);
+
+  // Загружаем справочники (категории, ингредиенты)
   useEffect(() => {
-    dispatch(fetchRecipesByName());
-    dispatch(fetchRecipes({ page: 1, perPage }));
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
-  }, [dispatch, perPage]);
-// =======
-  // categoryParam повертає _id категорії
-  const categoryParam = searchParams.get('category') || '';
-  const ingredientIdParam = searchParams.get('ingredientId') || '';
-  const pageParam = parseInt(searchParams.get('page') || 1);
-  // const queryParam = searchParams.get('query') || '';
+  }, [dispatch]);
 
+  // Загружаем рецепты при изменении параметров фильтрации
+  useEffect(() => {
+    dispatch(
+      fetchRecipes({
+        page: pageParam,
+        perPage,
+        category: categoryParam,
+        ingredientId: ingredientIdParam,
+      })
+    );
+  }, [dispatch, pageParam, perPage, categoryParam, ingredientIdParam]);
+
+  // Обновление URL параметров
   const updateSearchParams = (key, value) => {
     const updatedParams = new URLSearchParams(searchParams);
     if (value) {
       updatedParams.set(key, value);
     } else {
-      // Це треба аби
       updatedParams.delete(key);
     }
-    //Аби при фільтрації завжди починати з першої сторінки
-    updatedParams.set('page', 1);
+    updatedParams.set("page", 1);
     setSearchParams(updatedParams);
   };
+
+  // Сброс фильтров
   const handleResetFilters = () => {
     const updatedParams = new URLSearchParams(searchParams);
-    updatedParams.delete('category');
-    updatedParams.delete('ingredientId');
-    updatedParams.set('page', 1);
+    updatedParams.delete("category");
+    updatedParams.delete("ingredientId");
+    updatedParams.set("page", 1);
     setSearchParams(updatedParams);
   };
-// >>>>>>> main
 
+  // Пагинация
   const handleLoadMoreClick = () => {
-    setSearchParams(prevValue => {
-      const newParams = new URLSearchParams(prevValue);
-      const currentPage = parseInt(prevValue.get('page') || 1);
-      newParams.set('page', currentPage + 1);
-      //треба повертати аби setSearchParams отримав нові парамери
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      const currentPage = parseInt(prev.get("page") || 1);
+      newParams.set("page", currentPage + 1);
       return newParams;
     });
-    // dispatch(fetchRecipes({ page: pageParam + 1, perPage }));
   };
 
-// <<<<<<< Larysa0707
-  // const isVisible =
-  //   page < totalPages && !isLoading && !error && recipes.length > 0;
-// =======
-  useEffect(() => {
-    dispatch(fetchCategories());
-  }, [dispatch]);
+  const isLoadMoreVisible =
+    page < totalPages && !isLoading && !error && recipes.length > 0;
 
-  useEffect(() => {
-    try {
-      dispatch(
-        fetchRecipes({
-          page: pageParam,
-          perPage,
-          category: categoryParam,
-          ingredientId: ingredientIdParam,
-          // query: queryParam,
-        })
-      ).unwrap();
-    } catch (error) {
-      console.error('Error is:', error.message);
-    }
-  }, [categoryParam, dispatch, ingredientIdParam, pageParam, perPage]);
-// >>>>>>> main
-
-  const isLoadMoreButtonVisible =
-    page < totalPages && !error && recipes.length > 0;
-
-  // console.log(
-  //   'page:',
-  //   page,
-  //   'totalPages:',
-  //   totalPages,
-  //   'recipes.length:',
-  //   recipes.length,
-  //   'isLoading:',
-  //   isLoading,
-  //   'error:',
-  //   error
-  // );
   return (
-    <div>
+    <div className={css.wrapper}>
       <Hero />
-// <<<<<<< Larysa0707
 
-      {!isLoading && !error && (
-        <Recipes
-          onLoadMore={handleLoadMoreClick}
-          isLoadMoreVisible={isLoadMoreButtonVisible}
-          isLoadMoreDisabled={isLoading}
-        />
-// =======
       {error && <ErrorMessage />}
+
+      {isLoading && <Loader />}
+
       {!isLoading && !error && (
         <div className="container">
           <Recipes
             onLoadMore={handleLoadMoreClick}
-            isLoadMoreVisible={isVisible}
+            isLoadMoreVisible={isLoadMoreVisible}
             isLoadMoreDisabled={isLoading}
             categoryParam={categoryParam}
             ingredientIdParam={ingredientIdParam}
@@ -162,11 +112,7 @@ export default function HomePage() {
             resetFilters={handleResetFilters}
           />
         </div>
-// >>>>>>> main
       )}
-      {/* {isLoading && recipes.length === 0 && (
-        <p className={css.text}>...Loading</p>
-      )} */}
     </div>
   );
 }

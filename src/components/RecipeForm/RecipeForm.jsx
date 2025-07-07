@@ -262,17 +262,6 @@ export default function RecipeForm({ onAdd }) {
                         />
                       </div>
 
-//                       <Field
-//                         name="ingredientName"
-//                         placeholder="Name"
-//                         className={css.input}
-//                       />
-//                       <Field
-//                         name="ingredientAmount"
-//                         placeholder="Amount"
-//                         className={css.input}
-//                       />
-
                     </div>
                     <div className={css.addIngredientWrapper}>
                       <button

@@ -21,6 +21,13 @@
   position: relative;
 }
 
+.cancelBtn,
+.logoutBtn,
+.unauthConfirmBtn,
+.unauthCancelBtn .successBtn {
+  font-size: 16px;
+}
+
 .unauthorised {
   height: 277px;
 }
@@ -42,24 +49,24 @@
 
 .closeBtn {
   position: absolute;
-  top: 16px;
-  right: 12px;
-  font-size: 24px;
-  background: none;
+  top: 21px;
+  right: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  background: transparent;
   border: none;
   cursor: pointer;
   color: #000;
-  display: flex;
-  justify-content: center;
 }
 
 .title {
   font-size: 32px;
   font-weight: 600;
-  margin-bottom: 8px;
   color: #000;
   margin-top: 56px;
-  /* text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); */
+  margin-bottom: 20px;
 }
 
 .message {
@@ -67,6 +74,7 @@
   color: #000;
   margin-bottom: 20px;
   white-space: pre-line;
+  text-shadow: none;
 }
 
 .buttons {
@@ -84,13 +92,11 @@ button.unauthConfirmBtn {
 
 .logoutBtn,
 .cancelBtn {
-  font-size: 16px;
   width: 165px;
   height: 44px;
 }
 
 .logoutBtn {
-  /* border: none; */
   color: #fff;
   background-color: #c80000;
 }
@@ -140,4 +146,35 @@ button.unauthConfirmBtn {
 .successBtn {
   width: 356px;
   height: 44px;
+}
+
+@media screen and (max-width: 767px) {
+  .modal {
+    width: 362px;
+  }
+  .cancelBtn,
+  .logoutBtn,
+  .unauthConfirmBtn,
+  .unauthCancelBtn {
+    font-size: 18px;
+  }
+  .unauthorised {
+    height: 341px;
+  }
+  .logout {
+    height: 316px;
+  }
+  .success {
+    height: 276px;
+  }
+  .cancelBtn,
+  .logoutBtn,
+  .unauthConfirmBtn,
+  .unauthCancelBtn {
+    width: 314px;
+    height: 54px;
+  }
+  .successBtn {
+    width: 330px;
+  }
 }

@@ -1,13 +1,13 @@
-import MainTitle from "../../components/MainTitle/MainTitle";
-import SearchBox from "../../components/SearchBox/SearchBox";
-import css from "./Hero.module.css";
+import MainTitle from '../../components/MainTitle/MainTitle';
+import SearchBox from '../../components/SearchBox/SearchBox';
+import css from './Hero.module.css';
 
-const Hero = () => {
+const Hero = ({ onSearchTermChange }) => {
   return (
     <section className={css.hero}>
       <div className={css.container}>
         <MainTitle />
-        <SearchBox />
+        <SearchBox onSearchTermChange={onSearchTermChange} />
       </div>
     </section>
   );

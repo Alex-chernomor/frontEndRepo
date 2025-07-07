@@ -12,10 +12,16 @@ const filtersSlice = createSlice({
     error: null,
   },
   reducers: {
-    // resetFilters(state) {
-    //   state.selectedCategory = null;
-    //   state.selectedIngredient = null;
-    // },
+    setSelectedCategory: (state, { payload }) => {
+      state.selectedCategory = payload;
+    },
+    setSelectedIngredient: (state, { payload }) => {
+      state.selectedIngredient = payload;
+    },
+    resetFilters: state => {
+      state.selectedCategory = null;
+      state.selectedIngredient = null;
+    },
   },
   extraReducers: builder => {
     builder
@@ -46,5 +52,6 @@ const filtersSlice = createSlice({
   },
 });
 
-// export const { resetFilters } = filtersSlice.actions;
+export const { setSelectedCategory, setSelectedIngredient, resetFilters } =
+  filtersSlice.actions;
 export default filtersSlice.reducer;

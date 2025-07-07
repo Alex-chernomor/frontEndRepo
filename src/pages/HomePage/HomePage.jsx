@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from 'react';
 
-import Header from "../../sections/Header/Header.jsx";
-import Hero from "../../sections/Hero/Hero.jsx";
-import Recipes from "../../sections/Recipes/Recipes.jsx";
-// import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
-
-import { fetchRecipesByName } from "../../redux/recipes/operations.js";
+import Header from '../../sections/Header/Header.jsx';
+import Hero from '../../sections/Hero/Hero.jsx';
+import Recipes from '../../sections/Recipes/Recipes.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 
 import {
   fetchRecipes,
   fetchCategories,
   fetchIngredients,
-  fetchRecipesByFilters,
-} from "../../redux/recipes/operations.js";
+  fetchRecipesByName,
+} from '../../redux/recipes/operations.js';
 
-import { useDispatch, useSelector } from "react-redux";
-// import { resetFilters } from '../../redux/filters/slice.js';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   selectRecipes,
   selectPage,
@@ -23,7 +21,8 @@ import {
   selectTotalPages,
   selectIsLoading,
   selectError,
-} from "../../redux/recipes/selectors.js";
+} from '../../redux/recipes/selectors.js';
+// import css from './HomePage.module.css';
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -34,32 +33,22 @@ export default function HomePage() {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
-
   useEffect(() => {
     dispatch(fetchRecipesByName());
-    dispatch(fetchRecipes({ page, perPage }));
+    dispatch(fetchRecipes({ page: 1, perPage }));
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
-    dispatch(
-      fetchRecipesByFilters({
-        category: selectedCategory?.value || "",
-        ingredient: selectedIngredient?.value || "",
-      })
-    );
-  }, [dispatch, page, perPage, selectedCategory, selectedIngredient]);
+  }, [dispatch, perPage]);
 
   const handleLoadMoreClick = () => {
     dispatch(fetchRecipes({ page: page + 1, perPage }));
   };
 
-  // const handleReset = () => {
-  //   dispatch(resetFilters());
-  // };
+  // const isVisible =
+  //   page < totalPages && !isLoading && !error && recipes.length > 0;
 
-  const isVisible =
-    page < totalPages && !isLoading && !error && recipes.length > 0;
+  const isLoadMoreButtonVisible =
+    page < totalPages && !error && recipes.length > 0;
 
   // console.log(
   //   'page:',
@@ -76,18 +65,17 @@ export default function HomePage() {
   return (
     <div>
       <Hero />
-      {/* {error && <ErrorMessage />} */}
+
       {!isLoading && !error && (
         <Recipes
           onLoadMore={handleLoadMoreClick}
-          isLoadMoreVisible={isVisible}
+          isLoadMoreVisible={isLoadMoreButtonVisible}
           isLoadMoreDisabled={isLoading}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          selectedIngredient={selectedIngredient}
-          setSelectedIngredient={setSelectedIngredient}
         />
       )}
+      {/* {isLoading && recipes.length === 0 && (
+        <p className={css.text}>...Loading</p>
+      )} */}
     </div>
   );
 }

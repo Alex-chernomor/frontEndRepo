@@ -18,6 +18,15 @@
   margin: 0 auto;
 }
 
+.sectionCont {
+  width: 1440px;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width: 1224px;
+}
 .btn {
   display: flex;
   align-items: center;

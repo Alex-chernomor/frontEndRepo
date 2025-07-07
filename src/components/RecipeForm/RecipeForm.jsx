@@ -2,16 +2,18 @@ import React, { useState, useRef } from "react";
 import { Field, Form, Formik, ErrorMessage, FieldArray } from "formik";
 import css from "./RecipeForm.module.css";
 import * as Yup from "yup";
+
 import Select from "react-select";
 import { selectFilterCategories } from "../../redux/filters/selectors.js";
 import { useSelector } from "react-redux";
 import { useIngredients } from "../../context/useIngredients.js";
 
+
 const RecipeSchema = Yup.object().shape({
   title: Yup.string().required("Required"),
   description: Yup.string().required("Required"),
   cookingTime: Yup.number().positive("Must be positive").required("Required"),
-  calories: Yup.number(),
+  calories: Yup.string().required("Required"),
   category: Yup.string().required("Required"),
   ingredients: Yup.array().of(
     Yup.object().shape({
@@ -20,31 +22,15 @@ const RecipeSchema = Yup.object().shape({
     })
   ),
   instructions: Yup.string().required("Required"),
-  photo: Yup.mixed().nullable(),
+  photo: Yup.mixed().required("Required"),
 });
-
-const customSelectStyles = {
-  control: (base, state) => ({
-    ...base,
-    border: "1px solid #d9d9d9",
-    borderRadius: "8px",
-    padding: "0 12px",
-    width: "100%",
-    height: "46px",
-    fontSize: "18px",
-    color: "#000",
-    boxShadow: state.isFocused ? "0 0 0 2px rgba(78, 70, 180, 0.2)" : "none",
-    "&:hover": {
-      border: "2px solid #000",
-    },
-  }),
-};
 
 export default function RecipeForm({ onAdd }) {
   const [preview, setPreview] = useState(null);
   const fileInputRef = useRef(null);
   const categories = useSelector(selectFilterCategories);
   const allIngredients = useIngredients();
+
 
   const handleDrop = (event, setFieldValue) => {
     event.preventDefault();
@@ -55,30 +41,17 @@ export default function RecipeForm({ onAdd }) {
     }
   };
 
+  const handleFileChange = (event, setFieldValue) => {
+    const file = event.currentTarget.files[0];
+    if (file) {
+      setFieldValue("photo", file);
+      setPreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleClick = () => {
     fileInputRef.current.click();
   };
-
-  const handleFileChange = (e, setFieldValue) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setPreview(reader.result);
-        setFieldValue("photo", file);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleRemoveImage = (setFieldValue) => {
-    setPreview(null);
-    setFieldValue("photo", null);
-    if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // очищення інпута
-    }
-  };
-
   return (
     <Formik
       initialValues={{
@@ -99,24 +72,23 @@ export default function RecipeForm({ onAdd }) {
         formData.append("title", values.title);
         formData.append("description", values.description);
         formData.append("cookingTime", values.cookingTime);
-        formData.append("calories", values.calories || "-");
+        formData.append("calories", values.calories);
         formData.append("category", values.category);
         formData.append("instructions", values.instructions);
         formData.append("photo", values.photo);
         formData.append("ingredients", JSON.stringify(values.ingredients));
 
-        console.log([...formData.entries()]);
         onAdd(formData);
       }}
     >
-      {({ values, setFieldValue, handleSubmit }) => (
+      {({ values, setFieldValue }) => (
         <div className={css.formWrapper}>
           <h2 className={css.sectionTitle}>Add Recipe</h2>
-          <Form onSubmit={handleSubmit} className={css.formRecipe}>
-            <div className={css.photoUpload}>
-              <p className={css.photoLabel}>Upload Photo</p>
+          <Form className={css.formRecipe}>
+            <div className={css.order1}>
+              <p className={css.uploadPhoto}>Upload Photo</p>
               <div
-                className={css.dropZone}
+                className={css.photoContainer}
                 onClick={handleClick}
                 onDrop={(e) => handleDrop(e, setFieldValue)}
                 onDragOver={(e) => e.preventDefault()}
@@ -132,12 +104,12 @@ export default function RecipeForm({ onAdd }) {
                     <path
                       d="M50.363 44.7452C50.363 49.9162 46.171 54.1082 41 54.1082C35.829 54.1082 31.637 49.9162 31.637 44.7452C31.637 39.5741 35.829 35.3822 41 35.3822C46.171 35.3822 50.363 39.5741 50.363 44.7452Z"
                       stroke="#070707"
-                      strokeWidth="2.5625"
+                      stroke-width="2.5625"
                     />
                     <path
                       d="M16.6563 57.6562L16.6563 34.8358C16.6563 31.0007 19.7652 27.8918 23.6002 27.8918C26.2304 27.8918 28.6348 26.4058 29.8111 24.0533L31.3848 20.9058C32.687 18.3014 35.3489 16.6562 38.2608 16.6563L43.7393 16.6563C46.6511 16.6563 49.313 18.3014 50.6152 20.9058L52.1889 24.0533C53.3652 26.4058 55.7696 27.8919 58.3998 27.8919C62.2348 27.8919 65.3438 31.0008 65.3438 34.8358V57.6562C65.3438 61.9019 61.9019 65.3437 57.6563 65.3437H24.3437C20.0981 65.3437 16.6562 61.9019 16.6563 57.6562Z"
                       stroke="#070707"
-                      strokeWidth="2.5625"
+                      stroke-width="2.5625"
                     />
                   </svg>
                 )}
@@ -145,129 +117,93 @@ export default function RecipeForm({ onAdd }) {
                   name="photo"
                   type="file"
                   accept="image/*"
-                  className={css.hiddenInput}
+                  className={css.uploadImage}
                   ref={fileInputRef}
-                  onChange={(e) => handleFileChange(e, setFieldValue)}
+                  onChange={handleFileChange}
                   hidden
                 />
                 {preview && (
-                  <div className={css.preview}>
-                    <img src={preview} alt="Preview" className={css.image} />
-                    <button
-                      type="button"
-                      className={css.removeBtn}
-                      onClick={() => handleRemoveImage(setFieldValue)}
-                    >
-                      ✕
-                    </button>
-                  </div>
+                  <img
+                    src={preview}
+                    alt="Preview"
+                    className={css.previewImage}
+                  />
                 )}
               </div>
             </div>
-            <div className={css.formSectionsWrapper}>
-              <div className={css.generalInfoWrapper}>
-                <p className={css.formSectionTitle}>General Information</p>
-                <div className={css.itemFormWrapper}>
-                  <label className={css.itemFormTitle} htmlFor="title">
-                    Recipe Title
-                  </label>
-                  <Field
-                    name="title"
-                    placeholder="Enter the name of your recipe"
-                    className={css.input}
-                  />
-                  <ErrorMessage
-                    name="title"
-                    component="div"
-                    className={css.error}
-                  />
-                </div>
+            <div>
+              <p className={css.generalInfo}>General Information</p>
 
-                <div className={css.itemFormWrapper}>
-                  <label className={css.itemFormTitle} htmlFor="description">
-                    Recipe Description
-                  </label>
-                  <Field
-                    name="description"
-                    as="textarea"
-                    placeholder="Enter a brief description of your recipe"
-                    className={css.input}
-                  />
-                  <ErrorMessage
-                    name="description"
-                    component="div"
-                    className={css.error}
-                  />
-                </div>
+              <div>
+                <label htmlFor="title">Recipe Title</label>
+                <Field
+                  name="title"
+                  placeholder="Enter the name of your recipe"
+                  className={css.input}
+                />
+                <ErrorMessage
+                  name="title"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
 
-                <div className={css.itemFormWrapper}>
-                  <label className={css.itemFormTitle} htmlFor="cookingTime">
-                    Cooking time in minutes
-                  </label>
-                  <Field
-                    name="cookingTime"
-                    type="number"
-                    min="1"
-                    placeholder="10"
-                    className={css.input}
-                  />
-                  <ErrorMessage
-                    name="cookingTime"
-                    component="div"
-                    className={css.error}
-                  />
-                </div>
-                <div className={css.calsCategWrapper}>
-                  <div className={css.itemCatWrapper}>
-                    <label className={css.itemFormTitle} htmlFor="calories">
-                      Calories
-                    </label>
-                    <Field
-                      name="calories"
-                      type="number"
-                      placeholder="150"
-                      className={css.catInput}
-                    />
-                    <ErrorMessage
-                      name="calories"
-                      component="div"
-                      className={css.error}
-                    />
-                  </div>
-                  <div className={css.itemCatWrapper}>
-                    <label className={css.itemFormTitle} htmlFor="category">
-                      Category
-                    </label>
-                    <Select
-                      options={categories.map((cat) => ({
-                        label: cat.name,
-                        value: cat._id,
-                      }))}
-                      value={
-                        categories
-                          .map((cat) => ({ label: cat.name, value: cat._id }))
-                          .find((opt) => opt.value === values.category) || null
-                      }
-                      onChange={(selectedOption) => {
-                        setFieldValue("category", selectedOption.value);
-                      }}
-                      placeholder="Soup"
-                      styles={customSelectStyles}
-                    />
-                    <ErrorMessage
-                      name="category"
-                      component="div"
-                      className={css.error}
-                    />
-                  </div>{" "}
-                </div>
+              <div>
+                <label htmlFor="description">Recipe Description</label>
+                <Field
+                  name="description"
+                  as="textarea"
+                  placeholder="Enter a brief description"
+                  className={css.input}
+                />
+                <ErrorMessage
+                  name="description"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="cookingTime">Cooking time in minutes</label>
+                <Field name="cookingTime" type="number" className={css.input} />
+                <ErrorMessage
+                  name="cookingTime"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="calories">Calories</label>
+                <Field name="calories" className={css.input} />
+                <ErrorMessage
+                  name="calories"
+                  component="div"
+                  className={css.error}
+                />
+              </div>
+
+              <div>
+                <label htmlFor="category">Category</label>
+                <Field name="category" as="select" className={css.input}>
+                  <option value="">Select category</option>
+                  <option value="Soup">Soup</option>
+                  <option value="Main">Main</option>
+                  <option value="Dessert">Dessert</option>
+                </Field>
+                <ErrorMessage
+                  name="category"
+                  component="div"
+                  className={css.error}
+                />
               </div>
 
               <FieldArray name="ingredients">
                 {({ push, remove }) => (
-                  <div className={css.ingredientsFormWrapper}>
-                    <p className={css.formSectionTitle}>Ingredients</p>
+                  <div>
+                    <p className={css.ingredientsTitle}>Ingredients</p>
                     <div className={css.ingredientRow}>
+
                       <div
                         className={`${css.inputGroup} ${css.inputGroupName}`}
                       >
@@ -325,6 +261,18 @@ export default function RecipeForm({ onAdd }) {
                           className={css.error}
                         />
                       </div>
+
+//                       <Field
+//                         name="ingredientName"
+//                         placeholder="Name"
+//                         className={css.input}
+//                       />
+//                       <Field
+//                         name="ingredientAmount"
+//                         placeholder="Amount"
+//                         className={css.input}
+//                       />
+
                     </div>
                     <div className={css.addIngredientWrapper}>
                       <button
@@ -347,6 +295,7 @@ export default function RecipeForm({ onAdd }) {
                         Add new ingredient
                       </button>
                     </div>
+
                     <table className={css.table}>
                       <thead>
                         <tr>
@@ -391,18 +340,32 @@ export default function RecipeForm({ onAdd }) {
                         })}
                       </tbody>
                     </table>
+
+//                     <div className={css.ingredientList}>
+//                       {values.ingredients.map((ing, index) => (
+//                         <div key={index} className={css.ingredientItem}>
+//                           {ing.name} — {ing.amount}
+//                           <button
+//                             type="button"
+//                             className={css.deleteBtn}
+//                             onClick={() => remove(index)}
+//                           >
+//                             🗑
+//                           </button>
+//                         </div>
+//                       ))}
+//                     </div>
+
                   </div>
                 )}
               </FieldArray>
 
-              <div className={css.instructionWrapper}>
-                <label className={css.formSectionTitle} htmlFor="instructions">
-                  Instructions
-                </label>
+              <div>
+                <label htmlFor="instructions">Instructions</label>
                 <Field
                   name="instructions"
                   as="textarea"
-                  placeholder="Enter a text"
+                  placeholder="Enter instructions"
                   className={css.input}
                 />
                 <ErrorMessage

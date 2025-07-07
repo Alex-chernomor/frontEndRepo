@@ -78,15 +78,17 @@ export default function HomePage() {
       <Hero />
       {/* {error && <ErrorMessage />} */}
       {!isLoading && !error && (
-        <Recipes
-          onLoadMore={handleLoadMoreClick}
-          isLoadMoreVisible={isVisible}
-          isLoadMoreDisabled={isLoading}
-          selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
-          selectedIngredient={selectedIngredient}
-          setSelectedIngredient={setSelectedIngredient}
-        />
+        <div className="container">
+          <Recipes
+            onLoadMore={handleLoadMoreClick}
+            isLoadMoreVisible={isVisible}
+            isLoadMoreDisabled={isLoading}
+            selectedCategory={selectedCategory}
+            setSelectedCategory={setSelectedCategory}
+            selectedIngredient={selectedIngredient}
+            setSelectedIngredient={setSelectedIngredient}
+          />
+        </div>
       )}
     </div>
   );

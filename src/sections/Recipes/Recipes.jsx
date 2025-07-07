@@ -15,28 +15,24 @@ import { selectSearchTerm } from "../../redux/filters/selectors.js";
 
 import css from "./Recipes.module.css";
 
-const Recipes = ({
-  onLoadMore,
-  isLoadMoreVisible,
-  isLoadMoreDisabled,
-  categoryParam,
-  ingredientIdParam,
-  updateSearchParams,
-  resetFilters,
-}) => {
-  const recipes = useSelector(selectRecipes);
+const Recipes = ({ ...props }) => {
+  const recipesState = useSelector(selectRecipes);
   const isLoading = useSelector(selectIsLoading);
   const searchTerm = useSelector(selectSearchTerm);
 
   const [title, setTitle] = useState("Recipes");
 
+  const recipeItems = Array.isArray(recipesState?.data)
+    ? recipesState.data
+    : [];
+
   useEffect(() => {
-    if (searchTerm && recipes.length > 0) {
+    if (searchTerm && recipeItems.length > 0) {
       setTitle(`Search results for "${searchTerm}"`);
     } else {
       setTitle("Recipes");
     }
-  }, [searchTerm, recipes]);
+  }, [searchTerm, recipeItems]);
 
   return (
     <section className={css.recipes}>
@@ -45,24 +41,22 @@ const Recipes = ({
           <SectionTitle>{title}</SectionTitle>
 
           <RecipesFilters
-            categoryParam={categoryParam}
-            ingredientIdParam={ingredientIdParam}
-            onChangeSearchParams={updateSearchParams}
-            onResetFilters={resetFilters}
+            categoryParam={props.categoryParam}
+            ingredientIdParam={props.ingredientIdParam}
+            onChangeSearchParams={props.updateSearchParams}
+            onResetFilters={props.resetFilters}
           />
 
-          {isLoading && recipes.length === 0 && (
-            <p className={css.text}>...Loading</p>
-          )}
+          {isLoading && recipeItems.length === 0 && <Loader />}
 
-          {recipes.length > 0 && <RecipesList />}
+          {recipeItems.length > 0 && <RecipesList recipes={recipeItems} />}
 
-          {isLoadMoreVisible && (
+          {props.isLoadMoreVisible && (
             <Button
               type="button"
               className={css.button}
-              onClick={onLoadMore}
-              disabled={isLoadMoreDisabled || isLoading}
+              onClick={props.onLoadMore}
+              disabled={props.isLoadMoreDisabled || isLoading}
             >
               {isLoading ? <Loader /> : "Load More"}
             </Button>

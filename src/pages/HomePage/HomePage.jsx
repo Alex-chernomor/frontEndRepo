@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-import Header from "../../sections/Header/Header.jsx";
 import Hero from "../../sections/Hero/Hero.jsx";
 import Recipes from "../../sections/Recipes/Recipes.jsx";
 import Loader from "../../components/Loader/Loader.jsx";

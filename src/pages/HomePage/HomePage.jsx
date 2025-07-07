@@ -1,21 +1,15 @@
-import { useEffect, useState } from "react";
-
-import Header from "../../sections/Header/Header.jsx";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
 import Hero from "../../sections/Hero/Hero.jsx";
 import Recipes from "../../sections/Recipes/Recipes.jsx";
-// import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
-
-import { fetchRecipesByName } from "../../redux/recipes/operations.js";
-
+import Loader from "../../components/Loader/Loader.jsx";
+import ErrorMessage from "../../components/ErrorMessage/ErrorMessage.jsx";
 import {
   fetchRecipes,
   fetchCategories,
   fetchIngredients,
-  fetchRecipesByFilters,
 } from "../../redux/recipes/operations.js";
-
-import { useDispatch, useSelector } from "react-redux";
-// import { resetFilters } from '../../redux/filters/slice.js';
 import {
   selectRecipes,
   selectPage,
@@ -24,69 +18,80 @@ import {
   selectIsLoading,
   selectError,
 } from "../../redux/recipes/selectors.js";
-
+import css from "./HomePage.module.css";
 export default function HomePage() {
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const recipes = useSelector(selectRecipes);
   const page = useSelector(selectPage);
   const perPage = useSelector(selectPerPage);
   const totalPages = useSelector(selectTotalPages);
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
-
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedIngredient, setSelectedIngredient] = useState(null);
-
+  const categoryParam = searchParams.get("category") || "";
+  const ingredientIdParam = searchParams.get("ingredientId") || "";
+  const pageParam = parseInt(searchParams.get("page") || 1);
+  // Загружаем справочники (категории, ингредиенты)
   useEffect(() => {
-    dispatch(fetchRecipesByName());
-    dispatch(fetchRecipes({ page, perPage }));
     dispatch(fetchCategories());
     dispatch(fetchIngredients());
+  }, [dispatch]);
+  // Загружаем рецепты при изменении параметров фильтрации
+  useEffect(() => {
     dispatch(
-      fetchRecipesByFilters({
-        category: selectedCategory?.value || "",
-        ingredient: selectedIngredient?.value || "",
+      fetchRecipes({
+        page: pageParam,
+        perPage,
+        category: categoryParam,
+        ingredientId: ingredientIdParam,
       })
     );
-  }, [dispatch, page, perPage, selectedCategory, selectedIngredient]);
-
-  const handleLoadMoreClick = () => {
-    dispatch(fetchRecipes({ page: page + 1, perPage }));
+  }, [dispatch, pageParam, perPage, categoryParam, ingredientIdParam]);
+  // Обновление URL параметров
+  const updateSearchParams = (key, value) => {
+    const updatedParams = new URLSearchParams(searchParams);
+    if (value) {
+      updatedParams.set(key, value);
+    } else {
+      updatedParams.delete(key);
+    }
+    updatedParams.set("page", 1);
+    setSearchParams(updatedParams);
   };
-
-  // const handleReset = () => {
-  //   dispatch(resetFilters());
-  // };
-
-  const isVisible =
+  // Сброс фильтров
+  const handleResetFilters = () => {
+    const updatedParams = new URLSearchParams(searchParams);
+    updatedParams.delete("category");
+    updatedParams.delete("ingredientId");
+    updatedParams.set("page", 1);
+    setSearchParams(updatedParams);
+  };
+  // Пагинация
+  const handleLoadMoreClick = () => {
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      const currentPage = parseInt(prev.get("page") || 1);
+      newParams.set("page", currentPage + 1);
+      return newParams;
+    });
+  };
+  const isLoadMoreVisible =
     page < totalPages && !isLoading && !error && recipes.length > 0;
-
-  // console.log(
-  //   'page:',
-  //   page,
-  //   'totalPages:',
-  //   totalPages,
-  //   'recipes.length:',
-  //   recipes.length,
-  //   'isLoading:',
-  //   isLoading,
-  //   'error:',
-  //   error
-  // );
   return (
-    <div>
+    <div className={css.wrapper}>
       <Hero />
-      {/* {error && <ErrorMessage />} */}
+      {error && <ErrorMessage />}
+      {isLoading && <Loader />}
       {!isLoading && !error && (
         <div className="container">
           <Recipes
             onLoadMore={handleLoadMoreClick}
-            isLoadMoreVisible={isVisible}
+            isLoadMoreVisible={isLoadMoreVisible}
             isLoadMoreDisabled={isLoading}
-            selectedCategory={selectedCategory}
-            setSelectedCategory={setSelectedCategory}
-            selectedIngredient={selectedIngredient}
-            setSelectedIngredient={setSelectedIngredient}
+            categoryParam={categoryParam}
+            ingredientIdParam={ingredientIdParam}
+            updateSearchParams={updateSearchParams}
+            resetFilters={handleResetFilters}
           />
         </div>
       )}

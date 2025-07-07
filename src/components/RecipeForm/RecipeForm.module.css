@@ -1,217 +1,330 @@
 label {
-    font-weight: 600;
-    color: black;
-    font-size: 0.95rem;
-    margin-bottom: 0.25rem;
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #050505;
+  margin-bottom: 4px;
 }
 
 .formWrapper {
-    display: grid;
-    /* grid-template-columns: 2fr 1fr; */
-    gap: 2rem;
-    width: 100%;
-    margin: 0 auto;
-
-    background-color: #fafaf3;
-    box-sizing: border-box;
-    max-width: 360px;
+  display: flex;
+  justify-content: center;
+  background-color: #fafaf3;
+  width: 100%;
+  padding: 40px 16px;
+  box-sizing: border-box;
 }
 
+.formRecipe {
+  display: grid;
+  grid-template-columns: 754px 393px;
+  gap: 24px;
+  width: 100%;
+  max-width: 1226px;
+}
 
+/* Заголовок "Add Recipe" */
 .sectionTitle {
-    color: black;
-    font-weight: 600;
-    font-size: 40px;
-    margin: 0;
-    padding: 0;
+  grid-column: span 2;
+  color: #050505;
+  font-weight: 700;
+  font-size: 40px;
+  line-height: 1.2;
+  margin: 0 0 32px 0;
+  padding: 0;
 }
 
-.photoContainer {
-    height: 380px;
-    display: flex;
-    background: #9f9f9f;
-    border-radius: 10px;
-    text-align: center;
-    font-family: sans-serif;
-    color: #888;
-    cursor: pointer;
-    transition: border-color 0.3s, background-color 0.3s;
-    margin: 20px auto;
-    align-items: center;
-    justify-content: center;
+/* Підзаголовки секцій */
+.subSectionTitle {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: #050505;
+  margin-bottom: 16px;
 }
 
-.photoContainer:hover {
-    border-color: #333;
-    background-color: #fafafa;
+/* Сітка для cookingTime, calories, category */
+.inlineFields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
 }
 
-.generalInfo {
-    color: black;
+/* Стиль для блоку з одним полем (title, desc...) */
+.fieldGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 24px;
 }
 
-.uploadPhoto {
-    color: black;
-
-}
-
+/* Інпути */
 .input,
 select,
 textarea {
-    width: 100%;
-    padding: 0.6rem 0.8rem;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: white;
-    box-sizing: border-box;
-    color: black;
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: white;
+  box-sizing: border-box;
+  color: #050505;
+  font-family: inherit;
+}
+
+.input::placeholder,
+textarea::placeholder,
+select {
+  color: #7c7c7c;
 }
 
 textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-label {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
+  resize: vertical;
+  min-height: 100px;
 }
 
 .error {
-    color: red;
-    font-size: 0.85rem;
+  color: red;
+  font-size: 0.85rem;
+  margin-top: 4px;
 }
-
 
 .previewImage {
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
-    border-radius: 8px;
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 8px;
 }
 
-.ingredientsTitle {
-    color: black;
+.photoContainer {
+  height: 374px;
+  width: 391;
+  display: flex;
+  background: #9f9f9f;
+  border-radius: 10px;
+  text-align: center;
+  font-family: sans-serif;
+  color: #888;
+  cursor: pointer;
+  transition: border-color 0.3s, background-color 0.3s;
+  margin: 20px auto;
+  align-items: center;
+  justify-content: center;
 }
 
+.photoContainer:hover {
+  border-color: #333;
+  background-color: #fafafa;
+}
+
+/* Інгредієнти */
 .ingredientRow {
-    display: flex;
-    gap: 1rem;
-    /* flex-wrap: wrap; */
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 16px;
 }
 
 .ingredientItem {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    background-color: white;
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  /* background-color: #f7f7f2;
+  border-radius: 8px;
+  padding: 10px 12px; */
+  font-size: 14px;
+  color: #050505;
+  border-bottom: 1px solid #d9d9d9;
+}
+
+.ingredientText {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  line-height: 1.3;
 }
 
 .ingredientList {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 510px;
+  padding-left: 0;
 }
 
 .deleteBtn {
-    background: none;
-    border: none;
-    color: red;
-    font-size: 1.2rem;
-    cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #050505;
 }
 
-.addIngredient,
+.ingredientRow .fieldGroup {
+  flex: 1;
+}
+
+.ingredientHeader {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  width: 100%;
+  max-width: 510px;
+  font-weight: 600;
+  color: #050505;
+  margin: 24px 0 8px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid #ccc;
+  background-color: transparent;
+  z-index: 1;
+}
+
+/* Контейнер для header + список */
+.ingredientTable {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-left: 0;
+}
+
+.ingredientColumn {
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+/* Кнопки */
+.addIngredient {
+  background-color: #9b6c43;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 24px;
+  font-size: 12px;
+  font-weight: 600;
+  height: 32px;
+  width: fit-content;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.addIngredient:hover {
+  background-color: #855b37;
+}
+
+.addIngredientWrapper {
+  text-align: right;
+}
+
 .submitBtn {
-    grid-column: span 2;
-    margin-top: 2rem;
-    padding: 1rem;
-    background-color: #9b6c43;
-    color: white;
-    font-size: 1rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    width: 100%;
+  grid-column: span 2;
+  margin-top: 2rem;
+  padding: 16px;
+  background-color: #9b6c43;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 24px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s ease;
 }
 
-/* 📱 Mobile: до 768px */
-@media (max-width: 768px) {
-    .formWrapper {
-        /* grid-template-columns: 1fr; */
-    }
-
-    .submitBtn {
-        grid-column: span 1;
-        padding: 0.8rem;
-        font-size: 1rem;
-    }
-
-    .ingredientRow {
-        flex-direction: column;
-    }
-
-    .input,
-    select,
-    textarea {
-        font-size: 0.95rem;
-        padding: 0.5rem;
-    }
+.submitBtn:hover {
+  background-color: #855b37;
 }
 
-/* 📱 Tablet: 768px — 1023px */
-@media (min-width: 768px) and (max-width: 1025px) {
-    .formWrapper {
-        /* grid-template-columns: 1fr; */
-        max-width: 704px;
-    }
-
-    .submitBtn {
-        grid-column: span 1;
-    }
-
-    .ingredientRow {
-        flex-direction: row;
-    }
-}
-
+/* Порядок фото */
 .order1 {
-    order: 1;
+  order: 1;
 }
 
 /* 🖥 Desktop: 1026px і більше */
 @media (min-width: 1026px) {
-    .formWrapper {
-        /* grid-template-columns: 2fr 1fr; */
-        max-width: 1226px;
-    }
+  .formWrapper {
+    max-width: 1226px;
+  }
 
-    .formRecipe {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        gap: 24px;
-    }
+  .formRecipe {
+    grid-template-columns: 754px 393px;
+    gap: 24px;
+  }
 
-    .submitBtn {
-        grid-column: span 2;
-    }
+  .submitBtn {
+    grid-column: span 2;
+  }
 
-    .addIngredientWrapper {
-        text-align: right;
-    }
+  .addIngredient {
+    border-radius: 8px;
+    padding: 4px 8px;
+    width: 258px;
+    height: 23px;
+    font-weight: 600;
+    font-size: 12px;
+    text-align: center;
+    color: #fff;
+  }
+}
 
-    .addIngredient {
-        border-radius: 8px;
-        padding: 4px 8px;
-        width: 258px;
-        height: 23px;
-        font-weight: 600;
-        font-size: 12px;
-        text-align: center;
-        color: #fff;
-    }
+/* Порядок фото */
+.order-photo {
+  order: 1;
+}
+.order-info {
+  order: 2;
+}
+.order-submit {
+  order: 3;
+}
+
+/* Mobile: до 768px */
+@media (max-width: 767px) {
+  .formRecipe {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .sectionTitle {
+    font-size: 28px;
+    text-align: left;
+    margin-bottom: 20px;
+  }
+
+  .inlineFields {
+    grid-template-columns: 1fr;
+  }
+
+  .photoContainer {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 100%;
+    height: auto;
+    margin: 0 auto;
+    order: 1;
+  }
+
+  .ingredientHeader,
+  .ingredientList {
+    max-width: 100%;
+  }
+
+  .addIngredientWrapper {
+    text-align: left;
+  }
+
+  .submitBtn {
+    grid-column: unset;
+    width: 100%;
+    order: 3;
+  }
 }

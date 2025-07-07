@@ -7,11 +7,7 @@ import {
   removeFromFavorite,
 } from "../../redux/recipes/operations.js";
 import { selectSavedRecipes } from "../../redux/recipes/selectors.js";
-import {
-  selectFavorites,
-  selectIsLoggedIn,
-} from "../../redux/auth/selectors.js";
-import { refreshUser } from "../../redux/auth/operations.js";
+import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
 import css from "./RecipeCard.module.css";
 
 export default function RecipeCard({

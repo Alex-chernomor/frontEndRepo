@@ -133,6 +133,7 @@
 
 .favoriteBtn.active {
   background-color: #9b6c43;
+  color: #fff;
 }
 
 @media screen and (min-width: 1440px) {

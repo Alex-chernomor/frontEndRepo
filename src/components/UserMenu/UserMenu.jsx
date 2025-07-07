@@ -1,20 +1,20 @@
-import { useState } from 'react';
-import css from './UserMenu.module.css';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectUser } from '../../redux/auth/selectors';
-import { logOut } from '../../redux/auth/operations';
-import { LogOutIcon } from '../Icons/Icons';
+import { useState } from "react";
+import css from "./UserMenu.module.css";
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { selectUser } from "../../redux/auth/selectors";
+import { logOut } from "../../redux/auth/operations";
+import { LogOutIcon } from "../Icons/Icons";
 
-import ModalWindow from '../ModalWindow/ModalWindow.jsx';
-import toast from 'react-hot-toast';
+import ModalWindow from "../ModalWindow/ModalWindow.jsx";
+import toast from "react-hot-toast";
 
 export default function UserMenu() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(selectUser);
-  const userName = user?.name || 'userName';
+  const userName = user?.name || "userName";
 
   const handleLogoutClick = () => {
     setIsModalOpen(true);
@@ -26,15 +26,15 @@ export default function UserMenu() {
   const handleLogoutConfirm = async () => {
     try {
       await dispatch(logOut()).unwrap();
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error(error.message);
-      toast.error(error?.message || 'Logout failed');
+      toast.error(error?.message || "Logout failed");
     }
   };
 
   //! charAt(0) повертає першу літеру рядка
-  const firstLetterName = name => name?.trim()?.charAt(0).toUpperCase() || '';
+  const firstLetterName = (name) => name?.trim()?.charAt(0).toUpperCase() || "";
   return (
     <div className={css.container}>
       <NavLink className={css.link} to="/api/users/current">

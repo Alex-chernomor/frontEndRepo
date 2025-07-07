@@ -33,14 +33,9 @@
   padding: 14px 16px 40px;
   overflow-y: auto;
   display: flex;
-  justify-content: center; /* Центрування по горизонталі */
+  justify-content: center;
   align-items: flex-start;
   z-index: 1100;
-}
-
-.backdropInner {
-  width: 100%;
-  max-width: 393px; /* як у макеті */
 }
 
 .topBar {
@@ -93,4 +88,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.backdropInner {
+  width: 393px;
+  height: 288px;
 }

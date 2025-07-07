@@ -1,4 +1,7 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/selectors";
+
 import Logo from "../../components/Logo/Logo.jsx";
 import AppBar from "../../components/AppBar/AppBar.jsx";
 import css from "./Header.module.css";
@@ -7,7 +10,8 @@ import BurgerUserMenu from "../../components/BurgerMenu/BurgerUserMenu/BurgerUse
 import BurgerAuthMenu from "../../components/BurgerMenu/BurgerAuthMenu/BurgerAuthMenu.jsx";
 
 export default function Header() {
-  const isLogIn = false;
+  const isLogIn = useSelector(selectIsLoggedIn);
+
   return (
     <header className={css.header}>
       <section className={css.sectionHeader}>

@@ -1,24 +1,24 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   createResipe,
-  removeFromFavorite,
-  fetchRecipesByName,
-} from "./operations";
+  // removeFromFavorite,
+  // fetchRecipesByName,
   fetchRecipes,
   fetchFavoriteRecipes,
   fetchOwnRecipes,
-} from './operations';
+} from "./operations";
 
-const handlePending = state => {
+const handlePending = (state) => {
   state.loading = true;
 };
+
 const handleRejected = (state, { payload }) => {
   state.loading = false;
   state.error = payload;
 };
 
 const slice = createSlice({
-  name: 'recipes',
+  name: "recipes",
   initialState: {
     recipes: [],
     total: null,
@@ -28,27 +28,33 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
-
-      .addCase(fetchRecipesByName.pending, handlePending)
-      .addCase(fetchRecipesByName.fulfilled, (state, action) => {
-        console.log("✅ fetchRecipes payload:", action.payload);
+      // .addCase(fetchRecipesByName.pending, handlePending)
+      // .addCase(fetchRecipesByName.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.error = null;
+      //   console.log("✅ fetchRecipes payload:", action.payload);
+      //   state.recipes = action.payload.data.data;
+      //   state.total = action.payload.data.total;
+      //   state.page = action.payload.data.page;
+      //   state.perPage = action.payload.data.perPage;
+      //   state.totalPages = action.payload.data.totalPages;
+      // })
+      // .addCase(fetchRecipesByName.rejected, handleRejected)
 
       .addCase(fetchRecipes.pending, handlePending)
-
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
-
+        state.error = null;
         state.recipes = action.payload.data.data;
         state.total = action.payload.data.total;
         state.page = action.payload.data.page;
         state.perPage = action.payload.data.perPage;
         state.totalPages = action.payload.data.totalPages;
       })
-
-      .addCase(fetchRecipesByName.rejected, handleRejected)
       .addCase(fetchRecipes.rejected, handleRejected)
+
       .addCase(createResipe.pending, handlePending)
       .addCase(createResipe.fulfilled, (state, { payload }) => {
         state.loading = false;
@@ -56,6 +62,7 @@ const slice = createSlice({
         state.recipes = payload;
       })
       .addCase(createResipe.rejected, handleRejected)
+
       .addCase(fetchFavoriteRecipes.pending, handlePending)
       .addCase(fetchFavoriteRecipes.fulfilled, (state, { payload }) => {
         state.loading = false;
@@ -67,6 +74,7 @@ const slice = createSlice({
         state.totalPages = payload.data.totalPages;
       })
       .addCase(fetchFavoriteRecipes.rejected, handleRejected)
+
       .addCase(fetchOwnRecipes.pending, handlePending)
       .addCase(fetchOwnRecipes.fulfilled, (state, { payload }) => {
         state.loading = false;

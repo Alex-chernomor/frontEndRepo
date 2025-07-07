@@ -4,8 +4,6 @@ import styles from "../BurgerAuthMenu/BurgerAuthMenu.module.css";
 import { RxTextAlignJustify } from "react-icons/rx";
 import { GoXCircle } from "react-icons/go";
 import Logo from "../../Logo/Logo";
-import Button from "../../Button/Button";
-import CreateLink from "../../CreateLink/CreateLink";
 
 export default function BurgerAuthMenu() {
   const [isOpen, setIsOpen] = useState(false);

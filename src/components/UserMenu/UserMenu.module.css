@@ -25,9 +25,11 @@
   border-radius: 14px;
 }
 
-/* .firstLetter {
-  margin-right: 8px;
-} */
+.iconUserDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .firstLetter {
   display: flex;
   justify-content: center;
@@ -57,12 +59,12 @@
   align-items: center;
   justify-content: center;
   transition: background-color 0.3s ease;
-  color: white; /* керує кольором іконки */
+  color: white;
 }
 
 .buttonUserMenu:hover {
   background-color: #5a2e22;
-  color: #ffaa88; /* змінює колір stroke SVG при hover */
+  color: #ffaa88;
 }
 
 .userName {

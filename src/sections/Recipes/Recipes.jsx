@@ -1,11 +1,12 @@
-import RecipesList from '../../components/RecipesList/RecipesList.jsx';
-import RecipesFilters from '../../components/RecipesFilters/RecipesFilters.jsx';
-import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
-import Button from '../../components/Button/Button.jsx';
-import { selectRecipes } from '../../redux/recipes/selectors.js';
-import { useSelector } from 'react-redux';
+import RecipesList from "../../components/RecipesList/RecipesList.jsx";
+// import RecipesFilters from "../../components/RecipesFilters/RecipesFilters.jsx";
+import FilterMenu from "../../components/FilterMenu/FilterMenu.jsx";
+import SectionTitle from "../../components/SectionTitle/SectionTitle.jsx";
+import Button from "../../components/Button/Button.jsx";
+import { selectRecipes } from "../../redux/recipes/selectors.js";
+import { useSelector } from "react-redux";
 
-import css from './Recipes.module.css';
+import css from "./Recipes.module.css";
 
 const Recipes = ({
   onLoadMore,
@@ -23,7 +24,13 @@ const Recipes = ({
       <div className={css.container}>
         <div className={css.box}>
           <SectionTitle>Recipes</SectionTitle>
-          <RecipesFilters
+          {/* <RecipesFilters
+            categoryParam={categoryParam}
+            ingredientIdParam={ingredientIdParam}
+            onChangeSearchParams={updateSearchParams}
+            onResetFilters={resetFilters}
+          /> */}
+          <FilterMenu
             categoryParam={categoryParam}
             ingredientIdParam={ingredientIdParam}
             onChangeSearchParams={updateSearchParams}

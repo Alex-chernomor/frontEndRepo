@@ -1,0 +1,126 @@
+/* Верхній рядок: RecipeCount зліва, кнопка Filters справа */
+.topRow {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+}
+
+.countWrap {
+  margin-right: auto;
+}
+
+/* Кнопка Filters з текстом та іконкою справа */
+.openBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px; /* інтервал між текстом і іконкою */
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  height: 33px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  color: #595d62;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.openBtn:hover {
+  background-color: #f0f0f0;
+}
+
+.icon {
+  flex-shrink: 0;
+}
+
+/* Десктоп: сховаємо мобільний/планшетний верхній рядок */
+@media screen and (min-width: 1440px) {
+  .topRow {
+    display: none;
+  }
+}
+
+/* Десктоп: покажемо стандартні фільтри */
+.desktopFilters {
+  display: none;
+}
+
+@media screen and (min-width: 1440px) {
+  .desktopFilters {
+    display: block;
+  }
+}
+
+/* Бекдроп */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(17, 17, 17, 0.6);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Модалка */
+.modal {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px 12px;
+  width: 320px;
+  height: 222px;
+  overflow: visible; /* дозволяє випадаючим меню виходити за межі */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Заголовок модалки */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.closeBtn {
+  font-size: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #595d62;
+  transition: color 0.2s ease;
+}
+
+.closeBtn:hover {
+  color: #000;
+}
+
+/* Кнопка Reset */
+.resetBtn {
+  align-self: flex-start;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  height: 33px;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+  color: #595d62;
+  transition: all 0.2s ease;
+  text-decoration: none;
+}
+
+.resetBtn:hover {
+  background-color: #f0f0f0;
+}

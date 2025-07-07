@@ -5,9 +5,10 @@ import {
   fetchRecipes,
   fetchFavoriteRecipes,
   fetchOwnRecipes,
+  fetchRecipesByName,
+  addToFavorite,
 } from "./operations";
 
-const handlePending = (state) => {
 const handlePending = (state) => {
   state.loading = true;
 };
@@ -17,7 +18,6 @@ const handleRejected = (state, { payload }) => {
 };
 
 const slice = createSlice({
-  name: "recipes",
   name: "recipes",
   initialState: {
     recipes: [],
@@ -29,7 +29,6 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: (builder) => {
   extraReducers: (builder) => {
     builder
       .addCase(fetchRecipesByName.pending, handlePending)
@@ -82,7 +81,7 @@ const slice = createSlice({
         state.perPage = payload.data.perPage;
         state.totalPages = payload.data.totalPages;
       })
-      .addCase(fetchOwnRecipes.rejected, handleRejected);
+      .addCase(fetchOwnRecipes.rejected, handleRejected)
       .addCase(fetchOwnRecipes.rejected, handleRejected)
       .addCase(addToFavorite.fulfilled, (state, { payload }) => {
         state.savedRecipes = payload.data.favorites;

@@ -7,7 +7,6 @@ import { logOut } from "../../redux/auth/operations";
 import { LogOutIcon } from "../Icons/Icons";
 
 import ModalWindow from "../ModalWindow/ModalWindow.jsx";
-import ModalWindow from "../ModalWindow/ModalWindow.jsx";
 import toast from "react-hot-toast";
 
 export default function UserMenu() {
@@ -35,8 +34,6 @@ export default function UserMenu() {
   };
 
   //! charAt(0) повертає першу літеру рядка
-  const firstLetterName = (name) => name?.trim()?.charAt(0).toUpperCase() || "";
-
   const firstLetterName = (name) => name?.trim()?.charAt(0).toUpperCase() || "";
   return (
     <div className={css.container}>

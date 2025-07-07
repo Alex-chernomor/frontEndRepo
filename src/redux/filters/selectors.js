@@ -1,6 +1,6 @@
 // export const selectFilteredRecipes = state => state.recipes.filteredRecipes;
 
-export const selectTotalCount = (state) => state.recipes.total;
+export const selectTotalCount = (state) => state.recipes.recipes.total;
 
 export const selectFilterCategories = (state) => state.filters.categories;
 

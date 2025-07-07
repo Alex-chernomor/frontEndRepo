@@ -12,3 +12,5 @@ export const selectFilterIngredients = state => state.filters.ingredients;
 //   state.filters.selectedIngredient;
 
 export const selectFiltersIsLoading = state => state.filters.isLoading;
+
+export const selectSearchTerm = (state) => state.filters.searchTerm;

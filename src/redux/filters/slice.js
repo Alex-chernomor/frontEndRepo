@@ -9,9 +9,22 @@ const filtersSlice = createSlice({
     // ingredients: [],
     selectedCategory: null,
     selectedIngredient: null,
+    searchTerm: "",     
     isLoading: false,
     error: null,
   },
+  
+  reducers: {
+    setSearchTerm(state, action) {
+      state.searchTerm = action.payload;
+    },
+    // resetFilters(state) {
+    //   state.selectedCategory = null;
+    //   state.selectedIngredient = null;
+    //   state.searchTerm = "";
+    // },
+  },
+
   extraReducers: builder => {
     builder
       .addCase(fetchCategories.pending, state => {
@@ -41,5 +54,5 @@ const filtersSlice = createSlice({
   },
 });
 
-// export const { resetFilters } = filtersSlice.actions;
+export const { setSearchTerm } = filtersSlice.actions;
 export default filtersSlice.reducer;

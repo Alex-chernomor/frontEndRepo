@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import RecipesList from '../../components/RecipesList/RecipesList.jsx';
 import RecipesFilters from '../../components/RecipesFilters/RecipesFilters.jsx';
@@ -12,6 +11,7 @@ import {
 import css from './Recipes.module.css';
 
 const Recipes = ({
+  searchTerm,
   onLoadMore,
   isLoadMoreVisible,
   isLoadMoreDisabled,
@@ -22,21 +22,15 @@ const Recipes = ({
 }) => {
   const recipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectIsLoading);
-  const [title, setTitle] = useState('Recipes');
-
-  // useEffect(() => {
-  //   if (searchTerm && recipeItems.length > 0) {
-  //     setTitle(`Search results for "${searchTerm}"`);
-  //   } else {
-  //     setTitle('Recipes');
-  //   }
-  // }, [searchTerm, recipeItems]);
 
   return (
     <section className={css.recipes}>
       <div className={css.container}>
         <div className={css.box}>
-          <SectionTitle>{title}</SectionTitle>
+          <SectionTitle>
+            {/* {searchTerm ? `Search results for "${searchTerm}"` : 'Recipes'} */}
+            Recipes
+          </SectionTitle>
           <RecipesFilters
             categoryParam={categoryParam}
             ingredientIdParam={ingredientIdParam}
@@ -44,7 +38,6 @@ const Recipes = ({
             onResetFilters={resetFilters}
           />
           {isLoading && <Loader />}
-          {/* {recipeItems.length > 0 && <RecipesList recipes={recipeItems} />} */}
           {recipes.length > 0 && <RecipesList />}
           {isLoadMoreVisible && (
             <Button

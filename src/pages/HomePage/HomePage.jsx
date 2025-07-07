@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Hero from '../../sections/Hero/Hero.jsx';
 import Recipes from '../../sections/Recipes/Recipes.jsx';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
@@ -6,7 +6,6 @@ import {
   fetchRecipes,
   fetchCategories,
 } from '../../redux/recipes/operations.js';
-
 import { useDispatch, useSelector } from 'react-redux';
 import {
   selectRecipes,
@@ -21,6 +20,7 @@ import Loader from '../../components/Loader/Loader.jsx';
 
 export default function HomePage() {
   const dispatch = useDispatch();
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
 
   const recipes = useSelector(selectRecipes);
@@ -89,12 +89,13 @@ export default function HomePage() {
 
   return (
     <div>
-      <Hero />
+      <Hero onSearchTermChange={setSearchTerm} />
       {error && <ErrorMessage />}
       {isLoading && <Loader />}
       {!isLoading && !error && (
         <div className="container">
           <Recipes
+            searchTerm={searchTerm}
             onLoadMore={handleLoadMoreClick}
             isLoadMoreVisible={isVisible}
             isLoadMoreDisabled={isLoading}

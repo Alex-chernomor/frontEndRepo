@@ -1,5 +1,5 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // axios.defaults.params = {
 //   perPage: 12,
@@ -18,7 +18,7 @@ export const addToFavorite = createAsyncThunk(
 );
 
 export const createResipe = createAsyncThunk(
-  "recipes/createResipe",
+  'recipes/createResipe',
   async ({ recipe }, thunkAPI) => {
     try {
       const resp = await axios.post(`/api/users/recipes`, recipe);
@@ -30,23 +30,99 @@ export const createResipe = createAsyncThunk(
     }
   }
 );
+// <<<<<<< Larysa0707
 
+// <<<<<<< toggle_favorite
 export const removeFromFavorite = createAsyncThunk(
   "recipes/removeFromFavorite",
   async (recipeId, thunkAPI) => {
+// =======
+// export const fetchRecipes = createAsyncThunk(
+//   'recipes/fetchRecipes',
+//   async ({ page, perPage }, thunkAPI) => {
+//     try {
+//       const response = await axios.get(
+//         `/api/recipes?page=${page}&perPage=${perPage}`
+//       );
+
+//       return response.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.message);
+//     }
+//   }
+// );
+
+// export const fetchIngredients = createAsyncThunk(
+//   'filters/fetchIngredients',
+//   async (_, thunkAPI) => {
+// >>>>>>> main
     try {
-      const response = await axios.get("/api/ingredients");
+      const response = await axios.get('/api/ingredients');
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
+// =======
+//! Це типу fetchRecipesByName, але я в ній змінила назву аби не порушити роботу Search Box
+export const fetchRecipes = createAsyncThunk(
+  'recipes/fetchRecipes',
+  async (
+    {
+      page = 1,
+      perPage = 12,
+      category = '',
+      ingredientId = '',
+      query = '',
+    } = {},
+    thunkAPI
+  ) => {
+    try {
+      const response = await axios.get(
+        `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
+      );
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.message || 'Unknown error'
+      );
+    }
+  }
+);
+
+// export const fetchRecipes = createAsyncThunk(
+//   'recipes/fetchRecipes',
+//   async ({ page, perPage }, thunkAPI) => {
+//     try {
+//       const response = await axios.get(
+//         `/api/recipes?page=${page}&perPage=${perPage}`
+//       );
+
+//       return response.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.message);
+//     }
+//   }
+// );
+
+// export const fetchIngredients = createAsyncThunk(
+//   "filters/fetchIngredients",
+//   async (_, thunkAPI) => {
+//     try {
+//       const response = await axios.get("/api/ingredients");
+//       return response.data.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
+// >>>>>>> main
 export const fetchCategories = createAsyncThunk(
-  "filters/fetchCategories",
+  'filters/fetchCategories',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("/api/categories");
+      const response = await axios.get('/api/categories');
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -55,14 +131,18 @@ export const fetchCategories = createAsyncThunk(
 );
 
 export const fetchRecipesByName = createAsyncThunk(
-  "recipes/fetchRecipes",
+// <<<<<<< Larysa0707
+  'recipes/fetchRecipesByName',
+// =======
+//   'recipes/fetchRecipes',
+// >>>>>>> main
   async (
     {
       page = 1,
       perPage = 12,
-      category = "",
-      ingredientId = "",
-      query = "",
+      category = '',
+      ingredientId = '',
+      query = '',
     } = {},
     thunkAPI
   ) => {
@@ -70,21 +150,26 @@ export const fetchRecipesByName = createAsyncThunk(
       const response = await axios.get(
         `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
       );
+// <<<<<<< toggle_favorite
       const favorites = thunkAPI.getState().auth.user?.favorites || [];
       return { ...response.data, favorites };
+// =======
+
+//       return response.data;
+// >>>>>>> main
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.message || "Unknown error"
+        error.response?.message || 'Unknown error'
       );
     }
   }
 );
 
 export const fetchFavoriteRecipes = createAsyncThunk(
-  "recipes/getFavoritesRecipes",
+  'recipes/getFavoritesRecipes',
   async ({ page = 1, perPage = 12 }, thunkAPI) => {
     try {
-      const response = await axios.get("/api/users/favorites", {
+      const response = await axios.get('/api/users/favorites', {
         page,
         perPage,
       });
@@ -96,26 +181,27 @@ export const fetchFavoriteRecipes = createAsyncThunk(
     }
   }
 );
-export const fetchRecipesByFilters = createAsyncThunk(
-  "recipes/fetchByFilters",
-  async ({ category, ingredient }, thunkAPI) => {
-    try {
-      const params = {};
-      if (category) params.category = category;
-      if (ingredient) params.ingredient = ingredient;
-      const response = await axios.get("/api/recipes", { params });
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  }
-);
+// export const fetchRecipesByFilters = createAsyncThunk(
+//   'recipes/fetchByFilters',
+//   async ({ category, ingredient }, thunkAPI) => {
+//     try {
+//       const params = {};
+//       if (category) params.category = category;
+//       if (ingredient) params.ingredient = ingredient;
+//       const response = await axios.get('/api/recipes', { params });
+//       return response.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 
 export const fetchOwnRecipes = createAsyncThunk(
-  "recipes/fetchOwnRecipes",
+  'recipes/fetchOwnRecipes',
   async ({ page = 1, perPage = 12 }, thunkAPI) => {
     try {
-      const response = await axios.get("/api/users/own", {
+      const response = await axios.get('/api/users/own', {
         page,
         perPage,
       });
@@ -123,6 +209,41 @@ export const fetchOwnRecipes = createAsyncThunk(
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const fetchRecipes = createAsyncThunk(
+  'recipes/fetchRecipes',
+  async (params, thunkAPI) => {
+    try {
+      const queryParams = new URLSearchParams();
+      if (params.page) queryParams.append('page', params.page);
+      if (params.perPage) queryParams.append('per_page', params.perPage);
+      if (params.category) queryParams.append('category', params.category);
+      if (params.ingredientId)
+        queryParams.append('ingredient', params.ingredientId);
+      if (params.query) queryParams.append('query', params.query);
+
+// export const fetchOwnRecipes = createAsyncThunk(
+//   'recipes/fetchOwnRecipes',
+//   async ({ page = 1, perPage = 12 }, thunkAPI) => {
+//     try {
+//       const response = await axios.get('/api/users/own', {
+//         page,
+//         perPage,
+//       });
+
+      const response = await axios.get(
+        `/api/recipes?${queryParams.toString()}`
+      );
+      // const response = await axios.get(
+      //   `/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
+      // );
+      console.log('API Response:', response.data);
+      return response.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response?.data?.message);
     }
   }
 );

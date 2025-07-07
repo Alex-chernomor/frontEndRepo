@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Field, Form, Formik } from "formik";
 import toast, { Toaster } from "react-hot-toast";
@@ -5,6 +6,16 @@ import Button from "../Button/Button";
 import css from "./SearchBox.module.css";
 import { useDispatch } from "react-redux";
 import { fetchRecipesByName } from "../../redux/recipes/operations";
+import { setSearchTerm } from "../../redux/filters/slice";
+
+// import React from 'react';
+// import { Field, Form, Formik } from 'formik';
+// import toast, { Toaster } from 'react-hot-toast';
+// import Button from '../Button/Button';
+// import css from './SearchBox.module.css';
+// import { useDispatch } from 'react-redux';
+// import { fetchRecipesByName } from '../../redux/recipes/operations';
+
 
 export default function SearchBox() {
   const dispatch = useDispatch();
@@ -14,38 +25,71 @@ export default function SearchBox() {
       <Toaster position="top-right" />
 
       <Formik
-        initialValues={{ search: "" }}
+        initialValues={{ search: '' }}
         onSubmit={async (values, actions) => {
-  const trimmedValue = values.search.trim();
+          const trimmedValue = values.search.trim();
 
-  if (!trimmedValue) {
-    toast.error("Please enter something in the search field!");
-    return;
-  }
+          if (!trimmedValue) {
 
-  try {
-    const result = await dispatch(fetchRecipesByName({ query: trimmedValue }));
+            toast.error("Please enter something in the search field!");
+            dispatch(setSearchTerm(""));
 
-    if (result.type.endsWith("rejected")) {
-      toast.error("Recipe not found!");
-      return;
-    }
+//             toast.error('Please enter something in the search field!');
 
-    const recipesData = result?.payload;
-    const recipesArray = recipesData?.data?.data;
+            return;
+          }
 
-    const isValidRecipes = Array.isArray(recipesArray) && recipesArray.length > 0;
+          try {
 
-    if (!isValidRecipes) {
-      toast.error("Recipe not found!");
-      return;
-    }
-  } catch {
-    toast.error("Recipe not found!");
-  }
+            const result = await dispatch(fetchRecipesByName({ query: trimmedValue }));
 
-  actions.resetForm();
-}}
+            if (result.type.endsWith("rejected")) {
+              toast.error("Recipe not found!");
+              dispatch(setSearchTerm(""));
+
+//             const result = await dispatch(
+//               fetchRecipesByName({ query: trimmedValue })
+//             );
+
+//             if (result.type.endsWith('rejected')) {
+//               toast.error('Recipe not found!');
+
+              return;
+            }
+
+            const recipesData = result?.payload;
+            const recipesArray = recipesData?.data?.data;
+
+
+            const isValidRecipes = Array.isArray(recipesArray) && recipesArray.length > 0;
+
+            if (!isValidRecipes) {
+              toast.error("Recipe not found!");
+              dispatch(setSearchTerm(""));
+              return;
+            }
+
+            // Пошук успішний — оновлюємо searchTerm
+            dispatch(setSearchTerm(trimmedValue));
+
+          } catch {
+            toast.error("Recipe not found!");
+            dispatch(setSearchTerm(""));
+          }
+
+//             const isValidRecipes =
+//               Array.isArray(recipesArray) && recipesArray.length > 0;
+
+//             if (!isValidRecipes) {
+//               toast.error('Recipe not found!');
+//               return;
+//             }
+//           } catch {
+//             toast.error('Recipe not found!');
+//           }
+
+          actions.resetForm();
+        }}
       >
         <Form className={css.form}>
           <Field

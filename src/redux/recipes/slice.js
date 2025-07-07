@@ -1,6 +1,7 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   createResipe,
+  
   removeFromFavorite,
   fetchRecipes,
   fetchFavoriteRecipes,
@@ -9,7 +10,14 @@ import {
   addToFavorite,
 } from "./operations";
 
-const handlePending = (state) => {
+//   // fetchRecipesByName,
+//   fetchRecipes,
+//   fetchFavoriteRecipes,
+//   fetchOwnRecipes,
+// } from './operations';
+
+
+const handlePending = state => {
   state.loading = true;
 };
 const handleRejected = (state, { payload }) => {
@@ -18,7 +26,7 @@ const handleRejected = (state, { payload }) => {
 };
 
 const slice = createSlice({
-  name: "recipes",
+  name: 'recipes',
   initialState: {
     recipes: [],
     savedRecipes: [],
@@ -29,10 +37,9 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
-      .addCase(fetchRecipesByName.pending, handlePending)
-      // .addCase(fetchRecipes.pending, handlePending)
+      .addCase(fetchRecipes.pending, handlePending)
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
         state.recipes = action.payload.data.data;
@@ -43,9 +50,30 @@ const slice = createSlice({
         state.page = action.payload.page;
         state.perPage = action.payload.perPage;
         state.totalPages = action.payload.totalPages;
+
+
+//         const { data, total, page, perPage, totalPages } = action.payload.data;
+
+//         if (page > 1) {
+//           state.recipes = [...state.recipes, ...data];
+//         } else {
+//           state.recipes = data;
+//         }
+
+//         state.total = total;
+//         state.page = page;
+//         state.perPage = perPage;
+//         state.totalPages = totalPages;
+
       })
-      .addCase(fetchRecipesByName.rejected, handleRejected)
+// <<<<<<< Larysa0707
       // .addCase(fetchRecipes.rejected, handleRejected)
+      .addCase(fetchRecipesByName.pending, handlePending)
+      .addCase(fetchRecipesByName.rejected, handleRejected)
+
+// =======
+//       .addCase(fetchRecipes.rejected, handleRejected)
+// >>>>>>> main
       .addCase(createResipe.pending, handlePending)
       .addCase(createResipe.fulfilled, (state, { payload }) => {
         state.loading = false;

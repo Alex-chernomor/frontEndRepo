@@ -2,6 +2,7 @@
   margin-bottom: 48px;
   margin-left: auto;
   margin-right: auto;
+  max-width: 1224px;
 }
 
 .button {
@@ -35,4 +36,10 @@
   box-shadow: 0px 0px 0px 6px rgba(78, 70, 180, 0.12),
     0px 0px 0px 2px rgba(255, 255, 255, 1);
   overflow: hidden;
+}
+
+.text {
+  text-align: center;
+  font-size: 800px;
+  color: fuchsia;
 }

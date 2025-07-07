@@ -1,64 +1,52 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-
-import RecipesList from "../../components/RecipesList/RecipesList.jsx";
-import RecipesFilters from "../../components/RecipesFilters/RecipesFilters.jsx";
-import SectionTitle from "../../components/SectionTitle/SectionTitle.jsx";
-import Button from "../../components/Button/Button.jsx";
-import Loader from "../../components/Loader/Loader.jsx";
-
+import { useSelector } from 'react-redux';
+import RecipesList from '../../components/RecipesList/RecipesList.jsx';
+import RecipesFilters from '../../components/RecipesFilters/RecipesFilters.jsx';
+import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
+import Button from '../../components/Button/Button.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import {
   selectRecipes,
   selectIsLoading,
-} from "../../redux/recipes/selectors.js";
-import { selectSearchTerm } from "../../redux/filters/selectors.js";
+} from '../../redux/recipes/selectors.js';
+import css from './Recipes.module.css';
 
-import css from "./Recipes.module.css";
-
-const Recipes = ({ ...props }) => {
-  const recipesState = useSelector(selectRecipes);
+const Recipes = ({
+  searchTerm,
+  onLoadMore,
+  isLoadMoreVisible,
+  isLoadMoreDisabled,
+  categoryParam,
+  ingredientIdParam,
+  updateSearchParams,
+  resetFilters,
+}) => {
+  const recipes = useSelector(selectRecipes);
   const isLoading = useSelector(selectIsLoading);
-  const searchTerm = useSelector(selectSearchTerm);
-
-  const [title, setTitle] = useState("Recipes");
-
-  const recipeItems = Array.isArray(recipesState?.data)
-    ? recipesState.data
-    : [];
-
-  useEffect(() => {
-    if (searchTerm && recipeItems.length > 0) {
-      setTitle(`Search results for "${searchTerm}"`);
-    } else {
-      setTitle("Recipes");
-    }
-  }, [searchTerm, recipeItems]);
 
   return (
     <section className={css.recipes}>
       <div className={css.container}>
         <div className={css.box}>
-          <SectionTitle>{title}</SectionTitle>
-
+          <SectionTitle>
+            {/* {searchTerm ? `Search results for "${searchTerm}"` : 'Recipes'} */}
+            Recipes
+          </SectionTitle>
           <RecipesFilters
-            categoryParam={props.categoryParam}
-            ingredientIdParam={props.ingredientIdParam}
-            onChangeSearchParams={props.updateSearchParams}
-            onResetFilters={props.resetFilters}
+            categoryParam={categoryParam}
+            ingredientIdParam={ingredientIdParam}
+            onChangeSearchParams={updateSearchParams}
+            onResetFilters={resetFilters}
           />
-
-          {isLoading && recipeItems.length === 0 && <Loader />}
-
-          {recipeItems.length > 0 && <RecipesList recipes={recipeItems} />}
-
-          {props.isLoadMoreVisible && (
+          {isLoading && <Loader />}
+          {recipes.length > 0 && <RecipesList />}
+          {isLoadMoreVisible && (
             <Button
               type="button"
               className={css.button}
-              onClick={props.onLoadMore}
-              disabled={props.isLoadMoreDisabled || isLoading}
+              onClick={onLoadMore}
+              disabled={isLoadMoreDisabled}
             >
-              {isLoading ? <Loader /> : "Load More"}
+              Load More
             </Button>
           )}
         </div>

@@ -1,15 +1,31 @@
 import { useEffect } from 'react';
+import Header from '../../sections/Header/Header.jsx';
 import Hero from '../../sections/Hero/Hero.jsx';
 import Recipes from '../../sections/Recipes/Recipes.jsx';
-import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
+
 import {
   fetchRecipes,
   fetchCategories,
-  // fetchIngredients,
+  fetchIngredients,
+  fetchRecipesByName,
 } from '../../redux/recipes/operations.js';
 
 import { useDispatch, useSelector } from 'react-redux';
+
+
+// import Hero from '../../sections/Hero/Hero.jsx';
+// import Recipes from '../../sections/Recipes/Recipes.jsx';
+import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
+// import {
+//   fetchRecipes,
+//   fetchCategories,
+  // fetchIngredients,
+// } from '../../redux/recipes/operations.js';
+
+// import { useDispatch, useSelector } from 'react-redux';
 // import { resetFilters } from '../../redux/filters/slice.js';
+
 import {
   selectRecipes,
   selectPage,
@@ -18,7 +34,11 @@ import {
   selectIsLoading,
   selectError,
 } from '../../redux/recipes/selectors.js';
+// <<<<<<< Larysa0707
+import css from './HomePage.module.css';
+// =======
 import { useSearchParams } from 'react-router-dom';
+// >>>>>>> main
 
 export default function HomePage() {
   const dispatch = useDispatch();
@@ -31,6 +51,14 @@ export default function HomePage() {
   const isLoading = useSelector(selectIsLoading);
   const error = useSelector(selectError);
 
+// <<<<<<< Larysa0707
+  useEffect(() => {
+    dispatch(fetchRecipesByName());
+    dispatch(fetchRecipes({ page: 1, perPage }));
+    dispatch(fetchCategories());
+    dispatch(fetchIngredients());
+  }, [dispatch, perPage]);
+// =======
   // categoryParam повертає _id категорії
   const categoryParam = searchParams.get('category') || '';
   const ingredientIdParam = searchParams.get('ingredientId') || '';
@@ -56,6 +84,7 @@ export default function HomePage() {
     updatedParams.set('page', 1);
     setSearchParams(updatedParams);
   };
+// >>>>>>> main
 
   const handleLoadMoreClick = () => {
     setSearchParams(prevValue => {
@@ -68,6 +97,10 @@ export default function HomePage() {
     // dispatch(fetchRecipes({ page: pageParam + 1, perPage }));
   };
 
+// <<<<<<< Larysa0707
+  // const isVisible =
+  //   page < totalPages && !isLoading && !error && recipes.length > 0;
+// =======
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
@@ -87,9 +120,10 @@ export default function HomePage() {
       console.error('Error is:', error.message);
     }
   }, [categoryParam, dispatch, ingredientIdParam, pageParam, perPage]);
+// >>>>>>> main
 
-  const isVisible =
-    page < totalPages && !isLoading && !error && recipes.length > 0;
+  const isLoadMoreButtonVisible =
+    page < totalPages && !error && recipes.length > 0;
 
   // console.log(
   //   'page:',
@@ -106,6 +140,15 @@ export default function HomePage() {
   return (
     <div>
       <Hero />
+// <<<<<<< Larysa0707
+
+      {!isLoading && !error && (
+        <Recipes
+          onLoadMore={handleLoadMoreClick}
+          isLoadMoreVisible={isLoadMoreButtonVisible}
+          isLoadMoreDisabled={isLoading}
+        />
+// =======
       {error && <ErrorMessage />}
       {!isLoading && !error && (
         <div className="container">
@@ -119,7 +162,11 @@ export default function HomePage() {
             resetFilters={handleResetFilters}
           />
         </div>
+// >>>>>>> main
       )}
+      {/* {isLoading && recipes.length === 0 && (
+        <p className={css.text}>...Loading</p>
+      )} */}
     </div>
   );
 }

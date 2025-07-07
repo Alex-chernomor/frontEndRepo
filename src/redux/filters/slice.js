@@ -15,6 +15,18 @@ const filtersSlice = createSlice({
   },
   
   reducers: {
+// <<<<<<< Larysa0707
+    setSelectedCategory: (state, { payload }) => {
+      state.selectedCategory = payload;
+    },
+    setSelectedIngredient: (state, { payload }) => {
+      state.selectedIngredient = payload;
+    },
+    resetFilters: state => {
+      state.selectedCategory = null;
+      state.selectedIngredient = null;
+    },
+// =======
     setSearchTerm(state, action) {
       state.searchTerm = action.payload;
     },
@@ -23,6 +35,7 @@ const filtersSlice = createSlice({
     //   state.selectedIngredient = null;
     //   state.searchTerm = "";
     // },
+// >>>>>>> main
   },
 
   extraReducers: builder => {
@@ -54,5 +67,11 @@ const filtersSlice = createSlice({
   },
 });
 
-export const { setSearchTerm } = filtersSlice.actions;
+
+export const { setSelectedCategory, setSelectedIngredient, resetFilters } =
+  filtersSlice.actions;
 export default filtersSlice.reducer;
+
+// export const { setSearchTerm } = filtersSlice.actions;
+// export default filtersSlice.reducer;
+

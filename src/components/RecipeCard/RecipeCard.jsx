@@ -5,7 +5,7 @@ import Button from '../Button/Button';
 import { addToFavorite, removeFromFavorite } from '../../recipesService.js';
 // import { selectSavedRecipes } from '../../redux/recipes/selectors.js';
 import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
-import { refreshUser } from '../../redux/auth/operations.js';
+// import { refreshUser } from '../../redux/auth/operations.js';
 import css from './RecipeCard.module.css';
 import toast from 'react-hot-toast';
 

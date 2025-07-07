@@ -1,4 +1,3 @@
-// <<<<<<< toggle_favorite
 export const selectRecipes = (state) => state.recipes.recipes;
 export const selectSavedRecipes = (state) => state.recipes.savedRecipes;
 export const selectIsLoading = (state) => state.recipes.loading;

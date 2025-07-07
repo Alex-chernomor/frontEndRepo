@@ -3,11 +3,9 @@ import { Field, Form, Formik, ErrorMessage, FieldArray } from "formik";
 import css from "./RecipeForm.module.css";
 import * as Yup from "yup";
 import Select from "react-select";
-import {
-  selectFilterCategories,
-  selectFilterIngredients,
-} from "../../redux/filters/selectors.js";
+import { selectFilterCategories } from "../../redux/filters/selectors.js";
 import { useSelector } from "react-redux";
+import { useIngredients } from "../../context/useIngredients.js";
 
 const RecipeSchema = Yup.object().shape({
   title: Yup.string().required("Required"),
@@ -46,7 +44,7 @@ export default function RecipeForm({ onAdd }) {
   const [preview, setPreview] = useState(null);
   const fileInputRef = useRef(null);
   const categories = useSelector(selectFilterCategories);
-  const ingredients = useSelector(selectFilterIngredients);
+  const allIngredients = useIngredients();
 
   const handleDrop = (event, setFieldValue) => {
     event.preventDefault();
@@ -275,12 +273,12 @@ export default function RecipeForm({ onAdd }) {
                       >
                         <label className={css.itemFormTitle}>Name</label>
                         <Select
-                          options={ingredients.map((ing) => ({
+                          options={allIngredients.map((ing) => ({
                             label: ing.name,
                             value: ing._id,
                           }))}
                           value={
-                            ingredients
+                            allIngredients
                               .map((ing) => ({
                                 label: ing.name,
                                 value: ing._id,
@@ -358,34 +356,39 @@ export default function RecipeForm({ onAdd }) {
                         </tr>
                       </thead>
                       <tbody>
-                        {values.ingredients.map((ing, index) => (
-                          <tr key={index}>
-                            <td>{ing.name}</td>
-                            <td>{ing.amount}</td>
-                            <td>
-                              <button
-                                type="button"
-                                className={css.deleteBtn}
-                                onClick={() => remove(index)}
-                              >
-                                <svg
-                                  width="24"
-                                  height="24"
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  xmlns="http://www.w3.org/2000/svg"
+                        {values.ingredients.map((ing, index) => {
+                          const ingredientName =
+                            allIngredients.find((item) => item._id === ing.name)
+                              ?.name || "Unknown";
+                          return (
+                            <tr key={index}>
+                              <td>{ingredientName}</td>
+                              <td>{ing.amount}</td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className={css.deleteBtn}
+                                  onClick={() => remove(index)}
                                 >
-                                  <path
-                                    d="M12 16.3846L12 9.80769M4.875 7.06731H6.51923M19.125 7.06731H17.4808M14.7404 7.06731H9.25962M14.7404 7.06731V5.97115C14.7404 5.36576 14.2496 4.875 13.6442 4.875H10.3558C9.75038 4.875 9.25962 5.36576 9.25962 5.97115V7.06731M14.7404 7.06731H17.4808M9.25962 7.06731H6.51923M17.4808 7.06731V16.9327C17.4808 18.1435 16.4992 19.125 15.2885 19.125H8.71154C7.50076 19.125 6.51923 18.1435 6.51923 16.9327V7.06731"
-                                    stroke="black"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                  />
-                                </svg>
-                              </button>
-                            </td>
-                          </tr>
-                        ))}
+                                  <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M12 16.3846L12 9.80769M4.875 7.06731H6.51923M19.125 7.06731H17.4808M14.7404 7.06731H9.25962M14.7404 7.06731V5.97115C14.7404 5.36576 14.2496 4.875 13.6442 4.875H10.3558C9.75038 4.875 9.25962 5.36576 9.25962 5.97115V7.06731M14.7404 7.06731H17.4808M9.25962 7.06731H6.51923M17.4808 7.06731V16.9327C17.4808 18.1435 16.4992 19.125 15.2885 19.125H8.71154C7.50076 19.125 6.51923 18.1435 6.51923 16.9327V7.06731"
+                                      stroke="black"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>

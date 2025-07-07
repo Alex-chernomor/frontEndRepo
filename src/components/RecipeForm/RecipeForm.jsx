@@ -3,6 +3,12 @@ import { Field, Form, Formik, ErrorMessage, FieldArray } from "formik";
 import css from "./RecipeForm.module.css";
 import * as Yup from "yup";
 
+import Select from "react-select";
+import { selectFilterCategories } from "../../redux/filters/selectors.js";
+import { useSelector } from "react-redux";
+import { useIngredients } from "../../context/useIngredients.js";
+
+
 const RecipeSchema = Yup.object().shape({
   title: Yup.string().required("Required"),
   description: Yup.string().required("Required"),
@@ -22,6 +28,9 @@ const RecipeSchema = Yup.object().shape({
 export default function RecipeForm({ onAdd }) {
   const [preview, setPreview] = useState(null);
   const fileInputRef = useRef(null);
+  const categories = useSelector(selectFilterCategories);
+  const allIngredients = useIngredients();
+
 
   const handleDrop = (event, setFieldValue) => {
     event.preventDefault();
@@ -194,16 +203,76 @@ export default function RecipeForm({ onAdd }) {
                   <div>
                     <p className={css.ingredientsTitle}>Ingredients</p>
                     <div className={css.ingredientRow}>
-                      <Field
-                        name="ingredientName"
-                        placeholder="Name"
-                        className={css.input}
-                      />
-                      <Field
-                        name="ingredientAmount"
-                        placeholder="Amount"
-                        className={css.input}
-                      />
+
+                      <div
+                        className={`${css.inputGroup} ${css.inputGroupName}`}
+                      >
+                        <label className={css.itemFormTitle}>Name</label>
+                        <Select
+                          options={allIngredients.map((ing) => ({
+                            label: ing.name,
+                            value: ing._id,
+                          }))}
+                          value={
+                            allIngredients
+                              .map((ing) => ({
+                                label: ing.name,
+                                value: ing._id,
+                              }))
+                              .find(
+                                (opt) => opt.value === values.ingredientName
+                              ) || null
+                          }
+                          onChange={(selectedOption) => {
+                            setFieldValue(
+                              "ingredientName",
+                              selectedOption.value
+                            );
+                          }}
+                          placeholder="Broccoli"
+                          isClearable
+                          styles={customSelectStyles}
+                          classNamePrefix="select"
+                        />
+                        <ErrorMessage
+                          name="ingredientAmount"
+                          component="div"
+                          className={css.error}
+                        />
+                      </div>
+                      <div
+                        className={`${css.inputGroup} ${css.inputGroupAmount}`}
+                      >
+                        <label
+                          htmlFor="ingredientAmount"
+                          className={css.itemFormTitle}
+                        >
+                          Amount
+                        </label>
+                        <Field
+                          name="ingredientAmount"
+                          placeholder="100g"
+                          className={css.inputFluid}
+                          id="ingredientAmount"
+                        />{" "}
+                        <ErrorMessage
+                          name="ingredientAmount"
+                          component="div"
+                          className={css.error}
+                        />
+                      </div>
+
+//                       <Field
+//                         name="ingredientName"
+//                         placeholder="Name"
+//                         className={css.input}
+//                       />
+//                       <Field
+//                         name="ingredientAmount"
+//                         placeholder="Amount"
+//                         className={css.input}
+//                       />
+
                     </div>
                     <div className={css.addIngredientWrapper}>
                       <button
@@ -226,20 +295,67 @@ export default function RecipeForm({ onAdd }) {
                         Add new ingredient
                       </button>
                     </div>
-                    <div className={css.ingredientList}>
-                      {values.ingredients.map((ing, index) => (
-                        <div key={index} className={css.ingredientItem}>
-                          {ing.name} — {ing.amount}
-                          <button
-                            type="button"
-                            className={css.deleteBtn}
-                            onClick={() => remove(index)}
-                          >
-                            🗑
-                          </button>
-                        </div>
-                      ))}
-                    </div>
+
+                    <table className={css.table}>
+                      <thead>
+                        <tr>
+                          <th>Name:</th>
+                          <th>Amount:</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {values.ingredients.map((ing, index) => {
+                          const ingredientName =
+                            allIngredients.find((item) => item._id === ing.name)
+                              ?.name || "Unknown";
+                          return (
+                            <tr key={index}>
+                              <td>{ingredientName}</td>
+                              <td>{ing.amount}</td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className={css.deleteBtn}
+                                  onClick={() => remove(index)}
+                                >
+                                  <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M12 16.3846L12 9.80769M4.875 7.06731H6.51923M19.125 7.06731H17.4808M14.7404 7.06731H9.25962M14.7404 7.06731V5.97115C14.7404 5.36576 14.2496 4.875 13.6442 4.875H10.3558C9.75038 4.875 9.25962 5.36576 9.25962 5.97115V7.06731M14.7404 7.06731H17.4808M9.25962 7.06731H6.51923M17.4808 7.06731V16.9327C17.4808 18.1435 16.4992 19.125 15.2885 19.125H8.71154C7.50076 19.125 6.51923 18.1435 6.51923 16.9327V7.06731"
+                                      stroke="black"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                    />
+                                  </svg>
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+
+//                     <div className={css.ingredientList}>
+//                       {values.ingredients.map((ing, index) => (
+//                         <div key={index} className={css.ingredientItem}>
+//                           {ing.name} — {ing.amount}
+//                           <button
+//                             type="button"
+//                             className={css.deleteBtn}
+//                             onClick={() => remove(index)}
+//                           >
+//                             🗑
+//                           </button>
+//                         </div>
+//                       ))}
+//                     </div>
+
                   </div>
                 )}
               </FieldArray>

@@ -169,6 +169,20 @@ const slice = createSlice({
       .addCase(fetchRecipes.rejected, handleRejected)
 
       .addCase(fetchRecipesByName.pending, handlePending)
+      .addCase(fetchRecipesByName.fulfilled, (state, action) => {
+        state.loading = false;
+        const { data, favorites, total, page, perPage, totalPages } =
+          action.payload;
+
+        state.recipes = data || [];
+        state.savedRecipes = (favorites || []).map((recipe) =>
+          String(recipe._id)
+        );
+        state.total = total;
+        state.page = page;
+        state.perPage = perPage;
+        state.totalPages = totalPages;
+      })
       .addCase(fetchRecipesByName.rejected, handleRejected)
 
       .addCase(createRecipe.pending, handlePending)

@@ -16,5 +16,10 @@ export default function AddRecipePage() {
 
     toast.success('Added to favorites!');
   };
-  return <RecipeForm onAdd={onAdd} />;
+  return (
+    <div className="container">
+      <Toaster position="top-right" reverseOrder={false} />
+      <RecipeForm onAdd={onAdd} />
+    </div>
+  );
 }

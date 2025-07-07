@@ -5,7 +5,7 @@ const RecipesImg = ({ thumb, title }) => {
   const ingSrc = thumb?.trim() || defaultImg;
   return (
     <div className={styles.thumb}>
-      <img src={ingSrc} alt={title} className={styles.img} />
+      <img src={ingSrc} alt={title} className={`img ${styles.img}`} />
     </div>
   );
 };

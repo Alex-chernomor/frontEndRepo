@@ -33,35 +33,27 @@ const slice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(register.rejected, handleReject)
-      .addCase(login.pending, (state) => {
-        state.error = null;
-      })
+      .addCase(login.pending, handlePending)
       .addCase(login.fulfilled, (state, action) => {
         state.user = action.payload.data.user;
         state.token = action.payload.data.token;
         state.isLoggedIn = true;
         state.isRefreshing = false;
       })
-      .addCase(login.rejected, (state, action) => {
-        state.error = action.error.message;
-      })
+      .addCase(login.rejected, handleReject)
       .addCase(logOut.fulfilled, (state) => {
         state.user = { name: null, email: null, error: false };
         state.token = null;
         state.isLoggedIn = false;
       })
-      .addCase(refreshUser.pending, (state) => {
-        state.isRefreshing = true;
-      })
+      .addCase(refreshUser.pending, handlePending)
       .addCase(refreshUser.fulfilled, (state, action) => {
         state.user = action.payload.data.user;
         state.isRefreshing = false;
         state.isLoggedIn = true;
         axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
       })
-      .addCase(refreshUser.rejected, (state) => {
-        state.isRefreshing = false;
-      }),
+      .addCase(refreshUser.rejected, handlePending),
 });
 
 export default slice.reducer;

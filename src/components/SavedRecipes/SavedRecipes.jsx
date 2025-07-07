@@ -4,7 +4,7 @@ import { RecipeCount } from "../RecipeCount/RecipeCount";
 import RecipesList from "../RecipesList/RecipesList";
 import { selectRecipes, selectTotalPages } from "../../redux/recipes/selectors";
 import { fetchFavoriteRecipes } from "../../redux/recipes/operations";
-import Button from "../Button/Button";
+import Button from "../Button/Button.jsx";
 
 const SavedRecipes = () => {
   const dispatch = useDispatch();

@@ -8,11 +8,13 @@ import css from "./ProfilePage.module.css";
 export default function ProfilePage() {
   return (
     <section className={`container ${css.profileSection}`}>
-      <SectionTitle>My profile</SectionTitle>
-      <ProfileNavigation />
-      <Suspense fallback={<Loader />}>
-        <Outlet />
-      </Suspense>
+      <div className={css.container}>
+        <SectionTitle>My profile</SectionTitle>
+        <ProfileNavigation />
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+      </div>
     </section>
   );
 }

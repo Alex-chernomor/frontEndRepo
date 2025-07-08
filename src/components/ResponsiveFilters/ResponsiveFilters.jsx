@@ -7,7 +7,7 @@ import css from "./ResponsiveFilters.module.css";
 
 import { useEffect, useState } from "react";
 
-const useIsMobile = (breakpoint = 1024) => {
+const useIsMobile = (breakpoint = 1439) => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < breakpoint);
 
   useEffect(() => {

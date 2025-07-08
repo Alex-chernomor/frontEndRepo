@@ -68,7 +68,7 @@ export default function RecipeForm({ onAdd }) {
     setPreview(null);
     setFieldValue("photo", null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = ""; // очищення інпута
+      fileInputRef.current.value = "";
     }
   };
   return (
@@ -252,12 +252,7 @@ export default function RecipeForm({ onAdd }) {
                 </div>
               </div>
 
-
-
-
-
-12:03
-<FieldArray name="ingredients">
+              <FieldArray name="ingredients">
                 {({ push, remove }) => (
                   <div className={css.ingredientsFormWrapper}>
                     <p className={css.formSectionTitle}>Ingredients</p>

@@ -16,16 +16,22 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+
+  width: 327px;
+
+/*   width: 100%;
   max-width: 393px;
-  padding: 0 16px;
+  padding: 0 16px; */
+
   height: 74px;
   box-sizing: border-box;
 }
 
 @media screen and (min-width: 768px) {
   .headerContainer {
-    max-width: 768px;
+
+    width: 704px;
+
   }
 }
 @media screen and (min-width: 1440px) {

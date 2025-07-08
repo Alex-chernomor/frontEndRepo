@@ -11,19 +11,27 @@
   padding-block: 128px 98px;
 }
 
-.container {
-  max-width: 393px;
-  padding-inline: 32px;
-  margin-inline: auto;
+@media screen and (max-width: 768px) {
+  .hero {
+    display: flex;
+    justify-content: center;
+  }
+  .container {
+    max-width: 327px;
+    padding: 0;
+    margin: 0;
+  }
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 768px) and (max-width: 1439px) {
   .hero {
     background-size: cover;
     padding-bottom: 128px;
   }
   .container {
-    max-width: 768px;
+    display: flex;
+    justify-content: center;
+    max-width: 1439px;
   }
 }
 

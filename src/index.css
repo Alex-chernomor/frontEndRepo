@@ -60,8 +60,8 @@ input {
 .container {
   min-width: 320px;
   max-width: 393px;
-  padding-right: 16px;
-  padding-left: 16px;
+  /* padding-right: 16px;
+  padding-left: 16px; */
   margin: 48px auto;
 }
 
@@ -75,8 +75,8 @@ input {
 @media screen and (min-width: 768px) {
   .container {
     max-width: 768px;
-    padding-right: 32px;
-    padding-left: 32px;
+    /* padding-right: 32px;
+    padding-left: 32px; */
   }
 
   .loadMoreBtn {
@@ -87,8 +87,8 @@ input {
 @media screen and (min-width: 1440px) {
   .container {
     max-width: 1440px;
-    padding-right: 108px;
-    padding-left: 108px;
+    /* padding-right: 108px;
+    padding-left: 108px; */
   }
 
   .loadMoreBtn {

@@ -30,18 +30,32 @@ const slice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchRecipes.pending, handlePending)
+
       .addCase(fetchRecipes.fulfilled, (state, action) => {
         state.loading = false;
-        const { favorites } = action.payload;
-        state.recipes = action.payload.data.data;
+
+        const { favorites, data } = action.payload;
+        const { data: recipesData, total, page, perPage, totalPages } = data;
+
         state.savedRecipes = (favorites || []).map(recipe =>
           String(recipe._id)
         );
-        state.total = action.payload.data.total;
-        state.page = action.payload.data.page;
-        state.perPage = action.payload.data.perPage;
-        state.totalPages = action.payload.data.totalPages;
+
+        if (page > 1) {
+          // Додаємо унікальні рецепти
+          const existingIds = new Set(state.recipes.map(r => r._id));
+          const newRecipes = recipesData.filter(r => !existingIds.has(r._id));
+          state.recipes = [...state.recipes, ...newRecipes];
+        } else {
+          state.recipes = recipesData;
+        }
+
+        state.total = total;
+        state.page = page;
+        state.perPage = perPage;
+        state.totalPages = totalPages;
       })
+
       .addCase(fetchRecipes.rejected, handleRejected)
 
       .addCase(fetchRecipesByName.pending, handlePending)

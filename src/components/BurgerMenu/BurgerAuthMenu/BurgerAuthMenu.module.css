@@ -1,0 +1,95 @@
+.div {
+  position: absolute;
+  top: 74px;
+  right: 0;
+  width: 240px;
+  height: calc(100vh - 74px);
+  background-color: #3d2218;
+  z-index: 1000;
+  padding: 16px;
+}
+.burgerBtn {
+  font-size: 32px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  background-color: #3d2218;
+  z-index: 1001;
+  position: relative;
+}
+
+@media screen and (min-width: 769px) {
+  .burgerBtn {
+    display: none;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: #3d2218;
+  padding: 14px 16px 40px;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  z-index: 1100;
+}
+
+.topBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 36px;
+  width: 100%;
+  color: red;
+}
+
+.menu {
+  width: 100%;
+  max-width: 480px;
+  text-align: center;
+  color: white;
+}
+
+.menu ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu li {
+  margin: 32px 0;
+}
+
+.icon {
+  color: #ffffff;
+}
+
+.button {
+  width: 361px;
+  padding: 12px 146px;
+  max-height: 44px;
+  color: #ffffff;
+  background-color: #9b6c43;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.liButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.backdropInner {
+  width: 393px;
+}

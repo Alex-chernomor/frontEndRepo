@@ -68,11 +68,9 @@ export default function RecipeCard({
     try {
       if (!isFavorite && isLoggedIn) {
         await dispatch(addToFavorite(recipeId)).unwrap();
-        // setIsFavorite(true);
         toast.success('Added to favorites!');
       } else if (isFavorite && isLoggedIn) {
         await dispatch(removeFromFavorites(recipeId)).unwrap();
-        // setIsFavorite(false);
         toast.success('Removed from favorites!');
       }
     } catch (error) {

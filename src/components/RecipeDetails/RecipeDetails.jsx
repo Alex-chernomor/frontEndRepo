@@ -5,9 +5,8 @@ import RecipesGeneralInfo from '../RecipesGeneralInfo/RecipesGeneralInfo';
 import RecipesImg from '../RecipesImg/RecipesImg';
 import { FlagIcon } from '../Icons/Icons';
 import styles from './RecipeDetails.module.css';
-import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { selectFavorites, selectIsLoggedIn } from '../../redux/auth/selectors';
 import { useNavigate, useParams } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import {
@@ -25,11 +24,12 @@ export default function RecipeDetails({
   ingredients,
   cals,
 }) {
-  const [isFavorite, setIsFavorite] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const { recipeId } = useParams();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const favorites = useSelector(selectFavorites);
+  const isFavorite = favorites?.includes(recipeId);
 
   const handleClick = async () => {
     if (!isLoggedIn) {
@@ -40,11 +40,9 @@ export default function RecipeDetails({
     try {
       if (!isFavorite) {
         await dispatch(addToFavorite(recipeId)).unwrap();
-        setIsFavorite(true);
         toast.success('Added to favorites!');
       } else {
         await dispatch(removeFromFavorites(recipeId)).unwrap();
-        setIsFavorite(false);
         toast.success('Removed from favorites!');
       }
     } catch (error) {

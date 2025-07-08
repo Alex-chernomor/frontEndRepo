@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 import {
   login,
   register,
@@ -6,10 +6,10 @@ import {
   refreshUser,
   addToFavorite,
   removeFromFavorites,
-} from './operations';
-import axios from 'axios';
+} from "./operations";
+import axios from "axios";
 
-const handlePending = state => {
+const handlePending = (state) => {
   state.isRefreshing = true;
 };
 const handleReject = (state, { payload }) => {
@@ -18,7 +18,7 @@ const handleReject = (state, { payload }) => {
 };
 
 const slice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState: {
     user: {
       name: null,
@@ -30,7 +30,7 @@ const slice = createSlice({
     isLoggedIn: false,
     isRefreshing: false,
   },
-  extraReducers: builder =>
+  extraReducers: (builder) =>
     builder
       .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
@@ -52,7 +52,7 @@ const slice = createSlice({
         state.isRefreshing = false;
       })
       .addCase(login.rejected, handleReject)
-      .addCase(logOut.fulfilled, state => {
+      .addCase(logOut.fulfilled, (state) => {
         state.error = false;
         state.user = { name: null, email: null, error: false };
         state.token = null;
@@ -66,7 +66,7 @@ const slice = createSlice({
         state.user.favorites = action.payload.favorites;
         state.isRefreshing = false;
         state.isLoggedIn = true;
-        axios.defaults.headers.common.Authorization = Bearer ${state.token};
+        axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
       })
       .addCase(refreshUser.rejected, handleReject)
 
@@ -87,7 +87,7 @@ const slice = createSlice({
         state.error = false;
         state.isRefreshing = false;
         state.user.favorites = state.user.favorites.filter(
-          id => id !== action.payload
+          (id) => id !== action.payload
         );
       })
       .addCase(removeFromFavorites.rejected, handleReject),

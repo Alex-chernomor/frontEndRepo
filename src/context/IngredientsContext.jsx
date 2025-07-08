@@ -1,12 +1,12 @@
 // src/context/IngredientsContext.jsx
-import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { createContext, useState, useEffect } from "react";
+import axios from "axios";
 
 //створили контекст і експортували його за замовчуванням
 const IngredientsContext = createContext();
 export default IngredientsContext;
 
-const INGREDIENTS_KEY = 'ingredients_cache';
+const INGREDIENTS_KEY = "ingredients_cache";
 const CACHE_TTL = 1000 * 60 * 60 * 24; // cache time to live - 24 години
 
 export const IngredientsProvider = ({ children }) => {
@@ -33,7 +33,7 @@ export const IngredientsProvider = ({ children }) => {
 
         // Якщо кешу нема або протермінований — фетчимо з бекенду
         const { data } = await axios.get(
-          'https://backendrepo-ormv.onrender.com/api/ingredients'
+          "https://backendrepo-ormv.onrender.com/api/ingredients"
         );
         setIngredients(data);
         //зберігаєм нові данні в локал сторедж
@@ -42,7 +42,7 @@ export const IngredientsProvider = ({ children }) => {
           JSON.stringify({ data, timestamp: Date.now() })
         );
       } catch (err) {
-        console.error('Failed to load ingredients:', err);
+        console.error("Failed to load ingredients:", err);
       }
     };
 

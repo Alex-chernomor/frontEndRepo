@@ -62,7 +62,7 @@ input {
   max-width: 393px;
   padding-right: 16px;
   padding-left: 16px;
-  /* margin: 48px auto; */
+  margin: 48px auto;
 }
 
 .loadMoreBtn {

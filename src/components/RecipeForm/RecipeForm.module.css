@@ -122,11 +122,13 @@ body {
   height: 46px;
   max-height: 48px;
   background: #fff;
+  font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 18px;
   color: #000;
 }
 textarea {
+  font-family: "Montserrat", sans-serif;
   resize: vertical;
   min-height: 144px;
 }
@@ -290,7 +292,7 @@ textarea::placeholder,
   background-color: #7f5431;
 }
 /* :iphone: Tablet: 768px — 1023px */
-@media (min-width: 768px) and (max-width: 1439px) {
+@media (min-width: 768px) {
   .formWrapper {
     min-width: 704px;
   }

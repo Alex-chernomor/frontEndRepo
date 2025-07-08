@@ -1,18 +1,15 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import Button from "../Button/Button";
 import {
   addToFavorite,
-  removeFromFavorites,
-} from "../../redux/auth/operations.js";
-import {
-  selectFavorites,
-  selectIsLoggedIn,
-} from "../../redux/auth/selectors.js";
+  removeFromFavorite,
+} from "../../redux/recipes/operations.js";
+import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
+import ModalWindow from "../ModalWindow/ModalWindow"; // 👈 додай імпорт
 import css from "./RecipeCard.module.css";
-import toast, { Toaster } from "react-hot-toast";
-import ModalWindow from "../ModalWindow/ModalWindow.jsx";
+import toast from "react-hot-toast";
 
 export default function RecipeCard({
   _id,
@@ -24,50 +21,34 @@ export default function RecipeCard({
   isOwnRecipe = false,
 }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const dispatch = useDispatch();
+  // const location = useLocation();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const recipeId = String(_id);
-
-  const favorites = useSelector(selectFavorites);
-  const isFavorite = favorites?.includes(recipeId);
   const firstSentence = description.split(/[.!?]/)[0] + ".";
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [modalType, setModalType] = useState(null);
 
   const handleLearnMore = () => {
     navigate(`api/recipes/${_id}`);
   };
 
-  const handleLoginConfirm = async () => {
-    try {
-      navigate("api/auth/login", { state: { from: location } });
-    } catch (error) {
-      console.error(error.message);
-      toast.error(error?.message, "Logout failed");
-    }
-  };
-  const handleRegisterConfirm = async () => {
-    try {
-      navigate("api/auth/register", { state: { from: location } });
-    } catch (error) {
-      console.error(error.message);
-      toast.error(error?.message, "Logout failed");
-    }
-  };
-
   const handleToggleFavorite = async () => {
     if (!isLoggedIn) {
-      setIsModalOpen(true);
+      setModalType("unauthorised");
+      return;
     }
+
     setIsUpdating(true);
     try {
-      if (!isFavorite && isLoggedIn) {
-        await dispatch(addToFavorite(recipeId)).unwrap();
+      if (!isFavorite) {
+        await addToFavorite(recipeId);
+        setIsFavorite(true);
         toast.success("Added to favorites!");
-      } else if (isFavorite && isLoggedIn) {
-        await dispatch(removeFromFavorites(recipeId)).unwrap();
+      } else {
+        await removeFromFavorite(recipeId);
+        setIsFavorite(false);
         toast.success("Removed from favorites!");
       }
     } catch (error) {
@@ -78,14 +59,21 @@ export default function RecipeCard({
     }
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  // --- Modal handlers ---
+  const handleModalConfirm = () => {
+    setModalType(null);
+    navigate("/api/auth/login");
+  };
+
+  const handleModalCancel = () => {
+    setModalType(null);
+    navigate("/api/auth/register");
   };
 
   return (
     <div className={css.card}>
-      <Toaster position="top-right" reverseOrder={false} />
       <img src={thumb} alt={title} className={css.image} />
+
       <div className={css.titleRow}>
         <h3 className={css.name}>{title}</h3>
         <div className={css.time}>
@@ -107,11 +95,12 @@ export default function RecipeCard({
           <span>{time}</span>
         </div>
       </div>
+
       <div className={css.descrWrapper}>
         <p className={css.descrip}>{firstSentence}</p>
-        {/* <p className={css.descrip}>{cals ? ~${cals} cals : '— cals'}</p> */}
         <p className={css.descrip}>{cals ? `~${cals} cals` : "— cals"}</p>
       </div>
+
       <div className={css.actions}>
         <Button className={css.LearnMoreBtn} onClick={handleLearnMore}>
           Learn more
@@ -144,12 +133,14 @@ export default function RecipeCard({
           </button>
         )}
       </div>
-      {isModalOpen && (
+
+      {/* === Modal === */}
+      {modalType && (
         <ModalWindow
-          type="unauthorised"
-          onClose={handleCloseModal}
-          onConfirm={handleLoginConfirm}
-          onCancel={handleRegisterConfirm}
+          type={modalType}
+          onConfirm={handleModalConfirm}
+          onCancel={handleModalCancel}
+          onClose={() => setModalType(null)}
         />
       )}
     </div>

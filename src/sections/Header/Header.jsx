@@ -3,9 +3,14 @@ import Logo from "../../components/Logo/Logo.jsx";
 import AppBar from "../../components/AppBar/AppBar.jsx";
 import css from "./Header.module.css";
 import CreateLink from "../../components/CreateLink/CreateLink.jsx";
-import { RxTextAlignJustify } from "react-icons/rx";
+import { useSelector } from "react-redux";
+import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
+import BurgerUserMenu from "../../components/BurgerMenu/BurgerUserMenu/BurgerUserMenu.jsx";
+import BurgerAuthMenu from "../../components/BurgerMenu/BurgerAuthMenu/BurgerAuthMenu.jsx";
 
 export default function Header() {
+  const isLogIn = useSelector(selectIsLoggedIn);
+
   return (
     <header className={css.header}>
       <section className={css.sectionHeader}>
@@ -15,9 +20,7 @@ export default function Header() {
             <CreateLink className={css.reipeLink} text={"Recipes"} to={"/"} />
             <AppBar className={css.appbar} />
           </nav>
-          <button className={css.containerIcon}>
-            <RxTextAlignJustify className={css.icon} size={32} />
-          </button>
+          {isLogIn ? <BurgerUserMenu /> : <BurgerAuthMenu />}
         </div>
       </section>
     </header>

@@ -10,6 +10,7 @@ const filtersSlice = createSlice({
     isLoading: false,
     error: null,
   },
+
   extraReducers: builder => {
     builder
       .addCase(fetchCategories.pending, state => {

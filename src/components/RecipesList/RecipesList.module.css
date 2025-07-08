@@ -11,16 +11,3 @@
   gap: 24px;
   padding: 0;
 }
-
-/* 
-@media only screen and (min-width: 768px) {
-  .recipesWrap {
-    max-width: 704px;
-  }
-} */
-
-@media only screen and (min-width: 1440px) {
-  .recipesWrap {
-    max-width: 1225px;
-  }
-}

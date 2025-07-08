@@ -12,7 +12,7 @@ import css from "./Recipes.module.css";
 import ResponsiveFilters from "../../components/ResponsiveFilters/ResponsiveFilters.jsx";
 
 const Recipes = ({
-  // searchTerm,
+  searchTerm,
   onLoadMore,
   isLoadMoreVisible,
   isLoadMoreDisabled,
@@ -29,15 +29,10 @@ const Recipes = ({
       <div className={css.container}>
         <div className={css.box}>
           <SectionTitle>
-            {/* {searchTerm ? `Search results for "${searchTerm}"` : 'Recipes'} */}
-            Recipes
+            {searchTerm?.trim()
+              ? `Search results for "${searchTerm.trim()}"`
+              : "Recipes"}
           </SectionTitle>
-          {/* <RecipesFilters
-            categoryParam={categoryParam}
-            ingredientIdParam={ingredientIdParam}
-            onChangeSearchParams={updateSearchParams}
-            onResetFilters={resetFilters}
-          /> */}
           <ResponsiveFilters
             categoryParam={categoryParam}
             ingredientIdParam={ingredientIdParam}

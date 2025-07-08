@@ -2,30 +2,56 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Добавить в избранное
-export const addToFavorite = createAsyncThunk(
-  'recipes/addToFavorite',
-  async (recipeId, thunkAPI) => {
-    try {
-      const resp = await axios.post(`/api/users/favorites/${recipeId}`);
-      return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || error.message);
-    }
-  }
-);
+// export const addToFavorite = createAsyncThunk(
+//   "recipes/addToFavorite",
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.post(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
 
 // Удалить из избранного
-export const removeFromFavorite = createAsyncThunk(
-  'recipes/removeFromFavorite',
-  async (recipeId, thunkAPI) => {
-    try {
-      const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
-      return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || error.message);
-    }
-  }
-);
+// export const removeFromFavorite = createAsyncThunk(
+//   "recipes/removeFromFavorite",
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
+// export const addToFavorite = createAsyncThunk(
+//   'recipes/addToFavorite',
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.post(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
+// // Удалить из избранного
+// export const removeFromFavorite = createAsyncThunk(
+//   'recipes/removeFromFavorite',
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
 
 // Создать рецепт
 export const createRecipe = createAsyncThunk(

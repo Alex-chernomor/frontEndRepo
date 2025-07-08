@@ -53,13 +53,53 @@ export const refreshUser = createAsyncThunk(
       const reduxState = thunkAPI.getState();
       setAuthHeader(`Bearer ${reduxState.auth.token}`);
       const response = await axios.get('/api/users/current');
-
-      return response.data;
+      const user = response.data.data.user;
+      const favoriteIds = user?.favorites?.map(recipe => recipe._id);
+      return {
+        name: user.name,
+        email: user.email,
+        favorites: favoriteIds,
+      };
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.message);
+      const message =
+        error.response?.data?.message ||
+        error.message ||
+        'Failed to refresh user';
+      return thunkAPI.rejectWithValue(message);
     }
   },
   {
     condition: (_, thunkAPI) => thunkAPI.getState().auth.token !== null,
+  }
+);
+
+export const addToFavorite = createAsyncThunk(
+  'auth/addToFavorite',
+  async (recipeId, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      setAuthHeader(`Bearer ${reduxState.auth.token}`);
+      await axios.post(`/api/users/favorites/${recipeId}`);
+      return recipeId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || 'Failed to add favorite'
+      );
+    }
+  }
+);
+export const removeFromFavorites = createAsyncThunk(
+  'auth/removeFromFavorites',
+  async (recipeId, thunkAPI) => {
+    try {
+      const reduxState = thunkAPI.getState();
+      setAuthHeader(`Bearer ${reduxState.auth.token}`);
+      await axios.delete(`/api/users/favorites/${recipeId}`);
+      return recipeId;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || 'Failed to delete from favorite'
+      );
+    }
   }
 );

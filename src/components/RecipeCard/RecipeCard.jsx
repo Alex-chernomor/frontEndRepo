@@ -1,47 +1,19 @@
-
 import { useLocation, useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../Button/Button';
-
-// import { useLocation, useNavigate } from "react-router-dom";
-// import React, { useState } from "react";
-// import { useSelector } from "react-redux";
-// import Button from "../Button/Button";
-
 import {
   addToFavorite,
-  removeFromFavorite,
-} from '../../redux/recipes/operations.js';
-// import { selectSavedRecipes } from "../../redux/recipes/selectors.js";
-import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
-
+  removeFromFavorites,
+} from '../../redux/auth/operations.js';
+import {
+  selectFavorites,
+  selectIsLoggedIn,
+} from '../../redux/auth/selectors.js';
 import css from './RecipeCard.module.css';
-import toast from 'react-hot-toast';
+import toast, { Toaster } from 'react-hot-toast';
+import ModalWindow from '../ModalWindow/ModalWindow.jsx';
 
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import React, { useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import Button from '../Button/Button';
-// import { addToFavorite, removeFromFavorite } from '../../recipesService.js';
-
-// import { useLocation, useNavigate } from 'react-router-dom';
-// import React, { useState } from 'react';
-// import { useSelector } from 'react-redux';
-// import Button from '../Button/Button';
-// import { addToFavorite, removeFromFavorite } from '../../recipesService.js';
-
-// import { selectSavedRecipes } from '../../redux/recipes/selectors.js';
-
-// import { refreshUser } from '../../redux/auth/operations.js';
-
-// import { selectIsLoggedIn } from '../../redux/auth/selectors.js';
-// import { refreshUser } from '../../redux/auth/operations.js';
-
-// import css from "./RecipeCard.module.css";
-// import toast from "react-hot-toast";
-
-// >>>>>>> main
 export default function RecipeCard({
   _id,
   title,
@@ -53,51 +25,52 @@ export default function RecipeCard({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const recipeId = String(_id);
 
-  // const favorites = useSelector(selectFavorites);
-  // const isFavorite = favorites.find(
-  //   (recipe) => String(recipe._id) === recipeId
-  // );
-  // const favorites = useSelector(selectSavedRecipes);
-  // const isFavorite = favorites.includes(recipeId);
+  const favorites = useSelector(selectFavorites);
+  const isFavorite = favorites?.includes(recipeId);
   const firstSentence = description.split(/[.!?]/)[0] + '.';
 
+  // console.log('Favorites:', favorites);
+  // console.log('isFavorite:', isFavorite);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUpdating, setIsUpdating] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
 
   const handleLearnMore = () => {
-    navigate(`api/recipes/${_id}`);
+    navigate(api/recipes/${_id});
+  };
+
+  const handleLoginConfirm = async () => {
+    try {
+      navigate('api/auth/login', { state: { from: location } });
+    } catch (error) {
+      console.error(error.message);
+      toast.error(error?.message  'Logout failed');
+    }
+  };
+  const handleRegisterConfirm = async () => {
+    try {
+      navigate('api/auth/register', { state: { from: location } });
+    } catch (error) {
+      console.error(error.message);
+      toast.error(error?.message  'Logout failed');
+    }
   };
 
   const handleToggleFavorite = async () => {
-    //   setIsUpdating(true);
-    //   try {
-    //     if (isFavorite) {
-    //       // await dispatch(removeFromFavorite(recipeId)).unwrap();
-    //     } else {
-    //       // await dispatch(addToFavorite(recipeId)).unwrap();
-    //     }
-    //   } catch (error) {
-    //     console.error('Favorite toggle error:', error);
-    //   } finally {
-    //     setIsUpdating(false);
-    //   }
     if (!isLoggedIn) {
-      navigate('api/auth/login', { state: { from: location } });
-      return;
+      setIsModalOpen(true);
     }
     setIsUpdating(true);
     try {
-      if (!isFavorite) {
-        await addToFavorite(recipeId);
-        setIsFavorite(true);
+      if (!isFavorite && isLoggedIn) {
+        await dispatch(addToFavorite(recipeId)).unwrap();
         toast.success('Added to favorites!');
-      } else {
-        await removeFromFavorite(recipeId);
-        setIsFavorite(false);
+      } else if (isFavorite && isLoggedIn) {
+        await dispatch(removeFromFavorites(recipeId)).unwrap();
         toast.success('Removed from favorites!');
       }
     } catch (error) {
@@ -107,8 +80,14 @@ export default function RecipeCard({
       setIsUpdating(false);
     }
   };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className={css.card}>
+      <Toaster position="top-right" reverseOrder={false} />
       <img src={thumb} alt={title} className={css.image} />
       <div className={css.titleRow}>
         <h3 className={css.name}>{title}</h3>
@@ -133,17 +112,18 @@ export default function RecipeCard({
       </div>
       <div className={css.descrWrapper}>
         <p className={css.descrip}>{firstSentence}</p>
-        <p className={css.descrip}>{cals ? `~${cals} cals` : '— cals'}</p>
+        {/* <p className={css.descrip}>{cals ? ~${cals} cals : '— cals'}</p> */}
+        <p className={css.descrip}>{cals && ~${cals} cals}</p>
       </div>
       <div className={css.actions}>
         <Button className={css.LearnMoreBtn} onClick={handleLearnMore}>
           Learn more
         </Button>
 
-        {!isOwnRecipe && (
+{!isOwnRecipe && (
           <button
             type="button"
-            className={`${css.favoriteBtn} ${isFavorite ? css.active : ''}`}
+            className={${css.favoriteBtn} ${isFavorite ? css.active : ''}}
             onClick={handleToggleFavorite}
             disabled={isUpdating}
             aria-label={
@@ -167,6 +147,14 @@ export default function RecipeCard({
           </button>
         )}
       </div>
+      {isModalOpen && (
+        <ModalWindow
+          type="unauthorised"
+          onClose={handleCloseModal}
+          onConfirm={handleLoginConfirm}
+          onCancel={handleRegisterConfirm}
+        />
+      )}
     </div>
   );
 }

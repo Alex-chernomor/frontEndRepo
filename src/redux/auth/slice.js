@@ -1,6 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { login, register, logOut, refreshUser } from './operations';
-import axios from 'axios';
 
 const handlePending = state => {
   state.isRefreshing = true;
@@ -18,6 +17,7 @@ const slice = createSlice({
       email: null,
     },
     token: null,
+    // token: localStorage.getItem('token') || null,
     error: null,
     isLoggedIn: false,
     isRefreshing: false,
@@ -26,6 +26,7 @@ const slice = createSlice({
     builder
       .addCase(register.pending, handlePending)
       .addCase(register.fulfilled, (state, action) => {
+        state.error = false;
         state.user.name = action.payload.data.user.name;
         state.user.email = action.payload.data.user.email;
         state.token = action.payload.data.token;
@@ -35,6 +36,7 @@ const slice = createSlice({
       .addCase(register.rejected, handleReject)
       .addCase(login.pending, handlePending)
       .addCase(login.fulfilled, (state, action) => {
+        state.error = false;
         state.user.name = action.payload.data.user.name;
         state.user.email = action.payload.data.user.email;
         state.token = action.payload.data.token;
@@ -43,19 +45,28 @@ const slice = createSlice({
       })
       .addCase(login.rejected, handleReject)
       .addCase(logOut.fulfilled, state => {
-        state.user = { name: null, email: null, error: false };
+        state.error = false;
+        state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
+        state.isRefreshing = false;
       })
       .addCase(refreshUser.pending, handlePending)
       .addCase(refreshUser.fulfilled, (state, action) => {
+        state.error = false;
         state.user.name = action.payload.data.user.name;
         state.user.email = action.payload.data.user.email;
         state.isRefreshing = false;
         state.isLoggedIn = true;
-        axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
+        // axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
       })
-      .addCase(refreshUser.rejected, handleReject),
+      .addCase(refreshUser.rejected, (state, { payload }) => {
+        state.isRefreshing = false;
+        state.isLoggedIn = false;
+        state.user = null;
+        state.token = null;
+        state.error = payload || 'Refresh failed';
+      }),
 });
 
 export default slice.reducer;

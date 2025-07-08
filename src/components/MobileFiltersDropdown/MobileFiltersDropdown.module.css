@@ -1,0 +1,146 @@
+.container {
+  position: relative;
+  z-index: 100;
+}
+
+.toggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #2f2f2f;
+}
+
+.icon {
+  width: 22px;
+  height: 22px;
+  color: #2f2f2f;
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 60;
+}
+
+.backdrop.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.panel {
+  position: absolute;
+  right: 0;
+  width: min(320px, 100vw);
+  /* height: 222px; */
+  /* height: auto; */
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+  transform-origin: top;
+  transform: scaleY(0);
+  transition: transform 0.3s ease;
+  z-index: 70;
+  will-change: transform;
+  /* overflow: hidden; */
+}
+
+.panel.open {
+  transform: scaleY(1);
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 8px;
+  padding-top: 16px;
+  padding-right: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #000;
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  background-color: transparent;
+  border-radius: 50%;
+  border: 1px solid black;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  /* flex-shrink: 0; */
+  padding: 0;
+}
+
+.closeBtn:hover {
+  background-color: #e0e0e0;
+}
+
+.closeBtn svg {
+  /* display: flex;
+  align-items: center;
+  justify-content: center;*/
+  width: 10px;
+  height: 10px;
+  color: #333;
+}
+
+.filtersBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px 16px 16px;
+}
+
+.btn {
+  align-self: flex-start;
+  padding: 0;
+  font-weight: 600;
+  font-size: 12px;
+  color: #000;
+  position: relative;
+  background: none;
+  transition: transform 0.2s ease;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 2px;
+  background-color: #000;
+  transform: scale(1);
+  transform-origin: center;
+  transition: transform 0.2s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.btn:hover::after {
+  transform: scaleX(1.1);
+}
+
+@media (max-width: 1024px) {
+  .filtersWrap {
+    display: none;
+  }
+  .toggleBtn {
+    display: inline-flex;
+  }
+}

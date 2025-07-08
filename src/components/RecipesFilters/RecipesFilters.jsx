@@ -51,21 +51,38 @@ const RecipesFilters = ({
   const categories = useSelector(selectFilterCategories);
   const allIngredients = useIngredients();
 
+// <<<<<<< filter-dropdown
   const selectedCategory = categories.find(
     (category) => category._id === categoryParam
   );
   const selectedIngredient = allIngredients.find(
     (ingredient) => ingredient._id === ingredientIdParam
   );
+// =======
+  const categoryOptions = categories.map(cat => ({
+    label: cat.name,
+    value: cat._id,
+  }));
+// >>>>>>> main
 
   const ingredientOptions = allIngredients.map((ing) => ({
     label: ing.name,
     value: ing._id,
   }));
-  const categoryOptions = categories.map((cat) => ({
-    label: cat.name,
-    value: cat._id,
-  }));
+// <<<<<<< filter-dropdown
+//   const categoryOptions = categories.map((cat) => ({
+//     label: cat.name,
+//     value: cat._id,
+//   }));
+// =======
+
+//   const selectedCategory = categoryOptions.find(
+//     category => category.label === categoryParam
+//   );
+//   const selectedIngredient = allIngredients.find(
+//     ingredient => ingredient._id === ingredientIdParam
+//   );
+// >>>>>>> main
 
   const hasSelectedFilters = selectedCategory || selectedIngredient;
 

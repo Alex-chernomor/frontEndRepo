@@ -1,35 +1,35 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // Добавить в избранное
-export const addToFavorite = createAsyncThunk(
-  "recipes/addToFavorite",
-  async (recipeId, thunkAPI) => {
-    try {
-      const resp = await axios.post(`/api/users/favorites/${recipeId}`);
-      return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || error.message);
-    }
-  }
-);
+// export const addToFavorite = createAsyncThunk(
+//   "recipes/addToFavorite",
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.post(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
 
 // Удалить из избранного
-export const removeFromFavorite = createAsyncThunk(
-  "recipes/removeFromFavorite",
-  async (recipeId, thunkAPI) => {
-    try {
-      const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
-      return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response?.data || error.message);
-    }
-  }
-);
+// export const removeFromFavorite = createAsyncThunk(
+//   "recipes/removeFromFavorite",
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
 
 // Создать рецепт
 export const createRecipe = createAsyncThunk(
-  "recipes/createRecipe",
+  'recipes/createRecipe',
   async ({ recipe }, thunkAPI) => {
     try {
       const resp = await axios.post(`/api/recipes`, recipe);
@@ -44,14 +44,14 @@ export const createRecipe = createAsyncThunk(
 
 // Получить список рецептов (фильтрованный)
 export const fetchRecipes = createAsyncThunk(
-  "recipes/fetchRecipes",
+  'recipes/fetchRecipes',
   async (
     {
       page = 1,
       perPage = 12,
-      category = "",
-      ingredientId = "",
-      query = "",
+      category = '',
+      ingredientId = '',
+      query = '',
     } = {},
     thunkAPI
   ) => {
@@ -62,7 +62,7 @@ export const fetchRecipes = createAsyncThunk(
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.message || "Unknown error"
+        error.response?.message || 'Unknown error'
       );
     }
   }
@@ -70,14 +70,14 @@ export const fetchRecipes = createAsyncThunk(
 
 // Поиск рецептов по имени (с учетом избранного)
 export const fetchRecipesByName = createAsyncThunk(
-  "recipes/fetchRecipesByName",
+  'recipes/fetchRecipesByName',
   async (
     {
       page = 1,
       perPage = 12,
-      category = "",
-      ingredientId = "",
-      query = "",
+      category = '',
+      ingredientId = '',
+      query = '',
     } = {},
     thunkAPI
   ) => {
@@ -89,7 +89,7 @@ export const fetchRecipesByName = createAsyncThunk(
       return { ...response.data, favorites };
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.message || "Unknown error"
+        error.response?.message || 'Unknown error'
       );
     }
   }
@@ -97,10 +97,10 @@ export const fetchRecipesByName = createAsyncThunk(
 
 // Получить собственные рецепты
 export const fetchOwnRecipes = createAsyncThunk(
-  "recipes/fetchOwnRecipes",
+  'recipes/fetchOwnRecipes',
   async ({ page = 1, perPage = 12 }, thunkAPI) => {
     try {
-      const response = await axios.get("/api/users/own", {
+      const response = await axios.get('/api/users/own', {
         params: { page, perPage },
       });
       return response.data;
@@ -112,10 +112,10 @@ export const fetchOwnRecipes = createAsyncThunk(
 
 // Получить избранные рецепты
 export const fetchFavoriteRecipes = createAsyncThunk(
-  "recipes/getFavoritesRecipes",
+  'recipes/getFavoritesRecipes',
   async ({ page = 1, perPage = 12 }, thunkAPI) => {
     try {
-      const response = await axios.get("/api/users/favorites", {
+      const response = await axios.get('/api/users/favorites', {
         params: { page, perPage },
       });
       return response.data;
@@ -127,10 +127,10 @@ export const fetchFavoriteRecipes = createAsyncThunk(
 
 // Получить все ингредиенты
 export const fetchIngredients = createAsyncThunk(
-  "filters/fetchIngredients",
+  'filters/fetchIngredients',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("/api/ingredients");
+      const response = await axios.get('/api/ingredients');
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
@@ -140,10 +140,10 @@ export const fetchIngredients = createAsyncThunk(
 
 // Получить все категории
 export const fetchCategories = createAsyncThunk(
-  "filters/fetchCategories",
+  'filters/fetchCategories',
   async (_, thunkAPI) => {
     try {
-      const response = await axios.get("/api/categories");
+      const response = await axios.get('/api/categories');
       return response.data.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);

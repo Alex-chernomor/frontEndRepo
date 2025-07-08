@@ -11,7 +11,7 @@
   max-width: 361px;
   height: 483px;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-style: normal;
 }
 
@@ -133,6 +133,7 @@
 
 .favoriteBtn.active {
   background-color: #9b6c43;
+  border: none;
 }
 
 @media screen and (min-width: 1440px) {

@@ -1,17 +1,19 @@
 // import Button from '../Button/Button';
-import PageTitle from "../PageTitle/PageTitle";
-import RecipeDescription from "../RecipeDescription/RecipeDescription";
-import RecipesGeneralInfo from "../RecipesGeneralInfo/RecipesGeneralInfo";
-import RecipesImg from "../RecipesImg/RecipesImg";
-import { FlagIcon } from "../Icons/Icons";
-import styles from "./RecipeDetails.module.css";
-import { useState } from "react";
-import { useSelector } from "react-redux";
-import { selectIsLoggedIn } from "../../redux/auth/selectors";
-import { useNavigate, useParams } from "react-router-dom";
-import toast, { Toaster } from "react-hot-toast";
-import { addToFavorite, removeFromFavorite } from "../../recipesService";
-
+import PageTitle from '../PageTitle/PageTitle';
+import RecipeDescription from '../RecipeDescription/RecipeDescription';
+import RecipesGeneralInfo from '../RecipesGeneralInfo/RecipesGeneralInfo';
+import RecipesImg from '../RecipesImg/RecipesImg';
+import { FlagIcon } from '../Icons/Icons';
+import styles from './RecipeDetails.module.css';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsLoggedIn } from '../../redux/auth/selectors';
+import { useNavigate, useParams } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+import {
+  addToFavorite,
+  removeFromFavorites,
+} from '../../redux/auth/operations';
 export default function RecipeDetails({
   title,
   category,
@@ -27,26 +29,27 @@ export default function RecipeDetails({
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const { recipeId } = useParams();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClick = async () => {
     if (!isLoggedIn) {
-      navigate("/api/auth/login");
+      navigate('/api/auth/login');
       return;
     }
     //? unwrap() або повертає payload, або кидає error.message, який потрапляє в catch
     try {
       if (!isFavorite) {
-        await addToFavorite(recipeId);
+        await dispatch(addToFavorite(recipeId)).unwrap();
         setIsFavorite(true);
-        toast.success("Added to favorites!");
+        toast.success('Added to favorites!');
       } else {
-        await removeFromFavorite(recipeId);
+        await dispatch(removeFromFavorites(recipeId)).unwrap();
         setIsFavorite(false);
-        toast.success("Removed from favorites!");
+        toast.success('Removed from favorites!');
       }
     } catch (error) {
-      console.error("Error is:", error.message);
-      toast.error(error.message || "Something went wrong");
+      console.error('Error is:', error.message);
+      toast.error(error.message || 'Something went wrong');
     }
   };
   return (
@@ -69,7 +72,7 @@ export default function RecipeDetails({
           </Button> */}
             <button className={styles.btn} onClick={handleClick}>
               {isFavorite ? (
-                "Remove"
+                'Remove'
               ) : (
                 <>
                   Save <FlagIcon />

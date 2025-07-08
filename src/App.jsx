@@ -85,7 +85,7 @@ export default function App() {
               />
             }
           >
-            {/* <Route index element={<Navigate to="own" replace />} /> */}
+            <Route index element={<Navigate to="own" replace />} />
             <Route path="own" element={<OwnRecipes />} />
             <Route path="favorites" element={<SavedRecipes />} />
           </Route>

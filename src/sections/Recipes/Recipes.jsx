@@ -11,7 +11,7 @@ import {
 import css from './Recipes.module.css';
 
 const Recipes = ({
-  searchTerm,
+  // searchTerm,
   onLoadMore,
   isLoadMoreVisible,
   isLoadMoreDisabled,

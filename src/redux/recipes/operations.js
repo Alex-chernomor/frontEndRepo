@@ -27,6 +27,32 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 //   }
 // );
 
+// export const addToFavorite = createAsyncThunk(
+//   'recipes/addToFavorite',
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.post(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
+// // Удалить из избранного
+// export const removeFromFavorite = createAsyncThunk(
+//   'recipes/removeFromFavorite',
+//   async (recipeId, thunkAPI) => {
+//     try {
+//       const resp = await axios.delete(`/api/users/favorites/${recipeId}`);
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(error.response?.data || error.message);
+//     }
+//   }
+// );
+
+
 // Создать рецепт
 export const createRecipe = createAsyncThunk(
   'recipes/createRecipe',
@@ -59,6 +85,7 @@ export const fetchRecipes = createAsyncThunk(
       const response = await axios.get(
         `https://backendrepo-ormv.onrender.com/api/recipes?page=${page}&perPage=${perPage}&category=${category}&ingredientId=${ingredientId}&query=${query}`
       );
+
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(

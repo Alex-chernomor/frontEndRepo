@@ -40,7 +40,7 @@ export default function RecipeCard({
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleLearnMore = () => {
-    navigate(`api/recipes/${_id}`);
+    navigate(api/recipes/${_id});
   };
 
   const handleLoginConfirm = async () => {
@@ -48,7 +48,7 @@ export default function RecipeCard({
       navigate('api/auth/login', { state: { from: location } });
     } catch (error) {
       console.error(error.message);
-      toast.error(error?.message || 'Logout failed');
+      toast.error(error?.message  'Logout failed');
     }
   };
   const handleRegisterConfirm = async () => {
@@ -56,7 +56,7 @@ export default function RecipeCard({
       navigate('api/auth/register', { state: { from: location } });
     } catch (error) {
       console.error(error.message);
-      toast.error(error?.message || 'Logout failed');
+      toast.error(error?.message  'Logout failed');
     }
   };
 
@@ -112,18 +112,18 @@ export default function RecipeCard({
       </div>
       <div className={css.descrWrapper}>
         <p className={css.descrip}>{firstSentence}</p>
-        {/* <p className={css.descrip}>{cals ? `~${cals} cals` : '— cals'}</p> */}
-        <p className={css.descrip}>{cals && `~${cals} cals`}</p>
+        {/* <p className={css.descrip}>{cals ? ~${cals} cals : '— cals'}</p> */}
+        <p className={css.descrip}>{cals && ~${cals} cals}</p>
       </div>
       <div className={css.actions}>
         <Button className={css.LearnMoreBtn} onClick={handleLearnMore}>
           Learn more
         </Button>
 
-        {!isOwnRecipe && (
+{!isOwnRecipe && (
           <button
             type="button"
-            className={`${css.favoriteBtn} ${isFavorite ? css.active : ''}`}
+            className={${css.favoriteBtn} ${isFavorite ? css.active : ''}}
             onClick={handleToggleFavorite}
             disabled={isUpdating}
             aria-label={

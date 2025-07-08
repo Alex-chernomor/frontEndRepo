@@ -66,7 +66,7 @@ const slice = createSlice({
         state.user.favorites = action.payload.favorites;
         state.isRefreshing = false;
         state.isLoggedIn = true;
-        axios.defaults.headers.common.Authorization = `Bearer ${state.token}`;
+        axios.defaults.headers.common.Authorization = Bearer ${state.token};
       })
       .addCase(refreshUser.rejected, handleReject)
 

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { selectRecipes, selectTotalPages } from "../../redux/recipes/selectors";
 import RecipesList from "../RecipesList/RecipesList";
 import { fetchOwnRecipes } from "../../redux/recipes/operations";
+import Button from "../Button/Button";
 
 const OwnRecipes = () => {
   const dispatch = useDispatch();

@@ -65,8 +65,8 @@ const RecipeSchema = Yup.object().shape({
   ingredients: Yup.array()
     .of(
       Yup.object().shape({
-        name: Yup.string().required("Required"),
-        amount: Yup.string()
+        id: Yup.string().required("Required"),
+        measure: Yup.string()
           .min(2, "Minimum 2 characters")
           .max(16, "Maximum 16 characters")
           .required("Required"),
@@ -189,7 +189,7 @@ export default function RecipeForm() {
 
         values.ingredients.forEach((ingredient, index) => {
           formData.append(`ingredients[${index}][id]`, ingredient.id);
-          formData.append(`ingredients[${index}][measure]`, ingredient.amount);
+          formData.append(`ingredients[${index}][measure]`, ingredient.measure);
         });
 
         if (values.photo) {
@@ -440,7 +440,7 @@ export default function RecipeForm() {
                             values.ingredientAmount
                           ) {
                             push({
-                              _id: values.ingredientName,
+                              id: values.ingredientName,
                               measure: values.ingredientAmount,
                             });
                             setFieldValue("ingredientName", "");
@@ -463,7 +463,7 @@ export default function RecipeForm() {
                       <tbody>
                         {values.ingredients.map((ing, index) => {
                           const ingredientName =
-                            allIngredients.find((item) => item._id === ing._id)
+                            allIngredients.find((item) => item._id === ing.id)
                               ?.name || "Unknown";
                           return (
                             <tr key={index}>

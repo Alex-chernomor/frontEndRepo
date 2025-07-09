@@ -1,11 +1,13 @@
 .container {
   display: flex;
+  gap: 4px;
   justify-content: center;
   align-items: center;
   height: 46px;
 }
 .logoTitle {
   color: white;
+  font-size: 18px;
 }
 
 .icon {

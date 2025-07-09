@@ -241,13 +241,11 @@ export default function RecipeForm({ onAdd }) {
                         label: cat.name,
                         value: cat._id,
                       }))}
-                      value={
-                        categories
-                          .map((cat) => ({ label: cat.name, value: cat._id }))
-                          .find((opt) => opt.label === values.category) || null
-                      }
+                      value={categories
+                        .map((cat) => ({ label: cat.name, value: cat._id }))
+                        .find((opt) => opt.label === values.category)}
                       onChange={(selectedOption) => {
-                        setFieldValue("category", selectedOption.value);
+                        setFieldValue("category", selectedOption.label);
                       }}
                       placeholder="Soup"
                       styles={customSelectStyles}
@@ -356,7 +354,7 @@ export default function RecipeForm({ onAdd }) {
                       <tbody>
                         {values.ingredients.map((ing, index) => {
                           const ingredientName =
-                            allIngredients.find((item) => item._id === ing._id)
+                            allIngredients.find((item) => item._id === ing.name)
                               ?.name || "Unknown";
                           return (
                             <tr key={index}>

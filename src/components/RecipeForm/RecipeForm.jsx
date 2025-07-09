@@ -4,8 +4,10 @@ import css from "./RecipeForm.module.css";
 import * as Yup from "yup";
 import Select from "react-select";
 import { selectFilterCategories } from "../../redux/filters/selectors.js";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useIngredients } from "../../context/useIngredients.js";
+import { createRecipe } from "../../redux/recipes/operations.js";
+
 const RecipeSchema = Yup.object().shape({
   title: Yup.string().required("Required"),
   description: Yup.string().required("Required"),
@@ -14,8 +16,8 @@ const RecipeSchema = Yup.object().shape({
   category: Yup.string().required("Required"),
   ingredients: Yup.array().of(
     Yup.object().shape({
-      name: Yup.string().required("Required"),
-      amount: Yup.string().required("Required"),
+      id: Yup.string().required("Required"),
+      measure: Yup.string().required("Required"),
     })
   ),
   instructions: Yup.string().required("Required"),
@@ -42,6 +44,7 @@ export default function RecipeForm({ onAdd }) {
   const fileInputRef = useRef(null);
   const categories = useSelector(selectFilterCategories);
   const allIngredients = useIngredients();
+  const dispatch = useDispatch();
   const handleDrop = (event, setFieldValue) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
@@ -71,6 +74,15 @@ export default function RecipeForm({ onAdd }) {
       fileInputRef.current.value = "";
     }
   };
+
+  const handleSubmit = async (values, actions) => {
+    try {
+      const { ingredientName, ingredientAmount, ...dataToSend } = values;
+      await dispatch(createRecipe(dataToSend)).unwrap();
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  };
   return (
     <Formik
       initialValues={{
@@ -85,20 +97,8 @@ export default function RecipeForm({ onAdd }) {
         ingredientName: "",
         ingredientAmount: "",
       }}
-      validationSchema={RecipeSchema}
-      onSubmit={(values) => {
-        const formData = new FormData();
-        formData.append("title", values.title);
-        formData.append("description", values.description);
-        formData.append("cookingTime", values.cookingTime);
-        formData.append("calories", values.calories || "-");
-        formData.append("category", values.category);
-        formData.append("instructions", values.instructions);
-        formData.append("photo", values.photo);
-        formData.append("ingredients", JSON.stringify(values.ingredients));
-        console.log([...formData.entries()]);
-        onAdd(formData);
-      }}
+      validate={RecipeSchema}
+      onSubmit={handleSubmit}
     >
       {({ values, setFieldValue, handleSubmit }) => (
         <div className={css.formWrapper}>
@@ -325,8 +325,8 @@ export default function RecipeForm({ onAdd }) {
                             values.ingredientAmount
                           ) {
                             push({
-                              name: values.ingredientName,
-                              amount: values.ingredientAmount,
+                              id: values.ingredientName,
+                              measure: values.ingredientAmount,
                             });
                             setFieldValue("ingredientName", "");
                             setFieldValue("ingredientAmount", "");

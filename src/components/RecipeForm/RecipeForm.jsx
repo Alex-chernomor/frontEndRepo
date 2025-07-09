@@ -87,9 +87,10 @@ export default function RecipeForm({ onAdd }) {
   const handleSubmit = async (values, actions) => {
     try {
       const { ingredientName, ingredientAmount, ...dataToSend } = values;
-      await dispatch(createRecipe(dataToSend)).unwrap();
+      await onAdd(dataToSend);
+      actions.resetForm();
     } catch (error) {
-      console.log("Error:", error);
+      console.log("Error in handleSubmit in RecipeForm:", error);
     }
   };
   return (
@@ -354,8 +355,13 @@ export default function RecipeForm({ onAdd }) {
                       <tbody>
                         {values.ingredients.map((ing, index) => {
                           const ingredientName =
-                            allIngredients.find((item) => item._id === ing.name)
-                              ?.name || "Unknown";
+                            allIngredients.find((item) => {
+                              // console.log(item._id);
+
+                              item._id === ing.name;
+                            })?.name || "Unknown";
+                          // console.log(allIngredients);
+
                           return (
                             <tr key={index}>
                               <td>{ingredientName}</td>

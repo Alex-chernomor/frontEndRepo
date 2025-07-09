@@ -24,6 +24,8 @@ export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",
   async ({ recipe }, thunkAPI) => {
     try {
+      console.log(recipe);
+
       const resp = await axios.post(`/api/recipes`, recipe);
       return resp.data;
     } catch (error) {

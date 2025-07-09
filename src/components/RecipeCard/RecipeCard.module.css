@@ -93,7 +93,7 @@
 }
 
 .LearnMoreBtn {
-  width: 289px;
+  width: 95%;
   height: 40px;
   border: 1px solid #000;
   border-radius: 8px;
@@ -133,7 +133,6 @@
 
 .favoriteBtn.active {
   background-color: #9b6c43;
-  border: none;
 }
 
 @media screen and (min-width: 1440px) {

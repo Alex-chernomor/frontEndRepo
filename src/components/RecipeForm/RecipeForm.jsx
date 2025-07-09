@@ -1,32 +1,31 @@
-import React, { useState, useRef } from "react";
-import { Field, Form, Formik, ErrorMessage, FieldArray } from "formik";
-import css from "./RecipeForm.module.css";
-import * as Yup from "yup";
-import Select from "react-select";
-import { selectFilterCategories } from "../../redux/filters/selectors.js";
-import { useSelector, useDispatch } from "react-redux";
-import { useIngredients } from "../../context/useIngredients.js";
-import { createRecipe } from "../../redux/recipes/operations.js";
+import { useState, useRef } from 'react';
+import { Field, Form, Formik, ErrorMessage, FieldArray } from 'formik';
+import css from './RecipeForm.module.css';
+import * as Yup from 'yup';
+import Select from 'react-select';
+import { selectFilterCategories } from '../../redux/filters/selectors.js';
+import { useSelector } from 'react-redux';
+import { useIngredients } from '../../context/useIngredients.js';
 
 const RecipeSchema = Yup.object().shape({
-  title: Yup.string().max(64, "Too long!").required("Required"),
-  description: Yup.string().max(200, "Too long!").required("Required"),
+  title: Yup.string().max(64, 'Too long!').required('Required'),
+  description: Yup.string().max(200, 'Too long!').required('Required'),
   time: Yup.string()
-    .min(1, "Too quick!")
-    .max(360, "Too long!")
-    .required("Required"),
-  cals: Yup.string().min(1, "Too few!").max(10000, "Too much!"),
-  category: Yup.string().required("Required"),
+    .min(1, 'Too quick!')
+    .max(360, 'Too long!')
+    .required('Required'),
+  cals: Yup.string().min(1, 'Too few!').max(10000, 'Too much!'),
+  category: Yup.string().required('Required'),
   ingredients: Yup.array()
     .of(
       Yup.object().shape({
-        name: Yup.string().required("Required"),
-        amount: Yup.string().required("Required"),
+        id: Yup.string().required('Required'),
+        measure: Yup.string().required('Required'),
       })
     )
-    .min(2, "Too few!")
-    .max(16, "Too much!"),
-  instructions: Yup.string().max(1200, "Too long!").required("Required"),
+    .min(2, 'Too few!')
+    .max(16, 'Too much!'),
+  instructions: Yup.string().max(1200, 'Too long!').required('Required'),
   thumb: Yup.mixed().nullable(),
   ingredientName: Yup.string(),
   ingredientAmount: Yup.string(),
@@ -35,16 +34,16 @@ const RecipeSchema = Yup.object().shape({
 const customSelectStyles = {
   control: (base, state) => ({
     ...base,
-    border: "1px solid #D9D9D9",
-    borderRadius: "8px",
-    padding: "0 12px",
-    width: "100%",
-    height: "46px",
-    fontSize: "18px",
-    color: "#000",
-    boxShadow: state.isFocused ? "0 0 0 2px rgba(78, 70, 180, 0.2)" : "none",
-    "&:hover": {
-      border: "2px solid #000",
+    border: '1px solid #D9D9D9',
+    borderRadius: '8px',
+    padding: '0 12px',
+    width: '100%',
+    height: '46px',
+    fontSize: '18px',
+    color: '#000',
+    boxShadow: state.isFocused ? '0 0 0 2px rgba(78, 70, 180, 0.2)' : 'none',
+    '&:hover': {
+      border: '2px solid #000',
     },
   }),
 };
@@ -53,12 +52,11 @@ export default function RecipeForm({ onAdd }) {
   const fileInputRef = useRef(null);
   const categories = useSelector(selectFilterCategories);
   const allIngredients = useIngredients();
-  const dispatch = useDispatch();
   const handleDrop = (event, setFieldValue) => {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     if (file) {
-      setFieldValue("thumb", file);
+      setFieldValue('thumb', file);
       setPreview(URL.createObjectURL(file));
     }
   };
@@ -71,42 +69,43 @@ export default function RecipeForm({ onAdd }) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
-        setFieldValue("thumb", file);
+        setFieldValue('thumb', file);
       };
       reader.readAsDataURL(file);
     }
   };
-  const handleRemoveImage = (setFieldValue) => {
+  const handleRemoveImage = setFieldValue => {
     setPreview(null);
-    setFieldValue("thumb", null);
+    setFieldValue('thumb', null);
     if (fileInputRef.current) {
-      fileInputRef.current.value = "";
+      fileInputRef.current.value = '';
     }
   };
 
   const handleSubmit = async (values, actions) => {
     try {
       const { ingredientName, ingredientAmount, ...dataToSend } = values;
-      await dispatch(createRecipe(dataToSend)).unwrap();
+      await onAdd(dataToSend);
+      actions.resetForm();
     } catch (error) {
-      console.log("Error:", error);
+      console.log('Error in handleSubmit in RecipeForm:', error);
     }
   };
   return (
     <Formik
       initialValues={{
-        title: "",
-        description: "",
-        time: "",
-        cals: "",
-        category: "",
+        title: '',
+        description: '',
+        time: '',
+        cals: '',
+        category: '',
         ingredients: [],
-        instructions: "",
+        instructions: '',
         thumb: null,
-        ingredientName: "",
-        ingredientAmount: "",
+        ingredientName: '',
+        ingredientAmount: '',
       }}
-      // validate={RecipeSchema}
+      validationSchema={RecipeSchema}
       onSubmit={handleSubmit}
     >
       {({ values, setFieldValue, handleSubmit }) => (
@@ -118,8 +117,8 @@ export default function RecipeForm({ onAdd }) {
               <div
                 className={css.dropZone}
                 onClick={handleClick}
-                onDrop={(e) => handleDrop(e, setFieldValue)}
-                onDragOver={(e) => e.preventDefault()}
+                onDrop={e => handleDrop(e, setFieldValue)}
+                onDragOver={e => e.preventDefault()}
               >
                 {!preview && (
                   <svg
@@ -147,7 +146,7 @@ export default function RecipeForm({ onAdd }) {
                   accept="image/*"
                   className={css.hiddenInput}
                   ref={fileInputRef}
-                  onChange={(e) => handleFileChange(e, setFieldValue)}
+                  onChange={e => handleFileChange(e, setFieldValue)}
                   hidden
                 />
                 {preview && (
@@ -237,17 +236,17 @@ export default function RecipeForm({ onAdd }) {
                       Category
                     </label>
                     <Select
-                      options={categories.map((cat) => ({
+                      options={categories.map(cat => ({
                         label: cat.name,
                         value: cat._id,
                       }))}
                       value={
                         categories
-                          .map((cat) => ({ label: cat.name, value: cat._id }))
-                          .find((opt) => opt.label === values.category) || null
+                          .map(cat => ({ label: cat.name, value: cat._id }))
+                          .find(opt => opt.label === values.category) || null
                       }
-                      onChange={(selectedOption) => {
-                        setFieldValue("category", selectedOption.value);
+                      onChange={selectedOption => {
+                        setFieldValue('category', selectedOption.label);
                       }}
                       placeholder="Soup"
                       styles={customSelectStyles}
@@ -257,7 +256,7 @@ export default function RecipeForm({ onAdd }) {
                       component="div"
                       className={css.error}
                     />
-                  </div>{" "}
+                  </div>{' '}
                 </div>
               </div>
 
@@ -271,24 +270,17 @@ export default function RecipeForm({ onAdd }) {
                       >
                         <label className={css.itemFormTitle}>Name</label>
                         <Select
-                          options={allIngredients.map((ing) => ({
+                          options={allIngredients.map(ing => ({
                             label: ing.name,
                             value: ing._id,
                           }))}
-                          value={
-                            allIngredients
-                              .map((ing) => ({
-                                label: ing.name,
-                                value: ing._id,
-                              }))
-                              .find(
-                                (opt) => opt.value === values.ingredientName
-                              ) || null
-                          }
-                          onChange={(selectedOption) => {
+                          value={allIngredients
+                            .map(ing => ({ label: ing.name, value: ing._id }))
+                            .find(opt => opt.value === values.ingredientName)}
+                          onChange={selectedOption => {
                             setFieldValue(
-                              "ingredientName",
-                              selectedOption.value
+                              'ingredientName',
+                              selectedOption?.value || ''
                             );
                           }}
                           placeholder="Broccoli"
@@ -316,7 +308,7 @@ export default function RecipeForm({ onAdd }) {
                           placeholder="100g"
                           className={css.inputFluid}
                           id="ingredientAmount"
-                        />{" "}
+                        />{' '}
                         <ErrorMessage
                           name="ingredientAmount"
                           component="div"
@@ -334,11 +326,11 @@ export default function RecipeForm({ onAdd }) {
                             values.ingredientAmount
                           ) {
                             push({
-                              id: values.ingredientName,
+                              id: values.ingredientName, // ТУТ: id
                               measure: values.ingredientAmount,
                             });
-                            setFieldValue("ingredientName", "");
-                            setFieldValue("ingredientAmount", "");
+                            setFieldValue('ingredientName', '');
+                            setFieldValue('ingredientAmount', '');
                           }
                         }}
                       >
@@ -356,12 +348,13 @@ export default function RecipeForm({ onAdd }) {
                       <tbody>
                         {values.ingredients.map((ing, index) => {
                           const ingredientName =
-                            allIngredients.find((item) => item._id === ing._id)
-                              ?.name || "Unknown";
+                            allIngredients.find(item => item._id === ing.id)
+                              ?.name || 'Unknown';
+
                           return (
                             <tr key={index}>
                               <td>{ingredientName}</td>
-                              <td>{ing.amount}</td>
+                              <td>{ing.measure}</td>
                               <td>
                                 <button
                                   type="button"

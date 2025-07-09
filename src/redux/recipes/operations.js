@@ -1,16 +1,32 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
+// export const createRecipe = createAsyncThunk(
+//   "recipes/createRecipe",
+//   async (formData, thunkAPI) => {
+//     try {
+//       console.log(formData); // теперь работает
+//       const resp = await axios.post(
+//         // `/api/recipes`,
+//         `http://localhost:8080/api/recipes`,
+//         formData
+//       );
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(
+//         error.response?.data?.message || error.message
+//       );
+//     }
+//   }
+// );
+
 export const createRecipe = createAsyncThunk(
   "recipes/createRecipe",
-  async (formData, thunkAPI) => {
+  async ({ recipe }, thunkAPI) => {
     try {
-      console.log(formData); // теперь работает
-      const resp = await axios.post(
-        `https://backendrepo-ormv.onrender.com/api/recipes`,
-        // `http://localhost:8080/api/recipes`,
-        formData
-      );
+      console.log(recipe);
+
+      const resp = await axios.post(`/api/recipes`, recipe);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -19,7 +35,6 @@ export const createRecipe = createAsyncThunk(
     }
   }
 );
-
 // Получить список рецептов (фильтрованный)
 export const fetchRecipes = createAsyncThunk(
   "recipes/fetchRecipes",

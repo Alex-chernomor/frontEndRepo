@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import {
   selectIsLoggedIn,
   selectIsRefreshing,
@@ -9,9 +9,15 @@ import Loader from './components/Loader/Loader.jsx';
 export default function PrivateRoute({ component, redirectTo }) {
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const isRefreshing = useSelector(selectIsRefreshing);
+  const location = useLocation();
 
   if (isRefreshing) {
     return <Loader />;
   }
-  return isLoggedIn ? component : <Navigate to={redirectTo} />;
+
+  return isLoggedIn ? (
+    component
+  ) : (
+    <Navigate to={redirectTo} state={{ from: location.pathname }} replace />
+  );
 }

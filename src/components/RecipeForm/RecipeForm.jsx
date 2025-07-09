@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useIngredients } from "../../context/useIngredients.js";
 import { toast } from "react-hot-toast";
 import { createRecipe } from "../../redux/recipes/operations.js";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const MAX_IMAGE_SIZE_MB = 2;
 const LOCALSTORAGE_KEY = "recipeFormData";
@@ -31,13 +31,13 @@ const RecipeSchema = Yup.object().shape({
     .max(360, "Maximum 360 minutes")
     .required("Required"),
 
-  // calories: Yup.number()
-  //   .nullable()
-  //   .transform((value, originalValue) =>
-  //     String(originalValue).trim() === "" ? null : value
-  //   )
-  //   .min(1, "Minimum 1 calorie")
-  //   .max(10000, "Maximum 10000 calories"),
+  calories: Yup.number()
+    .nullable()
+    .transform((value, originalValue) =>
+      String(originalValue).trim() === "" ? null : value
+    )
+    .min(1, "Minimum 1 calorie")
+    .max(10000, "Maximum 10000 calories"),
 
   category: Yup.string()
     .oneOf(
@@ -81,7 +81,7 @@ const RecipeSchema = Yup.object().shape({
   photo: Yup.mixed()
     .nullable()
     .test("fileSize", "Image is too large (max 2MB)", (value) => {
-      if (!value) return true; // not required
+      if (!value) return true;
       return value.size <= MAX_IMAGE_SIZE_MB * 1024 * 1024;
     })
     .test("fileType", "Unsupported file format", (value) => {
@@ -122,7 +122,7 @@ function AutoSaveFormData() {
 
 export default function RecipeForm() {
   const dispatch = useDispatch();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [preview, setPreview] = useState(null);
   const fileInputRef = useRef(null);
   const categories = useSelector(selectFilterCategories);
@@ -180,31 +180,33 @@ export default function RecipeForm() {
         formData.append("title", values.title);
         formData.append("description", values.description);
         formData.append("time", values.cookingTime);
-        // formData.append("calories", values.calories || "-");
+
+        if (values.calories) {
+          formData.append("cals", values.calories || "-");
+        }
         formData.append("category", values.category);
         formData.append("instructions", values.instructions);
-        formData.append("ingredients", JSON.stringify(values.ingredients));
 
         values.ingredients.forEach((ingredient, index) => {
           formData.append(`ingredients[${index}][id]`, ingredient.id);
           formData.append(`ingredients[${index}][measure]`, ingredient.amount);
         });
 
-        if (values.thumb) {
+        if (values.photo) {
           formData.append("thumb", values.photo);
         }
         const loadingToast = toast.loading("Adding recipe...");
 
         dispatch(createRecipe({ recipe: formData }))
           .unwrap()
-          .then(() => {
+          .then((response) => {
             toast.dismiss(loadingToast);
             toast.success("Recipe added successfully!");
             localStorage.removeItem(LOCALSTORAGE_KEY);
             resetForm();
             setPreview(null);
-
-            // navigate("/api/users/recipeId");
+            const newRecipeId = response._id || response.id;
+            navigate(`/recipe/${newRecipeId}`);
           })
           .catch((error) => {
             console.error("Add recipe error:", error);
@@ -392,7 +394,7 @@ export default function RecipeForm() {
                           onChange={(selectedOption) => {
                             setFieldValue(
                               "ingredientName",
-                              selectedOption.value
+                              selectedOption ? selectedOption.value : ""
                             );
                           }}
                           placeholder="Broccoli"
@@ -438,12 +440,13 @@ export default function RecipeForm() {
                             values.ingredientAmount
                           ) {
                             push({
-                              name: values.ingredientName,
-                              amount: values.ingredientAmount,
+                              _id: values.ingredientName,
+                              measure: values.ingredientAmount,
                             });
                             setFieldValue("ingredientName", "");
                             setFieldValue("ingredientAmount", "");
                           }
+                          console.log(values.ingredients);
                         }}
                       >
                         Add new ingredient
@@ -460,12 +463,12 @@ export default function RecipeForm() {
                       <tbody>
                         {values.ingredients.map((ing, index) => {
                           const ingredientName =
-                            allIngredients.find((item) => item._id === ing.name)
+                            allIngredients.find((item) => item._id === ing._id)
                               ?.name || "Unknown";
                           return (
                             <tr key={index}>
                               <td>{ingredientName}</td>
-                              <td>{ing.amount}</td>
+                              <td>{ing.measure}</td>
                               <td>
                                 <button
                                   type="button"

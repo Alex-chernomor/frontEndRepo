@@ -51,46 +51,26 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route
             path="/api/auth/login"
-            element={
-              // <RestrictedRoute component={<LoginPage />} redirectTo="/" />
-              <RestrictedRoute
-                component={<LoginPage />}
-                redirectTo="/api/users/current"
-              />
-            }
+            element={<RestrictedRoute component={<LoginPage />} />}
           />
 
           <Route
             path="/api/auth/register"
-            element={
-              <RestrictedRoute
-                component={<RegistrationPage />}
-                redirectTo="/"
-              />
-            }
+            element={<RestrictedRoute component={<RegistrationPage />} />}
           />
           <Route
             path="/api/add-recipe"
-            element={
-              <PrivateRoute
-                component={<AddrecipePage />}
-                redirectTo="/api/auth/login"
-              />
-            }
+            element={<PrivateRoute component={<AddrecipePage />} />}
           />
           <Route
             path="/api/users/current"
-            element={
-              <PrivateRoute
-                component={<ProfilePage />}
-                redirectTo="/api/auth/login"
-              />
-            }
+            element={<PrivateRoute component={<ProfilePage />} />}
           >
             <Route index element={<Navigate to="own" replace />} />
             <Route path="own" element={<OwnRecipes />} />
             <Route path="favorites" element={<SavedRecipes />} />
           </Route>
+
           <Route path="/api/recipes/:recipeId" element={<RecipeViewPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

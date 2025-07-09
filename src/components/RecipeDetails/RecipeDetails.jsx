@@ -52,7 +52,7 @@ export default function RecipeDetails({
   };
   return (
     <section className={styles.sectionCont}>
-      <div className={styles.container}>
+      <div className={styles.recipeContainer}>
         <Toaster position="top-right" reverseOrder={false} />
         <PageTitle variant="recipeTitle">{title}</PageTitle>
         <RecipesImg thumb={thumb} title={title} />

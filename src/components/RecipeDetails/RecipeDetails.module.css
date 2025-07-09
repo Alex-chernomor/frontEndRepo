@@ -19,13 +19,17 @@
 }
 
 .sectionCont {
-  width: 1440px;
+  width: 100%;
   display: flex;
   justify-content: center;
+  padding: 48px 0;
 }
 
-.container {
-  width: 1224px;
+.recipeContainer {
+  max-width: 1224px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 16px;
 }
 .btn {
   display: flex;
@@ -59,6 +63,6 @@
   .textContainer {
     max-width: 1225px;
     flex-direction: row-reverse;
-    align-content: flex-start;
+    align-items: flex-start;
   }
 }

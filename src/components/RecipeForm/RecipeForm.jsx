@@ -9,20 +9,29 @@ import { useIngredients } from "../../context/useIngredients.js";
 import { createRecipe } from "../../redux/recipes/operations.js";
 
 const RecipeSchema = Yup.object().shape({
-  title: Yup.string().required("Required"),
-  description: Yup.string().required("Required"),
-  cookingTime: Yup.number().positive("Must be positive").required("Required"),
-  calories: Yup.number(),
+  title: Yup.string().max(64, "Too long!").required("Required"),
+  description: Yup.string().max(200, "Too long!").required("Required"),
+  time: Yup.string()
+    .min(1, "Too quick!")
+    .max(360, "Too long!")
+    .required("Required"),
+  cals: Yup.string().min(1, "Too few!").max(10000, "Too much!"),
   category: Yup.string().required("Required"),
-  ingredients: Yup.array().of(
-    Yup.object().shape({
-      id: Yup.string().required("Required"),
-      measure: Yup.string().required("Required"),
-    })
-  ),
-  instructions: Yup.string().required("Required"),
-  photo: Yup.mixed().nullable(),
+  ingredients: Yup.array()
+    .of(
+      Yup.object().shape({
+        name: Yup.string().required("Required"),
+        amount: Yup.string().required("Required"),
+      })
+    )
+    .min(2, "Too few!")
+    .max(16, "Too much!"),
+  instructions: Yup.string().max(1200, "Too long!").required("Required"),
+  thumb: Yup.mixed().nullable(),
+  ingredientName: Yup.string(),
+  ingredientAmount: Yup.string(),
 });
+
 const customSelectStyles = {
   control: (base, state) => ({
     ...base,
@@ -49,7 +58,7 @@ export default function RecipeForm({ onAdd }) {
     event.preventDefault();
     const file = event.dataTransfer.files[0];
     if (file) {
-      setFieldValue("photo", file);
+      setFieldValue("thumb", file);
       setPreview(URL.createObjectURL(file));
     }
   };
@@ -62,14 +71,14 @@ export default function RecipeForm({ onAdd }) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreview(reader.result);
-        setFieldValue("photo", file);
+        setFieldValue("thumb", file);
       };
       reader.readAsDataURL(file);
     }
   };
   const handleRemoveImage = (setFieldValue) => {
     setPreview(null);
-    setFieldValue("photo", null);
+    setFieldValue("thumb", null);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -88,24 +97,24 @@ export default function RecipeForm({ onAdd }) {
       initialValues={{
         title: "",
         description: "",
-        cookingTime: "",
-        calories: "",
+        time: "",
+        cals: "",
         category: "",
         ingredients: [],
         instructions: "",
-        photo: null,
+        thumb: null,
         ingredientName: "",
         ingredientAmount: "",
       }}
-      validate={RecipeSchema}
+      // validate={RecipeSchema}
       onSubmit={handleSubmit}
     >
       {({ values, setFieldValue, handleSubmit }) => (
         <div className={css.formWrapper}>
           <h2 className={css.sectionTitle}>Add Recipe</h2>
           <Form onSubmit={handleSubmit} className={css.formRecipe}>
-            <div className={css.photoUpload}>
-              <p className={css.photoLabel}>Upload Photo</p>
+            <div className={css.thumbUpload}>
+              <p className={css.thumbLabel}>Upload thumb</p>
               <div
                 className={css.dropZone}
                 onClick={handleClick}
@@ -133,7 +142,7 @@ export default function RecipeForm({ onAdd }) {
                   </svg>
                 )}
                 <input
-                  name="photo"
+                  name="thumb"
                   type="file"
                   accept="image/*"
                   className={css.hiddenInput}
@@ -190,35 +199,35 @@ export default function RecipeForm({ onAdd }) {
                   />
                 </div>
                 <div className={css.itemFormWrapper}>
-                  <label className={css.itemFormTitle} htmlFor="cookingTime">
+                  <label className={css.itemFormTitle} htmlFor="time">
                     Cooking time in minutes
                   </label>
                   <Field
-                    name="cookingTime"
-                    type="number"
+                    name="time"
+                    type="text"
                     min="1"
                     placeholder="10"
                     className={css.input}
                   />
                   <ErrorMessage
-                    name="cookingTime"
+                    name="time"
                     component="div"
                     className={css.error}
                   />
                 </div>
                 <div className={css.calsCategWrapper}>
                   <div className={css.itemCatWrapper}>
-                    <label className={css.itemFormTitle} htmlFor="calories">
+                    <label className={css.itemFormTitle} htmlFor="cals">
                       Calories
                     </label>
                     <Field
-                      name="calories"
-                      type="number"
+                      name="cals"
+                      type="text"
                       placeholder="150"
                       className={css.catInput}
                     />
                     <ErrorMessage
-                      name="calories"
+                      name="cals"
                       component="div"
                       className={css.error}
                     />
@@ -235,7 +244,7 @@ export default function RecipeForm({ onAdd }) {
                       value={
                         categories
                           .map((cat) => ({ label: cat.name, value: cat._id }))
-                          .find((opt) => opt.value === values.category) || null
+                          .find((opt) => opt.label === values.category) || null
                       }
                       onChange={(selectedOption) => {
                         setFieldValue("category", selectedOption.value);
@@ -347,7 +356,7 @@ export default function RecipeForm({ onAdd }) {
                       <tbody>
                         {values.ingredients.map((ing, index) => {
                           const ingredientName =
-                            allIngredients.find((item) => item._id === ing.name)
+                            allIngredients.find((item) => item._id === ing._id)
                               ?.name || "Unknown";
                           return (
                             <tr key={index}>

@@ -1,17 +1,17 @@
-import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
-const setAuthHeader = value => {
+const setAuthHeader = (value) => {
   axios.defaults.headers.common.Authorization = value;
 };
 
-axios.defaults.baseURL = 'https://backendrepo-ormv.onrender.com';
+axios.defaults.baseURL = "https://backendrepo-ormv.onrender.com";
 
 export const register = createAsyncThunk(
-  'auth/register',
+  "auth/register",
   async (userCredentials, thunkAPI) => {
     try {
-      const response = await axios.post('/api/auth/register', userCredentials);
+      const response = await axios.post("/api/auth/register", userCredentials);
       setAuthHeader(`Bearer ${response.data.data.token}`);
       return response.data;
     } catch (error) {
@@ -21,12 +21,11 @@ export const register = createAsyncThunk(
   }
 );
 
-// LOGIN
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (credentials, thunkAPI) => {
     try {
-      const response = await axios.post('/api/auth/login', credentials);
+      const response = await axios.post("/api/auth/login", credentials);
       setAuthHeader(`Bearer ${response.data.data.token}`);
       return response.data;
     } catch (error) {
@@ -35,11 +34,11 @@ export const login = createAsyncThunk(
   }
 );
 
-export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+export const logOut = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   try {
-    await axios.post('/api/auth/logout');
-    localStorage.removeItem('token'); // якщо токен зберігається там
-    setAuthHeader('');
+    await axios.post("/api/auth/logout");
+    localStorage.removeItem("token");
+    setAuthHeader("");
     return;
   } catch (error) {
     return thunkAPI.rejectWithValue(error.message);
@@ -47,14 +46,14 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 });
 
 export const refreshUser = createAsyncThunk(
-  'auth/refresh',
+  "auth/refresh",
   async (_, thunkAPI) => {
     try {
       const reduxState = thunkAPI.getState();
       setAuthHeader(`Bearer ${reduxState.auth.token}`);
-      const response = await axios.get('/api/users/current');
+      const response = await axios.get("/api/users/current");
       const user = response.data.data.user;
-      const favoriteIds = user?.favorites?.map(recipe => recipe._id);
+      const favoriteIds = user?.favorites?.map((recipe) => recipe._id);
       return {
         name: user.name,
         email: user.email,
@@ -64,7 +63,7 @@ export const refreshUser = createAsyncThunk(
       const message =
         error.response?.data?.message ||
         error.message ||
-        'Failed to refresh user';
+        "Failed to refresh user";
       return thunkAPI.rejectWithValue(message);
     }
   },
@@ -74,7 +73,7 @@ export const refreshUser = createAsyncThunk(
 );
 
 export const addToFavorite = createAsyncThunk(
-  'auth/addToFavorite',
+  "auth/addToFavorite",
   async (recipeId, thunkAPI) => {
     try {
       const reduxState = thunkAPI.getState();
@@ -83,13 +82,13 @@ export const addToFavorite = createAsyncThunk(
       return recipeId;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || 'Failed to add favorite'
+        error.response?.data?.message || "Failed to add favorite"
       );
     }
   }
 );
 export const removeFromFavorites = createAsyncThunk(
-  'auth/removeFromFavorites',
+  "auth/removeFromFavorites",
   async (recipeId, thunkAPI) => {
     try {
       const reduxState = thunkAPI.getState();
@@ -98,7 +97,7 @@ export const removeFromFavorites = createAsyncThunk(
       return recipeId;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.message || 'Failed to delete from favorite'
+        error.response?.data?.message || "Failed to delete from favorite"
       );
     }
   }

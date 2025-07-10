@@ -84,12 +84,12 @@ export default function BurgerUserMenu() {
             <nav className={styles.menu}>
               <ul>
                 <li>
-                  <NavLink to="/recipes" onClick={toggleMenu}>
+                  <NavLink to="/" onClick={toggleMenu}>
                     Recipes
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="/user/profile" onClick={toggleMenu}>
+                  <NavLink to="/api/users/current/own" onClick={toggleMenu}>
                     My profile
                   </NavLink>
                 </li>
@@ -120,7 +120,7 @@ export default function BurgerUserMenu() {
                 </li>
                 <li className={styles.liButton}>
                   <button className={styles.button} onClick={toggleMenu}>
-                    Add Recepy
+                    <NavLink to="/api/add-recipe">Add recipe</NavLink>
                   </button>
                 </li>
               </ul>

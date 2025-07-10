@@ -58,7 +58,7 @@ export const createRecipe = createAsyncThunk(
 
       // const resp = await axios.post(`/api/recipes`, recipe);
       const resp = await axios.post(
-        `http://localhost:8080/api/recipes`,
+        `https://backendrepo-ormv.onrender.com/api/recipes`,
         recipe
       );
       return resp.data;

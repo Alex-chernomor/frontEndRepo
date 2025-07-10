@@ -2,12 +2,8 @@ import { Field, Form, Formik } from 'formik';
 import toast, { Toaster } from 'react-hot-toast';
 import Button from '../Button/Button';
 import css from './SearchBox.module.css';
-import { useDispatch } from 'react-redux';
-import { fetchRecipesByName } from '../../redux/recipes/operations';
 
-export default function SearchBox({ onSearchTermChange }) {
-  const dispatch = useDispatch();
-
+export default function SearchBox({ setQueryParam }) {
   return (
     <>
       <Toaster position="top-right" />
@@ -19,27 +15,30 @@ export default function SearchBox({ onSearchTermChange }) {
             toast.error('Please enter something in the search field!');
             return;
           }
-          onSearchTermChange(trimmedValue);
-          try {
-            const result = await dispatch(
-              fetchRecipesByName({ query: trimmedValue })
-            );
-            if (result.type.endsWith('rejected')) {
-              toast.error('Recipe not found!');
-              return;
-            }
-            const recipesData = result?.payload;
-            const recipesArray = recipesData?.data?.data;
-            const isValidRecipes =
-              Array.isArray(recipesArray) && recipesArray.length > 0;
-            if (!isValidRecipes) {
-              toast.error('Recipe not found!');
-              return;
-            }
-          } catch {
-            toast.error('Recipe not found!');
-          }
+
+          setQueryParam(trimmedValue);
           actions.resetForm();
+          // onSearchTermChange(trimmedValue);
+          // try {
+          //   const result = await dispatch(
+          //     fetchRecipesByName({ query: trimmedValue })
+          //   );
+          //   if (result.type.endsWith('rejected')) {
+          //     toast.error('Recipe not found!');
+          //     return;
+          //   }
+          //   const recipesData = result?.payload;
+          //   const recipesArray = recipesData?.data?.data;
+          //   const isValidRecipes =
+          //     Array.isArray(recipesArray) && recipesArray.length > 0;
+          //   if (!isValidRecipes) {
+          //     toast.error('Recipe not found!');
+          //     return;
+          //   }
+          // } catch {
+          //   toast.error('Recipe not found!');
+          // }
+          // actions.resetForm();
         }}
       >
         <Form className={css.form}>

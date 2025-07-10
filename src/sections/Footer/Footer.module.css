@@ -10,7 +10,7 @@
   align-items: center;
   gap: 32px;
   padding-block: 24px;
-  width: 1224px;
+  max-width: 1224px;
   margin-inline: auto;
 }
 

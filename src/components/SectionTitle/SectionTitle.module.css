@@ -1,5 +1,22 @@
 .title {
+  display: flex;
+  align-items: center;
   font-weight: 600;
   font-size: 40px;
-  margin-bottom: 16px;
+  width: 361px;
+  height: 39px;
+  margin: 48px auto 16px;
+}
+
+@media (min-width: 768px) {
+  .title {
+    width: 704px;
+    height: 49px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .title {
+    width: 1225px;
+  }
 }

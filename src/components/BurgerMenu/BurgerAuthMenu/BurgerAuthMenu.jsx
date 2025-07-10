@@ -58,7 +58,7 @@ export default function BurgerAuthMenu() {
             <nav className={styles.menu}>
               <ul>
                 <li>
-                  <NavLink to="/recipes" onClick={toggleMenu}>
+                  <NavLink to="/" onClick={toggleMenu}>
                     Recipes
                   </NavLink>
                 </li>

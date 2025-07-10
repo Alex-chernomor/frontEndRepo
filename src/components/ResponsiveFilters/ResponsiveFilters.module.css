@@ -4,7 +4,10 @@
   align-items: center;
   flex-wrap: wrap; /* щоб не лізло на мобілці */
   gap: 12px;
-  padding: 12px 16px;
+  /* padding: 12px 16px; */
+  padding-bottom: 16px;
+  width: 361px;
+  margin: auto;
 }
 
 .recipeCount {
@@ -22,6 +25,8 @@
   .filtersRow {
     flex-direction: row;
     align-items: flex-start;
+    width: 361px;
+    margin: auto;
   }
 
   .filtersRight {
@@ -33,7 +38,21 @@
   }
 }
 
-@media (max-width: 1024px) {
+@media (min-width: 768px) {
+  .filtersRow {
+    width: 704px;
+    margin: auto;
+  }
+}
+
+@media (min-width: 1440px) {
+  .filtersRow {
+    width: 1225px;
+    height: 49px;
+  }
+}
+
+/* @media (max-width: 1024px) {
   .filtersRow {
     flex-direction: row;
   }
@@ -41,4 +60,4 @@
   .filtersRight {
     margin-left: auto;
   }
-}
+} */

@@ -2,6 +2,25 @@ import axios from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 // export const createRecipe = createAsyncThunk(
+//   "recipes/createRecipe",
+//   async (formData, thunkAPI) => {
+//     try {
+//       console.log(formData); // теперь работает
+//       const resp = await axios.post(
+//         // `/api/recipes`,
+//         `http://localhost:8080/api/recipes`,
+//         formData
+//       );
+//       return resp.data;
+//     } catch (error) {
+//       return thunkAPI.rejectWithValue(
+//         error.response?.data?.message || error.message
+//       );
+//     }
+//   }
+// );
+
+// export const createRecipe = createAsyncThunk(
 //   'recipes/createRecipe',
 //   async (formData, thunkAPI) => {
 //     try {
@@ -42,12 +61,7 @@ export const createRecipe = createAsyncThunk(
         formData.append('thumb', recipe.thumb);
       }
 
-      const resp = await axios.post(`/api/recipes`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
+      const resp = await axios.post(`/api/recipes`, recipe);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -56,21 +70,6 @@ export const createRecipe = createAsyncThunk(
     }
   }
 );
-
-// export const createRecipe = createAsyncThunk(
-//   'recipes/createRecipe',
-//   async ({ recipe }, thunkAPI) => {
-//     try {
-//       console.log('Recipe in createRecipe', recipe);
-//       const resp = await axios.post(`/api/recipes`, recipe);
-//       return resp.data;
-//     } catch (error) {
-//       return thunkAPI.rejectWithValue(
-//         error.response?.data?.message || error.message
-//       );
-//     }
-//   }
-// );
 
 // Получить список рецептов (фильтрованный)
 export const fetchRecipes = createAsyncThunk(

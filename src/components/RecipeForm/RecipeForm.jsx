@@ -350,7 +350,6 @@ export default function RecipeForm({ onAdd }) {
                           const ingredientName =
                             allIngredients.find(item => item._id === ing.id)
                               ?.name || 'Unknown';
-
                           return (
                             <tr key={index}>
                               <td>{ingredientName}</td>

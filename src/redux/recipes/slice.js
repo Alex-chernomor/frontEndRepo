@@ -1,13 +1,13 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from '@reduxjs/toolkit';
 import {
   createRecipe,
   fetchRecipes,
   fetchFavoriteRecipes,
   fetchOwnRecipes,
   fetchRecipesByName,
-} from "./operations";
+} from './operations';
 
-const handlePending = (state) => {
+const handlePending = state => {
   state.loading = true;
 };
 const handleRejected = (state, { payload }) => {
@@ -16,7 +16,7 @@ const handleRejected = (state, { payload }) => {
 };
 
 const slice = createSlice({
-  name: "recipes",
+  name: 'recipes',
   initialState: {
     recipes: [],
     savedRecipes: [],
@@ -27,7 +27,7 @@ const slice = createSlice({
     loading: false,
     error: null,
   },
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     builder
       .addCase(fetchRecipes.pending, handlePending)
 
@@ -37,13 +37,13 @@ const slice = createSlice({
         const { favorites, data } = action.payload;
         const { data: recipesData, total, page, perPage, totalPages } = data;
 
-        state.savedRecipes = (favorites || []).map((recipe) =>
+        state.savedRecipes = (favorites || []).map(recipe =>
           String(recipe._id)
         );
 
         if (page > 1) {
-          const existingIds = new Set(state.recipes.map((r) => r._id));
-          const newRecipes = recipesData.filter((r) => !existingIds.has(r._id));
+          const existingIds = new Set(state.recipes.map(r => r._id));
+          const newRecipes = recipesData.filter(r => !existingIds.has(r._id));
           state.recipes = [...state.recipes, ...newRecipes];
         } else {
           state.recipes = recipesData;
@@ -70,7 +70,7 @@ const slice = createSlice({
       .addCase(fetchRecipesByName.rejected, handleRejected)
 
       .addCase(createRecipe.pending, handlePending)
-      .addCase(createRecipe.fulfilled, (state, { payload }) => {
+      .addCase(createRecipe.fulfilled, state => {
         state.loading = false;
         state.error = null;
       })
@@ -82,9 +82,7 @@ const slice = createSlice({
         const { data, total, page, perPage, totalPages } = payload.data;
 
         state.recipes = data || [];
-        state.savedRecipes = data
-          ? data.map((recipe) => String(recipe._id))
-          : [];
+        state.savedRecipes = data ? data.map(recipe => String(recipe._id)) : [];
         state.total = total;
         state.page = page;
         state.perPage = perPage;
@@ -98,9 +96,7 @@ const slice = createSlice({
         const { data, total, page, perPage, totalPages } = payload.data;
 
         state.recipes = data || [];
-        state.savedRecipes = data
-          ? data.map((recipe) => String(recipe._id))
-          : [];
+        state.savedRecipes = data ? data.map(recipe => String(recipe._id)) : [];
         state.total = total;
         state.page = page;
         state.perPage = perPage;

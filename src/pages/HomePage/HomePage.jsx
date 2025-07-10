@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Hero from '../../sections/Hero/Hero.jsx';
 import Recipes from '../../sections/Recipes/Recipes.jsx';
 import ErrorMessage from '../../components/ErrorMessage/ErrorMessage.jsx';
@@ -22,6 +22,8 @@ export default function HomePage() {
   const dispatch = useDispatch();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
+  //Створюєм посилання на DOM-елемент
+  const recipesRef = useRef();
 
   const recipes = useSelector(selectRecipes);
   const page = useSelector(selectPage);
@@ -87,6 +89,17 @@ export default function HomePage() {
   const isVisible =
     page < totalPages && !isLoading && !error && recipes.length > 0;
 
+  useEffect(() => {
+    if (page > 1 && recipesRef.current) {
+      setTimeout(() => {
+        recipesRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }, 100);
+    }
+  }, [page, recipes]);
+
   return (
     <div>
       <Hero onSearchTermChange={setSearchTerm} />
@@ -95,6 +108,7 @@ export default function HomePage() {
       {!isLoading && !error && (
         <div className="container">
           <Recipes
+            recipesRef={recipesRef}
             searchTerm={searchTerm}
             onLoadMore={handleLoadMoreClick}
             isLoadMoreVisible={isVisible}

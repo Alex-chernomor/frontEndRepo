@@ -43,7 +43,7 @@ export default function App() {
   }, [dispatch, token]);
 
   return isRefreshing ? (
-    <strong>Getting user data please wait...</strong>
+    <Loader/>
   ) : (
     <Layout>
       <Suspense fallback={<Loader />}>

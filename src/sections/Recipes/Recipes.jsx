@@ -25,8 +25,8 @@ const Recipes = ({
   const isLoading = useSelector(selectIsLoading);
 
   return (
-    <section className={css.recipes}>
-      <div className={css.container}>
+    <div className={css.container}>
+      <section className={css.recipes}>
         <div className={css.box}>
           <SectionTitle>
             {searchTerm?.trim()
@@ -52,8 +52,8 @@ const Recipes = ({
             </Button>
           )}
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

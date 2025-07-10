@@ -1,15 +1,15 @@
-import { useSelector } from "react-redux";
-import RecipesList from "../../components/RecipesList/RecipesList.jsx";
+import { useSelector } from 'react-redux';
+import RecipesList from '../../components/RecipesList/RecipesList.jsx';
 // import RecipesFilters from "../../components/RecipesFilters/RecipesFilters.jsx";
-import SectionTitle from "../../components/SectionTitle/SectionTitle.jsx";
-import Button from "../../components/Button/Button.jsx";
-import Loader from "../../components/Loader/Loader.jsx";
+import SectionTitle from '../../components/SectionTitle/SectionTitle.jsx';
+import Button from '../../components/Button/Button.jsx';
+import Loader from '../../components/Loader/Loader.jsx';
 import {
   selectRecipes,
   selectIsLoading,
-} from "../../redux/recipes/selectors.js";
-import css from "./Recipes.module.css";
-import ResponsiveFilters from "../../components/ResponsiveFilters/ResponsiveFilters.jsx";
+} from '../../redux/recipes/selectors.js';
+import css from './Recipes.module.css';
+import ResponsiveFilters from '../../components/ResponsiveFilters/ResponsiveFilters.jsx';
 
 const Recipes = ({
   searchTerm,
@@ -31,7 +31,7 @@ const Recipes = ({
           <SectionTitle>
             {searchTerm?.trim()
               ? `Search results for "${searchTerm.trim()}"`
-              : "Recipes"}
+              : 'Recipes'}
           </SectionTitle>
           <ResponsiveFilters
             categoryParam={categoryParam}

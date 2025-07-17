@@ -23,7 +23,7 @@
 .formLoginForm {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  /* gap: 16px; */
   max-width: 298px;
   width: 100%;
   box-sizing: border-box;
@@ -67,7 +67,7 @@
 
 .eyeButton {
   position: absolute;
-  top: 50%;
+  top: 35%;
   right: 8px;
   transform: translateY(-50%);
   background: none;
@@ -120,7 +120,7 @@
   border: 1.5px solid #c80000 !important;
 }
 
-.error {
+.errorFixed {
   color: #c80000;
   font-size: 12px;
   margin: 4px;

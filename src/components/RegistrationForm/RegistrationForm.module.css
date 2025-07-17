@@ -25,7 +25,7 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  /* gap: 16px; */
   max-width: 298px;
   width: 100%;
   box-sizing: border-box;
@@ -46,7 +46,7 @@
 }
 .eyeBtn {
   position: absolute;
-  top: 50%;
+  top: 30%;
   right: 8px;
   transform: translateY(-50%);
   background: none;

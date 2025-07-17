@@ -73,18 +73,22 @@ export default function LoginForm() {
             Enter your email address
             <Field name="email">
               {({ field, meta }) => (
-                <input
-                  {...field}
-                  type="email"
-                  placeholder="email@gmail.com"
-                  className={clsx(
-                    css.fieldLoginForm,
-                    meta.touched && meta.error && css.errorInput
-                  )}
-                />
+                <>
+                  <input
+                    {...field}
+                    type="email"
+                    placeholder="email@gmail.com"
+                    className={clsx(
+                      css.fieldLoginForm,
+                      meta.touched && meta.error && css.errorInput
+                    )}
+                  />
+                  <div className={css.errorFixed}>
+                    {meta.touched && meta.error ? meta.error : "\u00A0"}
+                  </div>
+                </>
               )}
             </Field>
-            <ErrorMessage name="email" className={css.error} component="span" />
           </label>
 
           <label className={css.labelLoginForm}>
@@ -92,15 +96,20 @@ export default function LoginForm() {
             <div className={css.fieldWrapperLoginForm}>
               <Field name="password">
                 {({ field, meta }) => (
-                  <input
-                    {...field}
-                    type={passwordEye ? "text" : "password"}
-                    placeholder="*********"
-                    className={clsx(
-                      css.fieldLoginForm,
-                      meta.touched && meta.error && css.errorInput
-                    )}
-                  />
+                  <>
+                    <input
+                      {...field}
+                      type={passwordEye ? "text" : "password"}
+                      placeholder="*********"
+                      className={clsx(
+                        css.fieldLoginForm,
+                        meta.touched && meta.error && css.errorInput
+                      )}
+                    />
+                    <div className={css.errorFixed}>
+                      {meta.touched && meta.error ? meta.error : "\u00A0"}
+                    </div>
+                  </>
                 )}
               </Field>
               <button
@@ -112,11 +121,6 @@ export default function LoginForm() {
                 {passwordEye ? <Eye /> : <EyeCrossed />}
               </button>
             </div>
-            <ErrorMessage
-              name="password"
-              className={css.error}
-              component="span"
-            />
           </label>
 
           <button className={css.buttonLoginForm} type="submit">

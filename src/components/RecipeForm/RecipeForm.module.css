@@ -17,6 +17,9 @@ body {
   font-size: 40px;
   padding: 0;
 }
+.thumbLabel {
+  font-size: 24px;
+}
 .formRecipe {
   display: flex;
   flex-direction: column;
@@ -93,7 +96,10 @@ body {
   align-items: flex-start;
   justify-content: flex-start;
   flex-direction: column;
-  gap: 16px;
+  /* gap: 16px; */
+}
+.generalInfoWrapper p {
+  margin-bottom: 16px;
 }
 .formSectionTitle {
   font-style: normal;
@@ -136,11 +142,14 @@ textarea::placeholder,
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 18px;
-  color: #595d62;
+  /* color: #595d62; */
+  color: #9f9f9f;
 }
 .error {
   color: red;
   font-size: 0.85rem;
+  min-height: 16px;
+  transition: opacity 0.2s ease-in-out;
 }
 .calsCategWrapper {
   display: flex;
@@ -153,6 +162,7 @@ textarea::placeholder,
 .itemCatWrapper {
   flex: 1 1 50%;
   min-width: 0;
+  gap: 8px;
 }
 .catInput,
 .select__control {
@@ -336,6 +346,9 @@ textarea::placeholder,
   }
   .table {
     width: 66%;
+  }
+  .thumbLabel {
+    font-size: 32px;
   }
 }
 /* :desktop_computer: Desktop: 1026px і більше */

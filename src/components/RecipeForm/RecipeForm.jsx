@@ -6,15 +6,20 @@ import Select from "react-select";
 import { selectFilterCategories } from "../../redux/filters/selectors.js";
 import { useSelector } from "react-redux";
 import { useIngredients } from "../../context/useIngredients.js";
+import clsx from "clsx";
 
 const RecipeSchema = Yup.object().shape({
   title: Yup.string().max(64, "Too long!").required("Required"),
   description: Yup.string().max(200, "Too long!").required("Required"),
-  time: Yup.string()
+  time: Yup.number()
+    .typeError("Must be a number!")
     .min(1, "Too quick!")
-    .max(360, "Too long!")
+    .max(360, "Too long! (max 360 min)")
     .required("Required"),
-  cals: Yup.string().min(1, "Too few!").max(10000, "Too much!"),
+  cals: Yup.number()
+    .typeError("Must be a number!")
+    .min(1, "Too few!")
+    .max(10000, "Too much! (max 10000 cals)"),
   category: Yup.string().required("Required"),
   ingredients: Yup.array()
     .of(
@@ -123,7 +128,7 @@ export default function RecipeForm({ onAdd }) {
           <h2 className={css.sectionTitle}>Add Recipe</h2>
           <Form onSubmit={handleSubmit} className={css.formRecipe}>
             <div className={css.thumbUpload}>
-              <p className={css.thumbLabel}>Upload thumb</p>
+              <p className={css.thumbLabel}>Upload Photo</p>
               <div
                 className={css.dropZone}
                 onClick={handleClick}
@@ -180,38 +185,75 @@ export default function RecipeForm({ onAdd }) {
                   <label className={css.itemFormTitle} htmlFor="title">
                     Recipe Title
                   </label>
-                  <Field
-                    name="title"
-                    placeholder="Enter the name of your recipe"
-                    className={css.input}
-                  />
-                  <ErrorMessage
-                    name="title"
-                    component="div"
-                    className={css.error}
-                  />
+                  <Field name="title">
+                    {({ field, meta }) => (
+                      <>
+                        <input
+                          {...field}
+                          id={field.name}
+                          type="text"
+                          placeholder="Enter the name of your recipe"
+                          className={clsx(
+                            css.input,
+                            meta.touched && meta.error && css.errorInput
+                          )}
+                        />
+                        <div className={css.error}>
+                          {meta.touched && meta.error ? meta.error : "\u00A0"}
+                        </div>
+                      </>
+                    )}
+                  </Field>
                 </div>
                 <div className={css.itemFormWrapper}>
                   <label className={css.itemFormTitle} htmlFor="description">
                     Recipe Description
                   </label>
-                  <Field
-                    name="description"
-                    as="textarea"
-                    placeholder="Enter a brief description of your recipe"
-                    className={css.input}
-                  />
-                  <ErrorMessage
-                    name="description"
-                    component="div"
-                    className={css.error}
-                  />
+                  <Field name="description" as="textarea">
+                    {({ field, meta }) => (
+                      <>
+                        <textarea
+                          {...field}
+                          id={field.name}
+                          placeholder="Enter a brief description of your recipe"
+                          className={clsx(
+                            css.input,
+                            meta.touched && meta.error && css.errorInput
+                          )}
+                        />
+                        <div className={css.error}>
+                          {meta.touched && meta.error ? meta.error : "\u00A0"}
+                        </div>
+                      </>
+                    )}
+                  </Field>
                 </div>
                 <div className={css.itemFormWrapper}>
                   <label className={css.itemFormTitle} htmlFor="time">
                     Cooking time in minutes
                   </label>
-                  <Field
+                  <Field name="time">
+                    {({ field, meta }) => (
+                      <>
+                        <input
+                          {...field}
+                          id={field.name}
+                          type="text"
+                          placeholder="10"
+                          min={1}
+                          max={360}
+                          className={clsx(
+                            css.input,
+                            meta.touched && meta.error && css.errorInput
+                          )}
+                        />
+                        <div className={css.error}>
+                          {meta.touched && meta.error ? meta.error : "\u00A0"}
+                        </div>
+                      </>
+                    )}
+                  </Field>
+                  {/* <Field
                     name="time"
                     type="text"
                     min="1"
@@ -222,14 +264,35 @@ export default function RecipeForm({ onAdd }) {
                     name="time"
                     component="div"
                     className={css.error}
-                  />
+                  /> */}
                 </div>
                 <div className={css.calsCategWrapper}>
                   <div className={css.itemCatWrapper}>
                     <label className={css.itemFormTitle} htmlFor="cals">
                       Calories
                     </label>
-                    <Field
+                    <Field name="cals">
+                      {({ field, meta }) => (
+                        <>
+                          <input
+                            {...field}
+                            id={field.name}
+                            type="text"
+                            placeholder="150"
+                            min={1}
+                            max={10000}
+                            className={clsx(
+                              css.catInput,
+                              meta.touched && meta.error && css.errorInput
+                            )}
+                          />
+                          <div className={css.error}>
+                            {meta.touched && meta.error ? meta.error : "\u00A0"}
+                          </div>
+                        </>
+                      )}
+                    </Field>
+                    {/* <Field
                       name="cals"
                       type="text"
                       placeholder="150"
@@ -239,13 +302,14 @@ export default function RecipeForm({ onAdd }) {
                       name="cals"
                       component="div"
                       className={css.error}
-                    />
+                    /> */}
                   </div>
                   <div className={css.itemCatWrapper}>
                     <label className={css.itemFormTitle} htmlFor="category">
                       Category
                     </label>
                     <Select
+                      inputId="category"
                       options={categories.map((cat) => ({
                         label: cat.name,
                         value: cat._id,
@@ -399,7 +463,26 @@ export default function RecipeForm({ onAdd }) {
                 <label className={css.formSectionTitle} htmlFor="instructions">
                   Instructions
                 </label>
-                <Field
+                <Field name="instructions">
+                  {({ field, meta }) => (
+                    <>
+                      <textarea
+                        {...field}
+                        id={field.name}
+                        type="text"
+                        placeholder="Enter a text"
+                        className={clsx(
+                          css.input,
+                          meta.touched && meta.error && css.errorInput
+                        )}
+                      />
+                      <div className={css.error}>
+                        {meta.touched && meta.error ? meta.error : "\u00A0"}
+                      </div>
+                    </>
+                  )}
+                </Field>
+                {/* <Field
                   name="instructions"
                   as="textarea"
                   placeholder="Enter a text"
@@ -409,7 +492,7 @@ export default function RecipeForm({ onAdd }) {
                   name="instructions"
                   component="div"
                   className={css.error}
-                />
+                /> */}
               </div>
               <button type="submit" className={css.submitBtn}>
                 Publish Recipe

@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
-// import { createPortal } from "react-dom";
+import { useEffect } from "react";
 import css from "./ModalWindow.module.css";
 import Button from "../Button/Button";
 import { CloseIcon } from "../Icons/Icons.jsx";
-
-// const modalRoot = document.querySelector("#modal-root") ?? document.body;
 
 const MODAL_CONFIG = {
   unauthorised: {

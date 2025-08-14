@@ -30,9 +30,9 @@
   height: 236px;
 }
 
-.logout {
+/* .logout {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
+} */
 
 .closeSvg {
   display: flex;
@@ -67,6 +67,7 @@
   color: #000;
   margin-bottom: 20px;
   white-space: pre-line;
+  text-shadow: none;
 }
 
 .buttons {
@@ -90,7 +91,6 @@ button.unauthConfirmBtn {
 }
 
 .logoutBtn {
-  /* border: none; */
   color: #fff;
   background-color: #c80000;
 }
@@ -140,4 +140,25 @@ button.unauthConfirmBtn {
 .successBtn {
   width: 356px;
   height: 44px;
+}
+
+@media screen and (min-width: 320px) and (max-width: 768px) {
+  .modal {
+    width: 362px;
+    height: 316px;
+  }
+
+  .buttons {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+  }
+
+  button.logoutBtn,
+  button.cancelBtn {
+    font-size: 18px;
+    width: 314px;
+    height: 54px;
+  }
 }
